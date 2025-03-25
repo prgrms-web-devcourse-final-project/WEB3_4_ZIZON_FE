@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # 4. 의존성 설치 (단, production 모드에서는 devDependencies 설치 안함)
-RUN npm ci
+RUN npm i
 
 # 5. 소스 코드 복사
 COPY . .
