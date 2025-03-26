@@ -5,15 +5,7 @@ const meta = {
   title: 'atoms/MediumTag',
   component: MediumTag,
   tags: ['autodocs'],
-  // argTypes: {
-  //   text: {
-  //     control: {
-  //       type: 'select',
-  //       options: ['이사/청소', '설치/수리', '취미/자기계발', '과외', '기타'],
-  //     },
-  //   },
-  // },
-} as  Meta<typeof MediumTag>;
+} as Meta<typeof MediumTag>;
 
 export default meta;
 
