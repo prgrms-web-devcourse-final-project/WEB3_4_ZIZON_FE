@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import 'tailwindcss-preset-px-to-rem'
 
 export default {
   content: [
@@ -9,11 +10,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+
       },
     },
   },
   plugins: [],
-  presets: [require('tailwindcss-preset-px-to-rem')],
+  presets: [],
 } satisfies Config;
