@@ -1,0 +1,99 @@
+import { Meta, Typeset } from '@storybook/blocks';
+
+<Meta title="Typography" />
+
+export const typography = {
+  type: {
+    primary: '"Pretendard"',
+  },
+  weight: {
+    regular: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  },
+  size: {
+    caption: 13,
+    body: 16,
+    subtitle2: 20,
+    subtitle1: 24,
+    headline3: 28,
+    headline2: 32,
+    headline1: 40,
+  },
+};
+
+export const SampleTextKR = '자유도 다스리는 자를 필요로 해';
+
+## Typography
+
+**Font:** Pretendard <br/>
+**Weights:** 400(regular), 500(medium), 600(semibold), 700(bold)
+
+### Regular
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.caption),
+    Number(typography.size.body),
+    Number(typography.size.subtitle2),
+    Number(typography.size.subtitle1),
+    Number(typography.size.headline3),
+    Number(typography.size.headline2),
+    Number(typography.size.headline1),
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleTextKR}
+  fontFamily={typography.type.primary}
+/>
+
+### medium
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.caption),
+    Number(typography.size.body),
+    Number(typography.size.subtitle2),
+    Number(typography.size.subtitle1),
+    Number(typography.size.headline3),
+    Number(typography.size.headline2),
+    Number(typography.size.headline1),
+  ]}
+  fontWeight={typography.weight.medium}
+  sampleText={SampleTextKR}
+  fontFamily={typography.type.primary}
+/>
+
+### semibold
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.caption),
+    Number(typography.size.body),
+    Number(typography.size.subtitle2),
+    Number(typography.size.subtitle1),
+    Number(typography.size.headline3),
+    Number(typography.size.headline2),
+    Number(typography.size.headline1),
+  ]}
+  fontWeight={typography.weight.semibold}
+  sampleText={SampleTextKR}
+  fontFamily={typography.type.primary}
+/>
+
+### bold
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.caption),
+    Number(typography.size.body),
+    Number(typography.size.subtitle2),
+    Number(typography.size.subtitle1),
+    Number(typography.size.headline3),
+    Number(typography.size.headline2),
+    Number(typography.size.headline1),
+  ]}
+  fontWeight={typography.weight.bold}
+  sampleText={SampleTextKR}
+  fontFamily={typography.type.primary}
+/>
