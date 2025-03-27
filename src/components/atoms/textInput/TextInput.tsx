@@ -34,9 +34,9 @@ export default function TextInput({
       )}
       <input
         className={`w-full mb-4 border rounded-sm text-16 px-16 py-12
-      placeholder:font-regular placeholder:text-black6  text-black12 text-
+      placeholder:font-regular placeholder:text-black6  text-black12 
       focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent
-      focus:shadow-input ${borderVariant}`}
+      focus:shadow-input ${borderVariant} disabled:bg-black3 `}
         type={type}
         placeholder={placeholder}
         disabled={disabled}
