@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import 'tailwindcss-preset-px-to-rem'
+import 'tailwindcss-preset-px-to-rem';
 
 export default {
   content: [
@@ -8,11 +8,7 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      colors: {
-
-      },
-    },
+    extend: {},
   },
   plugins: [],
   presets: [],
