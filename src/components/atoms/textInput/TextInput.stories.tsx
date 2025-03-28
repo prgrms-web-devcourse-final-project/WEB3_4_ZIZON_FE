@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    name: 'title',
+    id: 'title',
     placeholder: '제목을 입력해주세요',
     type: 'text',
     disabled: false,
@@ -30,7 +30,7 @@ export const Default: Story = {
 
 export const WithLabel: Story = {
   args: {
-    name: 'email',
+    id: 'email',
     placeholder: '이메일을 입력해주세요',
     type: 'email',
     disabled: false,
@@ -42,7 +42,7 @@ export const WithLabel: Story = {
 
 export const Error: Story = {
   args: {
-    name: 'email',
+    id: 'email',
     placeholder: '이메일을 입력해주세요',
     type: 'email',
     disabled: false,
@@ -59,7 +59,7 @@ export const Chatting = () => {
   return (
     <div className="w-752">
       <TextInput
-        name="chatting"
+        id="chatting"
         placeholder="메시지를 입력해주세요. (Enter: 줄바꿈 / Ctrl+Enter: 전송)"
         type="text"
         disabled={false}
