@@ -2,7 +2,6 @@ import React from 'react';
 import ArrowsRightLeftBlack from "public/icons/ArrowsRightLeftBlack.svg"
 import ArrowsRightLeftWhite from "public/icons/ArrowsRightLeftWhite.svg"
 import Image from 'next/image';
-import * as console from 'node:console';
 
 interface props {
   isState: boolean;
