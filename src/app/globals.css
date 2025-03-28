@@ -19,6 +19,7 @@
   --color-starYellow: #f0d539;
   --color-redWarning: #dc3644;
   --color-greenComplete: #1ca673;
+  --color-purpleTutor: #ab2dff
   --color-primary6: #1e3060;
   --color-primary5: #2556f5;
   --color-primary4: #3270ff;
@@ -31,13 +32,12 @@
   --color-secondary1: #ffab72;
 
   --font-pretendard: 'Pretendard', 'sans-serif';
+  --shadow-input: 0px 0px 4px 2px rgba(37, 86, 245, 0.2);
 }
 @theme inline {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-  }
 }
 
 body {
