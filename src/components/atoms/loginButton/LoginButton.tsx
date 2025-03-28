@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 interface LoginButtonProps {
   type: 'kakao' | 'naver' | 'default' | 'blue';
   onClick: () => void;
@@ -25,7 +27,12 @@ export default function LoginButton({ type, onClick, disabled }: LoginButtonProp
       disabled={disabled}
       className={`w-404 h-47 py-12 px-16 rounded-[8px] flex gap-12 justify-center items-center  disabled:bg-black6 disabled:text-black9  cursor-pointer ${colorVariant[type]}`}
     >
-      {(type === 'kakao' || type === 'naver') && <div>로고이미지</div>}
+      {type === 'kakao' && (
+        <Image src="/icons/KakaoLogo.svg" alt="kakao-logo" width={25} height={25} />
+      )}
+      {type === 'naver' && (
+        <Image src="/icons/NaverLogo.svg" alt="naver-logo" width={25} height={25} />
+      )}
       <span>{textVarient[type]}</span>
     </button>
   );
