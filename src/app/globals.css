@@ -30,9 +30,19 @@
   --color-secondary3: #ff6e2d;
   --color-secondary2: #ff8e52;
   --color-secondary1: #ffab72;
-  --color-kakao: #FFE617;
-  --color-naver: #00C73C;
+
   --font-pretendard: 'Pretendard', 'sans-serif';
+
+  --text-40: 40px;
+  --text-32: 32px;
+  --text-28: 28px;
+  --text-24: 24px;
+  --text-20: 20px;
+  --text-16: 16px;
+  --text-14: 14px;
+  --text-13: 13px;
+  --text-11: 11px;
+
   --shadow-input: 0px 0px 4px 2px rgba(37, 86, 245, 0.2);
 }
 @theme inline {
@@ -42,5 +52,6 @@
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Pretendard, Helvetica, sans-serif;
+  line-height: 1.2;
 }
