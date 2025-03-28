@@ -78,3 +78,14 @@ export const White: Story = {
     onClick: () => alert('버튼 클릭'),
   },
 };
+
+export const Big = () => (
+  <div className="w-300">
+    <StandardButton
+      text="거래하기"
+      state="blue"
+      disabled={false}
+      onClick={() => alert('버튼 클릭')}
+    />
+  </div>
+);
