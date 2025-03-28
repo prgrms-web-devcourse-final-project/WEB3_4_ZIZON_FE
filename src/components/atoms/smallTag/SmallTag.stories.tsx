@@ -1,15 +1,15 @@
 import { Meta, StoryObj } from '@storybook/react';
-import MediumTag from './MediumTag';
+import SmallTag from './SmallTag';
 
 const meta = {
-  title: 'atoms/MediumTag',
-  component: MediumTag,
+  title: 'atoms/SmallTag',
+  component: SmallTag,
   tags: ['autodocs'],
-} as Meta<typeof MediumTag>;
+} as Meta<typeof SmallTag>;
 
 export default meta;
 
-type Story = StoryObj<typeof MediumTag>;
+type Story = StoryObj<typeof SmallTag>;
 
 export const Default: Story = {
   args: {
