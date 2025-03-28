@@ -53,22 +53,24 @@ export const WithTextButton = () => {
   const [state, setState] = React.useState<string>('수정해보세요');
   const [isDisabled, setIssDisabled] = React.useState<boolean>(true);
   return (
-    <LabeledInput
-      id="title"
-      placeholder="제목을 입력해주세요"
-      type="text"
-      disabled={isDisabled}
-      value={state}
-      onChange={value => setState(value)}
-      label="제목"
-      htmlFor="title"
-    >
-      <div className="flex gap-4">
-        <TextButton
-          text={isDisabled ? '수정' : '저장'}
-          onClick={() => setIssDisabled(prev => !prev)}
-        />
-      </div>
-    </LabeledInput>
+    <div className="w-300">
+      <LabeledInput
+        id="title"
+        placeholder="제목을 입력해주세요"
+        type="text"
+        disabled={isDisabled}
+        value={state}
+        onChange={value => setState(value)}
+        label="제목"
+        htmlFor="title"
+      >
+        <div className="flex gap-4">
+          <TextButton
+            text={isDisabled ? '수정' : '저장'}
+            onClick={() => setIssDisabled(prev => !prev)}
+          />
+        </div>
+      </LabeledInput>
+    </div>
   );
 };

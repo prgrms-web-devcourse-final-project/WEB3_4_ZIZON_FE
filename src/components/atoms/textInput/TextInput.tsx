@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-type TextInputType = 'text' | 'email' | 'password';
+type TextInputType = 'text' | 'email' | 'password' | 'tel';
 
 export interface TextInputProps {
   id: string;

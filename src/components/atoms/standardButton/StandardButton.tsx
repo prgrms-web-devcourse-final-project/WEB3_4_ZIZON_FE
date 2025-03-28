@@ -7,7 +7,7 @@ type ButtonStateType =
   | 'gray'
   | 'white';
 
-interface StandardButtonProps {
+export interface StandardButtonProps {
   text: string;
   onClick: () => void;
   disabled: boolean;
@@ -35,7 +35,7 @@ export default function StandardButton({
       type="button"
       disabled={disabled}
       onClick={() => onClick()}
-      className={`w-full px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer ${stateVariants[state]}`}
+      className={`w-fit min-w-100 px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer ${stateVariants[state]}`}
     >
       {text}
     </button>

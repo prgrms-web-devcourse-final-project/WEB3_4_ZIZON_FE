@@ -8,8 +8,8 @@ interface LoginButtonProps {
 
 export default function LoginButton({ type, onClick, disabled }: LoginButtonProps) {
   const colorVariant = {
-    kakao: 'bg-kakao text-black9',
-    naver: 'bg-naver text-black1',
+    kakao: 'bg-kakao text-black9 disabled:bg-kakao',
+    naver: 'bg-naver text-black1 disabled:bg-naver',
     default: 'bg-white text-black9',
     blue: 'bg-primary5 text-black1',
   };
