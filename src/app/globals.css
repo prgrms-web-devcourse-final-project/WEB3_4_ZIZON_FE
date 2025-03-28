@@ -1,9 +1,7 @@
 @import 'tailwindcss';
 
-@layer theme {
-  :root {
-    --spacing: 1px; /* 기본 간격 스케일 */
-  }
+:root {
+  --spacing: 1px; /* 기본 간격 스케일 */
 }
 @theme {
   --color-black12: #111111;
