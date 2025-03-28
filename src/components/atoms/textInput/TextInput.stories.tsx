@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import TextInput from './TextInput';
 import { fn } from '@storybook/test';
+import React from 'react';
 
 const meta = {
   title: 'Atoms/TextInput',
@@ -18,6 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    name: 'title',
     placeholder: '제목을 입력해주세요',
     type: 'text',
     disabled: false,
@@ -28,6 +30,7 @@ export const Default: Story = {
 
 export const WithLabel: Story = {
   args: {
+    name: 'email',
     placeholder: '이메일을 입력해주세요',
     type: 'email',
     disabled: false,
@@ -39,6 +42,7 @@ export const WithLabel: Story = {
 
 export const Error: Story = {
   args: {
+    name: 'email',
     placeholder: '이메일을 입력해주세요',
     type: 'email',
     disabled: false,
@@ -48,4 +52,22 @@ export const Error: Story = {
     error: true,
     errorText: '이메일 형식이 올바르지 않습니다.',
   },
+};
+
+export const Chatting = () => {
+  const [value, setValue] = React.useState<string>('');
+  return (
+    <div className="w-752">
+      <TextInput
+        name="chatting"
+        placeholder="메시지를 입력해주세요. (Enter: 줄바꿈 / Ctrl+Enter: 전송)"
+        type="text"
+        disabled={false}
+        value={value}
+        onChange={(value: string) => setValue(value)}
+        error={false}
+        color="white"
+      />
+    </div>
+  );
 };
