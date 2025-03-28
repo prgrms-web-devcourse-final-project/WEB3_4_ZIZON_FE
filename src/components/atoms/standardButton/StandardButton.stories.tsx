@@ -7,8 +7,13 @@ const meta = {
   component: StandardButton,
   parameters: {
     layout: 'centered',
-    // 추가
     componentSubtitle: '기본 버튼 컴포넌트',
+    docs: {
+      description: {
+        component:
+          '기본적으로 컨텐츠 자체의 너비를 가집니다. <br/> size props에 `full`을 전달하면 부모너비를 채우는 넓은 버튼을 만들 수 있습니다.',
+      },
+    },
   },
   tags: ['autodocs'],
   args: { onClick: fn() },
@@ -83,6 +88,7 @@ export const Big = () => (
   <div className="w-300">
     <StandardButton
       text="거래하기"
+      size="full"
       state="blue"
       disabled={false}
       onClick={() => alert('버튼 클릭')}

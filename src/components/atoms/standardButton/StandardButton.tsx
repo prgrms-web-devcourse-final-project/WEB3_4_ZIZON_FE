@@ -11,6 +11,7 @@ export interface StandardButtonProps {
   text: string;
   onClick: () => void;
   disabled: boolean;
+  size?: 'fit' | 'full';
   state?: ButtonStateType;
 }
 
@@ -18,6 +19,7 @@ export default function StandardButton({
   text,
   onClick = () => {},
   disabled = false,
+  size = 'fit',
   state = 'default',
 }: StandardButtonProps) {
   const stateVariants = {
@@ -30,12 +32,17 @@ export default function StandardButton({
     white: 'bg-black1 text-black7',
   };
 
+  const widthVariants = {
+    fit: 'w-fit',
+    full: 'w-full',
+  };
   return (
     <button
       type="button"
       disabled={disabled}
       onClick={() => onClick()}
-      className={`w-fit min-w-100 px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer ${stateVariants[state]}`}
+      className={`min-w-100 px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer 
+        ${stateVariants[state]} ${widthVariants[size]}`}
     >
       {text}
     </button>
