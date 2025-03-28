@@ -14,10 +14,14 @@ export default function LabeledInput({
   error = false,
   errorText = '',
   label,
-}: LabeledInputProps) {
+  children,
+}: LabeledInputProps & { children?: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-8 w-full">
-      <InputLabel label={label} htmlFor={id} />
+      <div className="flex justify-between items-center">
+        <InputLabel label={label} htmlFor={id} />
+        <div>{children}</div>
+      </div>
       <TextInput
         id={id}
         placeholder={placeholder}
