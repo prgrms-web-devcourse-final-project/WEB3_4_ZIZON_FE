@@ -23,7 +23,7 @@ export default function Checkbox({ label, caption, checked = false, onChange }: 
         >
           {label}
         </label>
-        <span className={`text-14 font-regular ${checked ? 'text-primary5' : 'text-black12'}`}>
+        <span className={`text-16 font-regular ${checked ? 'text-primary5' : 'text-black12'}`}>
           {caption}
         </span>
       </div>
