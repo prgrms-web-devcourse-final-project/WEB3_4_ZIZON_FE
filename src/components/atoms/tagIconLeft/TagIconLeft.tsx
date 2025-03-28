@@ -14,14 +14,14 @@ function TagIconLeft({type, count}:props) {
     return (
       <div className="flex bg-black1 drop-shadow-xl min-w-fit max-w-fit py-8 px-12 rounded-full">
         <Image src={HeartFull} alt={""} width={20} height={20} />
-        <label className="text-13 font-medium ml-4">{value}</label>
+        <label className="text-13 content-center font-medium ml-4">{value}</label>
       </div>
     );
   } else if (type == "like-off") {
     return (
       <div className="flex bg-black2 border border-black3 min-w-fit max-w-fit py-8 px-12 rounded-full">
         <Image src={HeartOutLine} alt={""} width={20} height={20} />
-        <label className="text-13 font-medium ml-4">{value}</label>
+        <label className="text-13 content-center font-medium ml-4">{value}</label>
       </div>
     )
   }
