@@ -3,12 +3,12 @@ interface VerticalTabItemProps {
   isFocused: boolean;
   text: string;
   onClick: (name: string) => void;
-  tabStyle: 'shopping' | 'mypage';
+  tabStyle: 'small' | 'large';
 }
 
 const tabStyleVariation = {
-  shopping: 'w-217 text-16', // 큰거
-  mypage: 'w-194 text-12', // 작은거
+  large: 'w-217 text-16', // 큰거
+  small: 'w-194 text-12', // 작은거
 };
 
 export default function VerticalTabItem({
