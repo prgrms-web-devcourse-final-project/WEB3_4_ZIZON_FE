@@ -23,7 +23,7 @@ export const Setting: Story = {
   args: {
     onClick: () => alert("active 상태로 변경"),
     value: "설치",
-    state: 'default'
+    state: 'active'
   },
 };
 
