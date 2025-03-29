@@ -3,20 +3,20 @@ interface VerticalTabItemProps {
   isFocused: boolean;
   text: string;
   onClick: (name: string) => void;
-  tabStyle: 'small' | 'large';
+  size: 'small' | 'large';
 }
 
-const tabStyleVariation = {
+const sizeVariation = {
   large: 'w-217 text-16', // 큰거
   small: 'w-194 text-12', // 작은거
-};
+} as const;
 
 export default function VerticalTabItem({
   name,
   isFocused,
   text,
   onClick,
-  tabStyle,
+  size,
 }: VerticalTabItemProps) {
   const focusedTabStyle = isFocused
     ? 'bg-primary1 border-1 border-primary2 text-black12'
@@ -24,7 +24,7 @@ export default function VerticalTabItem({
   return (
     <li
       onClick={() => onClick(name)}
-      className={`list-none px-20 py-12 rounded-[8px] hover:bg-black3 font-semibold transition-colors duration-200 ${focusedTabStyle} ${tabStyleVariation[tabStyle]}`}
+      className={`list-none px-20 py-12 rounded-[8px] hover:bg-black3 font-semibold transition-colors duration-200 ${focusedTabStyle} ${sizeVariation[size]}`}
     >
       {text}
     </li>
