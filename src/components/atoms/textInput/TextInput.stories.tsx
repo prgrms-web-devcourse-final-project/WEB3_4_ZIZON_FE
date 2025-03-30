@@ -54,6 +54,16 @@ export const Error: Story = {
   },
 };
 
+export const Locked: Story = {
+  args: {
+    id: 'email',
+    placeholder: '이메일을 입력해주세요',
+    type: 'email',
+    value: 'hello@gmail.com',
+    isEditable: false,
+  },
+};
+
 export const Chatting = () => {
   const [value, setValue] = React.useState<string>('');
   return (
