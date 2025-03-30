@@ -5,13 +5,13 @@ import FixWrench from "public/icons/FixWrench.svg"
 import LessonHat from "public/icons/LessonHat.svg"
 import HobbyPalette from "public/icons/HobbyPalette.svg"
 
-interface props {
+interface LabelWithIconButtonProps {
   onClick: () => void;
   value: "이사" | "설치" | "과외" | "취미";
   state: 'default' | 'active';
 }
 
-export default function LabelWithIconButton({onClick, value, state}: props) {
+export default function LabelWithIconButton({onClick, value, state}: LabelWithIconButtonProps) {
 
   if(value === "이사") {
     return (
