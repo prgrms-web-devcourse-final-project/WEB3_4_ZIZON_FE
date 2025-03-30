@@ -26,7 +26,7 @@ function ImageUploadButton({ onImageUpload }: ImageUploadButtonProps) {
       onClick={handleClick}
       className="w-100 h-100 p-5 rounded-lg bg-black2 flex flex-col items-center justify-center cursor-pointer hover:bg-black3 transition-colors duration-200 group"
     >
-      <div className="w-32 h-32 rounded p-5 bg-black3 flex items-center justify-center mb-8 group-hover:bg-black4">
+      <div className="w-24 h-24 rounded p-5 bg-black3 flex items-center justify-center mb-8 group-hover:bg-black4">
         <Image src="/icons/Plus.svg" alt="이미지 추가" width={20} height={20} />
       </div>
       <span className="text-13 text-black8">이미지 추가</span>
