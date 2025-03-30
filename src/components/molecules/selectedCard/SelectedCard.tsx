@@ -12,9 +12,9 @@ interface SelectedCardProps {
 function SelectedCard({ type, checked, title, subtitle, category }: SelectedCardProps) {
   return (
     <div
-      className={`rounded-lg p-16 cursor-pointer transition-colors duration-200
+      className={`rounded-2xl p-16 cursor-pointer transition-colors duration-200
         ${checked ? 'bg-primary1/30' : 'bg-black2'}
-        ${type === 'center' ? 'w-262 text-center' : 'w-548 '}`}
+        ${type === 'center' ? 'w-262 text-center pt-20' : 'w-548 '}`}
     >
       <div
         className={`flex ${type === 'center' ? 'flex-col items-center' : 'items-center gap-12'}`}
