@@ -46,6 +46,7 @@
 
   --shadow-input: 0px 0px 4px 2px rgba(37, 86, 245, 0.2);
   --shadow-category-box: 10px 10px 20px 0px rgba(0, 0, 0, 0.06);
+  --shadow-searchBar : 10px 10px 30px 0px rgba(0, 0, 0, 0.06);
 }
 @theme inline {
 }
