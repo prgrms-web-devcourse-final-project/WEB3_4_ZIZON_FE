@@ -2,11 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import CheckBadge from "public/icons/CheckBadge.svg"
 
-interface props {
+interface CertificationBadgeProps {
   text: string;
 }
 
-function CertificationBadge({text}: props) {
+function CertificationBadge({text}: CertificationBadgeProps) {
   return (
     <div className="flex bg-black1 rounded-sm border border-black4 py-4 pl-4 pr-8 max-w-fit">
       <Image src={CheckBadge} alt={""} width={22} height={22} />

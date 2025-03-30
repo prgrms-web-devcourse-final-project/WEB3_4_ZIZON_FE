@@ -3,11 +3,11 @@ import HeartFull from "public/icons/HeartFull.svg"
 import HeartOutLine from "public/icons/HeartOutline.svg"
 import Image from 'next/image';
 
-interface props {
+interface TagIconLeftProps {
   type: "like-on" | "like-off";
   count: number;
 }
-function TagIconLeft({type, count}:props) {
+function TagIconLeft({type, count}:TagIconLeftProps) {
   const value = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
   if (type == "like-on") {
