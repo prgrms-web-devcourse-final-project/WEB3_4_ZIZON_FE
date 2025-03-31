@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SelectedOptionProps {
   type: 'left-impact' | 'right-impact' | 'price-small' | 'price-large';
   leftText: string;

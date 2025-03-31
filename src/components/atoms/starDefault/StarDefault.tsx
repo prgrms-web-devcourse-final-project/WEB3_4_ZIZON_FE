@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import StarOnLarge from 'public/icons/StarOnLarge.svg';
 
@@ -7,7 +6,7 @@ interface StarDefaultProps {
   reviewCount: number;
 }
 
-const StarDefault: React.FC<StarDefaultProps> = ({ rating, reviewCount }) => {
+const StarDefault = ({ rating, reviewCount }: StarDefaultProps) => {
   return (
     <div className="flex items-center gap-2">
       <Image src={StarOnLarge} alt="별점" width={16} height={14} />
