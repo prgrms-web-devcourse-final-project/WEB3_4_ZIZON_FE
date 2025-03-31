@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SelectedOptionProps {
   type: 'left-impact' | 'right-impact' | 'price-small' | 'price-large';
   leftText: string;
@@ -20,12 +18,12 @@ function SelectedOption({ type, leftText, rightText }: SelectedOptionProps) {
         right: 'text-16 text-black12 font-semibold',
       },
       'price-small': {
-        container: 'justify-between',
+        container: '',
         left: 'text-16 text-black7 font-medium',
         right: 'text-16 text-black7 font-semibold',
       },
       'price-large': {
-        container: 'justify-between',
+        container: '',
         left: 'text-20 text-black10 font-medium',
         right: 'text-20 text-black12 font-semibold',
       },
@@ -37,7 +35,7 @@ function SelectedOption({ type, leftText, rightText }: SelectedOptionProps) {
   const styles = getStyles();
 
   return (
-    <div className={`w-full flex items-center ${styles.container}`}>
+    <div className={`w-full flex items-center justify-between ${styles.container}`}>
       <span className={`inline-block min-w-[72px] ${styles.left}`}>{leftText}</span>
       <span className={`inline-block ${styles.right}`}>{rightText}</span>
     </div>

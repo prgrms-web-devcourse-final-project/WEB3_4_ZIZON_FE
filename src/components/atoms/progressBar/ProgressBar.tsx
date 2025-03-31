@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ProgressBarProps {
   progress: 'default' | 'quarter' | 'half' | 'three-quarters' | 'done';
 }
