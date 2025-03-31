@@ -5,12 +5,12 @@ import Image from 'next/image';
 
 interface TagIconRightProps {
   text: string;
-  color: "" | "gray" | "blue" | "dark";
+  color: "default" | "gray" | "blue" | "dark";
   onClickXMark: () => void;
 }
 
-function TagIconRight({text, color, onClickXMark}: TagIconRightProps) {
-  if (color == "") {
+function TagIconRight({text, color = "default", onClickXMark}: TagIconRightProps) {
+  if (color == "default") {
     return (
       <div className="flex border border-black3 rounded-full max-w-fit items-center justify-center py-8 px-12">
         <label className="text-13 font-medium content-center mr-4 text-black12">{text}</label>

@@ -14,7 +14,7 @@ type Story = StoryObj<typeof TagIconRight>;
 export const Default: Story = {
   args: {
     text: "키워드",
-    color: "",
+    color: "default",
   },
 };
 
