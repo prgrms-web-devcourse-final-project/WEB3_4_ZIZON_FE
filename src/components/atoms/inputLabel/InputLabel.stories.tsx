@@ -11,7 +11,6 @@ const meta = {
     componentSubtitle: 'Input에 어떤 값이 들어가는지 사용자에게 알려주는 레이블',
   },
   tags: ['autodocs'],
-  args: { onChange: fn() },
 } as Meta<typeof InputLabel>;
 
 export default meta;
