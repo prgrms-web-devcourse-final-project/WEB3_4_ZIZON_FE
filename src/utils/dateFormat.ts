@@ -16,3 +16,10 @@ export const getTimeAgo = (date: Date): string => {
   if (minutes > 0) return `${minutes}분 전`;
   return '방금 전';
 };
+
+export const getDotSeparatedDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}.${month}.${day}`;
+};
