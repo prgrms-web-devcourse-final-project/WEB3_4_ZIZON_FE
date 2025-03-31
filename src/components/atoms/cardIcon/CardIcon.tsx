@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-interface CardIconProps {
+export interface CardIconProps {
   category: 'spanner' | 'home' | 'pallete' | 'pencil' | 'women';
   isOn: boolean;
 }
