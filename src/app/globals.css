@@ -49,6 +49,7 @@
   --shadow-searchBar : 10px 10px 30px 0px rgba(0, 0, 0, 0.06);
   --shadow-tag : 5px 5px 15px 0px rgba(0, 0, 0, 0.06);
   --shadow-card : 0px 0px 20px 0px rgba(0, 0, 0, 0.06);
+  --shadow-project-item-card: 10px 10px 30px 0px rgba(0, 0, 0, 0.06);
 }
 @theme inline {
 }
