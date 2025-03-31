@@ -16,7 +16,7 @@ type Story = StoryObj<typeof SelectedCard>;
 export const LeftUnchecked: Story = {
   args: {
     type: 'left',
-    checked: false,
+    isOn: false,
     title: '헤더',
     subtitle: '컨텐츠',
     category: 'spanner',
@@ -26,7 +26,7 @@ export const LeftUnchecked: Story = {
 export const LeftChecked: Story = {
   args: {
     type: 'left',
-    checked: true,
+    isOn: true,
     title: '헤더',
     subtitle: '컨텐츠',
     category: 'spanner',
@@ -36,7 +36,7 @@ export const LeftChecked: Story = {
 export const CenterUnchecked: Story = {
   args: {
     type: 'center',
-    checked: false,
+    isOn: false,
     title: '헤더',
     subtitle: '컨텐츠',
     category: 'spanner',
@@ -46,7 +46,7 @@ export const CenterUnchecked: Story = {
 export const CenterChecked: Story = {
   args: {
     type: 'center',
-    checked: true,
+    isOn: true,
     title: '헤더',
     subtitle: '컨텐츠',
     category: 'spanner',
