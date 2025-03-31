@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import StarOnLarge from 'public/icons/StarOnLarge.svg';
 import StarOffLarge from 'public/icons/StarOffLarge.svg';
@@ -9,7 +8,7 @@ interface StarWithTextProps {
   reviewCount?: number;
 }
 
-const StarWithText: React.FC<StarWithTextProps> = ({ rating, maxRating = 5, reviewCount }) => {
+const StarWithText = ({ rating, maxRating = 5, reviewCount }: StarWithTextProps) => {
   return (
     <div className="flex items-center gap-8">
       <div className="flex gap-1">

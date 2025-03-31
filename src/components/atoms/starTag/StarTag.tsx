@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import StarOnLarge from 'public/icons/StarOnLarge.svg';
 
@@ -7,7 +6,7 @@ interface StarTagProps {
   reviewCount: number;
 }
 
-const StarTag: React.FC<StarTagProps> = ({ rating, reviewCount }) => {
+const StarTag = ({ rating, reviewCount }: StarTagProps) => {
   return (
     <div className="flex items-center gap-2 px-12 py-8 bg-black1 border border-black3 rounded-full">
       <Image src={StarOnLarge} alt="별점" width={16} height={14} />
