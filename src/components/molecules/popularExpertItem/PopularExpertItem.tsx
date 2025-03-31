@@ -1,19 +1,20 @@
-import LikeTag from '@/components/atoms/likeTag/LikeTag';
 import StarTag from '@/components/atoms/starTag/StarTag';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import style from 'PopularExpertItem.module.css';
+import TagIconLeft from '@/components/atoms/tagIconLeft/TagIconLeft';
+import { ProjectCategoryType } from '@/types/category';
+
 interface PopularExpertItemProps {
   imageSrc: string;
   name: string;
-  category: string; // 백엔드 카테고리
-  expertId: string; // 전문가 ID
+  category: ProjectCategoryType;
+  expertId: string;
   rating: number;
   reviewCount: number;
   likeCount: number;
-  onLikeClick: () => void;
-  isFilled: boolean;
+  onLikeClick: (expertId: string) => void;
+  isLike: boolean;
 }
 
 export default function PopularExpertItem({
@@ -25,10 +26,10 @@ export default function PopularExpertItem({
   reviewCount,
   likeCount,
   onLikeClick,
-  isFilled = false,
+  isLike,
 }: PopularExpertItemProps) {
   const [imagePath, setImagePath] = useState(imageSrc);
-
+  const isLikeOn = isLike ? 'like-on' : 'like-off';
   return (
     <Link
       href={`/expert/${expertId}`}
@@ -48,7 +49,9 @@ export default function PopularExpertItem({
           <span className="font-medium text-16 text-black7">{category} 전문가</span>
         </div>
         <div className="flex items-center justify-center gap-8">
-          <LikeTag likeCount={likeCount} onClick={onLikeClick} isFilled={isFilled} />
+          <button onClick={() => onLikeClick(expertId)} className="cursor-pointer h-32">
+            <TagIconLeft type={isLikeOn} count={likeCount} />
+          </button>
           <StarTag rating={rating} reviewCount={reviewCount} />
         </div>
       </div>

@@ -18,13 +18,13 @@ export const Default: Story = {
   args: {
     imageSrc: '/public/images/ServiceMock.png',
     name: '조현우',
-    category: '설치/수리',
+    category: '이사/청소',
     rating: 4.5,
     reviewCount: 100,
     likeCount: 50,
     expertId: 'e125434',
     onLikeClick: () => alert('좋아요 클릭'),
-    isFilled: false,
+    isLike: false,
   },
 };
 
@@ -32,12 +32,12 @@ export const ErrorImage: Story = {
   args: {
     imageSrc: '/public/images/Service.png',
     name: '조현우',
-    category: '설치/수리',
+    category: '이사/청소',
     rating: 4.5,
     reviewCount: 100,
     likeCount: 50,
     expertId: 'e125434',
     onLikeClick: () => alert('좋아요 클릭'),
-    isFilled: false,
+    isLike: false,
   },
 };
