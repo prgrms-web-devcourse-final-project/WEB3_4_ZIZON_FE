@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import Moving from '../../../../../public/images/Moving.png';
-import Fix from '../../../../../public/images/Fix.png';
-import Tutoring from '../../../../../public/images/Tutoring.png';
-import Hobby from '../../../../../public/images/Hobby.png';
-import Contents from '../../../../../public/images/Contents.png';
+import Moving from 'public/images/Moving.png';
+import Fix from 'public/images/Fix.png';
+import Tutoring from 'public/images/Tutoring.png';
+import Hobby from 'public/images/Hobby.png';
+import Contents from 'public/images/Contents.png';
 import Link from 'next/link';
 
 interface ServiceCategoryItemProps {
@@ -30,7 +30,7 @@ const imageVariation = {
 export default function ServiceCategoryItem({ type, linkTo = '/' }: ServiceCategoryItemProps) {
   return (
     <Link href={linkTo} className="flex flex-col items-center justify-center gap-8">
-      <div className="w-84 h-84 rounded-[8px] flex justify-center items-center bg-black1 hover:shadow-category-box transition-shadow duration-400">
+      <div className="w-84 h-84 rounded-[8px] flex justify-center items-center bg-black1 hover:shadow-style1 transition-shadow duration-400">
         <Image
           src={imageVariation[type]}
           alt={`${nameVariation[type]}-image`}

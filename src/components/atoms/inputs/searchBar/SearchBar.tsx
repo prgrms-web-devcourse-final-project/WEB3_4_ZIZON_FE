@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import SearchLarge from '../../../../../public/icons/SearchLarge.svg';
+import SearchLarge from 'public/icons/SearchLarge.svg';
 interface SearchBarProps {
   type: 'default' | 'rounded' | 'large';
   placedholder: string;

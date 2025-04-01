@@ -1,4 +1,4 @@
-import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
+import SmallTag, { Theme } from '@/components/atoms/tags/smallTag/SmallTag';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,6 +12,10 @@ interface ProjectItemCardProps {
   comissionId: string;
 }
 
+type TagColorType = {
+  [key in ProjectCategoryIdType]: Theme;
+};
+
 export default function ProjectItemCard({
   categoryId,
   title,
@@ -19,7 +23,7 @@ export default function ProjectItemCard({
   dueDate,
   comissionId,
 }: ProjectItemCardProps) {
-  const tagColorVariation = {
+  const tagColorVariation: TagColorType = {
     1000: 'lightBlue',
     2000: 'lightGreen',
     3000: 'lightPurple',
@@ -27,7 +31,7 @@ export default function ProjectItemCard({
   };
 
   return (
-    <button className="w-411 flex justify-center items-end px-28 py-24 rounded-lg shadow-project-item-card focus:ring-2 focus:ring-primary3">
+    <button className="w-411 flex justify-center items-end px-28 py-24 rounded-lg bg-black1 shadow-card focus:ring-2 focus:ring-primary3">
       <div className="w-323 flex flex-col items-start gap-12">
         <SmallTag theme={tagColorVariation[categoryId]} text={PROJECT_CATEGORY[categoryId]} />
         <p className="text-16 font-bold text-black12">{title}</p>
