@@ -7,15 +7,17 @@ interface ChatListItemProps {
   userName: string;
   userProfile: string;
   isSelected: boolean;
-  onClick?: (chatRoomId: string) => void;
+  onClick: (chatRoomId: string) => void;
 }
 
 export default function ChatListItem({
+  chatRoomId,
   recentChatDate,
   text,
   userName,
   userProfile,
   isSelected,
+  onClick,
 }: ChatListItemProps) {
   const styleMap = {
     selected: 'bg-primary0 ',
@@ -24,7 +26,10 @@ export default function ChatListItem({
   const style = isSelected ? styleMap.selected : styleMap.unselected;
 
   return (
-    <div className={`relative w-402 h-fit px-20 py-16 flex gap-8 ${style} `}>
+    <div
+      onClick={() => onClick(chatRoomId)}
+      className={`relative w-402 h-fit px-20 py-16 flex gap-8 ${style} `}
+    >
       {isSelected && <div className="absolute w-8 h-full bg-primary4 top-0 left-0" />}
 
       {/* 프로필 이미지*/}
