@@ -15,26 +15,38 @@ function UserStateTabContainer({isState, tabManager}: UserStateTabContainerProps
       <VerticalTabTitle text={"내 정보 관리"} size={"large"} />
       <VerticalTabItem name={"내 정보"} isFocused={tabManager==="myInfo"} text={"내 정보"} onClick={() => {
         router.push({
-          pathname:`/mypage/${isState? "expert": "client"}/setting`
+          pathname:`/myPage/myInfo`
         })}} size={"large"} />
-      <VerticalTabItem name={"전문가 정보"} isFocused={tabManager==="expertInfo"} text={"전문가 정보"} onClick={() => {
+
+      {isState ? null: <VerticalTabItem name={"전문가 정보"} isFocused={tabManager==="expertInfo"} text={"전문가 정보"} onClick={() => {
         router.push({
-          pathname:`/myPage/${isState? "expert": "client"}/setting`
-        })}} size={"large"} />
+          pathname:`/myPage/expertInfo`
+        })}} size={"large"} />}
+      <VerticalTabTitle text={"서비스 관리"} size={"large"} />
       {isState ? <div className="grid grid-cols-1 gap-y-8 max-w-full">
-          <VerticalTabTitle text={"판매 관리"} size={"large"} />
-          <VerticalTabItem name={"내 프로젝트"} isFocused={tabManager === "myProject"} text={"내 프로젝트"} onClick={() => {
-          }} size={"large"} />
+          <VerticalTabItem name={"진행중인 프로젝트"} isFocused={tabManager === "myProject"} text={"내 프로젝트"} onClick={() => {
+            router.push({
+              pathname:`/myPage/myProject`
+            })}} size={"large"} />
           <VerticalTabItem name={"구매한 상품"} isFocused={tabManager === "saleProject"} text={"판매중인 상품"} onClick={() => {
-          }} size={"large"} />
+            router.push({
+              pathname:`/myPage/expertInfo`
+            })}} size={"large"} />
         </div>
         :
         <div className="grid grid-cols-1 gap-y-8 max-w-full">
-          <VerticalTabTitle text={"구매 관리"} size={"large"} />
-          <VerticalTabItem name={"내 프로젝트"} isFocused={tabManager === "myProject"} text={"내 프로젝트"} onClick={() => {
-          }} size={"large"} />
+          <VerticalTabItem name={"진행중인 프로젝트"} isFocused={tabManager === "myProject"} text={"내 프로젝트"} onClick={() => {
+            router.push({
+              pathname:`/myPage/myProject`
+            })}} size={"large"} />
           <VerticalTabItem name={"구매한 상품"} isFocused={tabManager === "boughtProduct"} text={"구매한 상품"} onClick={() => {
-          }} size={"large"} />
+            router.push({
+              pathname:`/myPage/boughtProduct`
+            })}} size={"large"} />
+          <VerticalTabItem name={"판매중인 상품"} isFocused={tabManager === "boughtProduct"} text={"구매한 상품"} onClick={() => {
+            router.push({
+              pathname:`/myPage/saleProduct`
+            })}} size={"large"} />
         </div>}
     </div>
   );
