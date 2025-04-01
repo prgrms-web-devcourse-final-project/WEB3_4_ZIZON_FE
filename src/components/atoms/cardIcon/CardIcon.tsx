@@ -5,18 +5,31 @@ export interface CardIconProps {
   isOn: boolean;
 }
 
-function CardIcon({ category, isOn }: CardIconProps) {
-  const getIconPath = () => {
-    const iconMap = {
-      spanner: isOn ? '/icons/FixBlue.svg' : '/icons/Fix.svg',
-      home: isOn ? '/icons/HomeBlue.svg' : '/icons/Home.svg',
-      pallete: isOn ? '/icons/PalleteBlue.svg' : '/icons/Pallete.svg',
-      pencil: isOn ? '/icons/PencilBlue.svg' : '/icons/Pencil.svg',
-      women: isOn ? '/icons/WomenBlue.svg' : '/icons/Women.svg',
-    };
+const ICON_PATHS = {
+  spanner: {
+    on: '/icons/FixBlue.svg',
+    off: '/icons/Fix.svg',
+  },
+  home: {
+    on: '/icons/HomeBlue.svg',
+    off: '/icons/Home.svg',
+  },
+  pallete: {
+    on: '/icons/PalleteBlue.svg',
+    off: '/icons/Pallete.svg',
+  },
+  pencil: {
+    on: '/icons/PencilBlue.svg',
+    off: '/icons/Pencil.svg',
+  },
+  women: {
+    on: '/icons/WomenBlue.svg',
+    off: '/icons/Women.svg',
+  },
+} as const;
 
-    return iconMap[category];
-  };
+function CardIcon({ category, isOn }: CardIconProps) {
+  const iconPath = ICON_PATHS[category][isOn ? 'on' : 'off'];
 
   return (
     <div
@@ -24,7 +37,7 @@ function CardIcon({ category, isOn }: CardIconProps) {
         isOn ? 'bg-primary1' : 'bg-black3'
       }`}
     >
-      <Image src={getIconPath()} alt={category} width={24} height={24} />
+      <Image src={iconPath} alt={category} width={24} height={24} />
     </div>
   );
 }
