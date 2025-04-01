@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ArrowUpRight from 'public/icons/ArrowUpRight.svg';
 
-interface ProjectItemCardProps {
+export interface ProjectItemCardProps {
   categoryId: ProjectCategoryIdType;
   title: string;
   budget: string;
@@ -19,7 +19,10 @@ export default function ProjectItemCard({
   dueDate,
   comissionId,
 }: ProjectItemCardProps) {
-  const tagColorVariation = {
+  const tagColorVariation: Record<
+    ProjectCategoryIdType,
+    'lightBlue' | 'lightGreen' | 'lightPurple' | 'lightOrange'
+  > = {
     1000: 'lightBlue',
     2000: 'lightGreen',
     3000: 'lightPurple',
@@ -27,7 +30,7 @@ export default function ProjectItemCard({
   };
 
   return (
-    <button className="w-411 flex justify-center items-end px-28 py-24 rounded-lg shadow-project-item-card focus:ring-2 focus:ring-primary3">
+    <button className="w-411 flex justify-center items-end bg-black1 px-28 py-24 rounded-2xl shadow-style1 hover:ring-2 hover:ring-primary3 transition-all duration-300">
       <div className="w-323 flex flex-col items-start gap-12">
         <SmallTag theme={tagColorVariation[categoryId]} text={PROJECT_CATEGORY[categoryId]} />
         <p className="text-16 font-bold text-black12">{title}</p>
