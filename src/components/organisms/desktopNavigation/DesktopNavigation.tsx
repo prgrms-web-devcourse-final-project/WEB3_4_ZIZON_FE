@@ -2,8 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
-import NavigationLinks from '@/components/molecules/navigationLinks/NavigationLinks';
-import AuthButtons from '@/components/molecules/authButtons/AuthButtons';
+import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
+import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
 
 interface DesktopNavigationProps {
   isLoggedIn?: boolean;
