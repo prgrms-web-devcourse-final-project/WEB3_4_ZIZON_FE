@@ -24,7 +24,7 @@ function ReviewItem({
       <div className="flex flex-col mb-12">
         <div className="flex gap-16 mb-12">
           <Image
-            src={profile_image || 'https://placehold.co/40x40?text=DOPDANG'}
+            src={profile_image || '/images/DefaultImage.png'}
             alt="profile"
             width={40}
             height={40}

@@ -3,7 +3,6 @@
 import MediumTag from '@/components/atoms/mediumTag/MediumTag';
 import StandardButton from '@/components/atoms/standardButton/StandardButton';
 import Image from 'next/image';
-// import { useRouter } from 'next/navigation';
 
 interface ExpertListItemProps {
   expert_id: string;
@@ -12,6 +11,7 @@ interface ExpertListItemProps {
   introduction: string;
   career_years: number;
   skill: string;
+  onClick: (expert_id: string) => void;
 }
 
 function ExpertListItem({
@@ -21,15 +21,14 @@ function ExpertListItem({
   career_years,
   skill,
   expert_id,
+  onClick,
 }: ExpertListItemProps) {
-  // const router = useRouter();
-
   return (
     <article className="w-410 flex flex-col p-24 bg-black1 rounded-[20px] border-2 border-black1 hover:border-primary3 transition-all duration-300">
       <div className="flex flex-col mb-32">
         <div className="w-full h-240 mb-16 rounded-xl overflow-hidden">
           <Image
-            src={profile_image || 'https://placehold.co/362x240?text=DOPDANG'}
+            src={profile_image || '/images/DefaultImage.png'}
             alt="expert"
             width={362}
             height={240}
@@ -48,7 +47,7 @@ function ExpertListItem({
         </div>
       </div>
       <StandardButton
-        // onClick={() => router.push(`/experts/${expert_id}`)}
+        onClick={() => onClick(expert_id)}
         text="프로필 보기"
         disabled={false}
         state="gray"

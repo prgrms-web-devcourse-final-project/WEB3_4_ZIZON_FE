@@ -38,7 +38,7 @@ function ProductListItem({
     <div className={`${sizeStyle.container} flex flex-col gap-16 group`}>
       <div className={`${sizeStyle.imageStlye} rounded-2xl overflow-hidden`}>
         <Image
-          src={imageUrl || 'https://placehold.co/302x302?text=DOPDANG'}
+          src={imageUrl || '/images/DefaultImage.png'}
           alt={title}
           width={sizeStyle.imageSize}
           height={sizeStyle.imageSize}
@@ -49,7 +49,7 @@ function ProductListItem({
       <div className="flex flex-col gap-8">
         <div className="flex gap-8">
           <SmallTag text={category} theme={category === '리빙' ? 'lightOrange' : 'lightBlue'} />
-          <SmallTag text="소분류" theme="gray" />
+          <SmallTag text="소분류" theme="grey" />
         </div>
         <span className="text-16 font-regular text-black12 truncate">{title}</span>
         <span className="text-13 font-regular text-black7">{seller_name}</span>
