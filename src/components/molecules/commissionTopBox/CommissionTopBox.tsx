@@ -1,6 +1,6 @@
 import React from 'react';
-import ProgressBar from '@/components/atoms/progressBar/ProgressBar';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
+import ProgressBar from '@/components/atoms/bars/progressBar/ProgressBar';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 
 interface CommissionTopBox {
   title: string;

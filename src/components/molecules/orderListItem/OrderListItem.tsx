@@ -1,7 +1,7 @@
 import React from 'react';
-import NumberReadability from '@/components/atoms/numberReadability/NumberReadability';
+import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import Image from 'next/image';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 
 type SellState = "진행" | "대기" | "취소" | "구매";
 interface OrderListItemProps {

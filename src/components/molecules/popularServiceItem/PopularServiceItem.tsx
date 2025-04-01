@@ -1,4 +1,4 @@
-import NumberReadability from '@/components/atoms/numberReadability/NumberReadability';
+import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';

@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import NumberReadability from '@/components/atoms/numberReadability/NumberReadability';
-import SmallTag from '@/components/atoms/smallTag/SmallTag';
+import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
+import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 
 interface ProductListItemProps {
   size: 'small' | 'large';

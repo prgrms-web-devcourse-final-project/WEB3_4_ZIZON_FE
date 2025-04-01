@@ -1,4 +1,4 @@
-import CardIcon, { CardIconProps } from '@/components/atoms/cardIcon/CardIcon';
+import CardIcon, { CardIconProps } from '@/components/atoms/icons/cardIcon/CardIcon';
 
 interface SelectedCardProps extends CardIconProps {
   type: 'left' | 'center';

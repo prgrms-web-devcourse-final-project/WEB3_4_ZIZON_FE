@@ -1,7 +1,7 @@
 'use client';
 
-import MediumTag from '@/components/atoms/mediumTag/MediumTag';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
+import MediumTag from '@/components/atoms/tags/mediumTag/MediumTag';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import Image from 'next/image';
 
 interface ExpertListItemProps {

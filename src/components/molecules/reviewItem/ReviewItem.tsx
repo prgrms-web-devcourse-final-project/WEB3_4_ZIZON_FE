@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { getTimeAgo } from '@/utils/dateFormat';
-import StarDefault from '@/components/atoms/starDefault/StarDefault';
+import StarDefault from '@/components/atoms/texts/starDefault/StarDefault';
 
 interface ReviewItemProps {
   profile_image: string;

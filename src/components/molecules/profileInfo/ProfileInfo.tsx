@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import ChangePositionButton from '@/components/atoms/changePositionButton/ChangePositionButton';
-import CertificationBadge from '@/components/atoms/certificationBadge/CertificationBadge';
+import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
+import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
 
 interface ProfileInfoProps {
   profileImage: string;
@@ -16,7 +16,7 @@ export default function ProfileInfo({profileImage, isState, certificationBadgeTe
       <div className="flex max-w-full justify-center">
         <Image className="rounded-full m-auto" src={profileImage} alt={""} width={150} height={150} />
       </div>
-      {isState && typeof certificationBadgeText == 'string'? <div className="max-w-fit mx-auto"><CertificationBadge text={certificationBadgeText}/></div>: null}
+      {isState && typeof certificationBadgeText == 'string'? <div className="max-w-fit mx-auto"><CertificationTag text={certificationBadgeText}/></div>: null}
       <div className="text-[20px] font-medium">
         <label>{userName}</label>
       </div>

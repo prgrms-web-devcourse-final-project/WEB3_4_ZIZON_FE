@@ -1,14 +1,14 @@
-import StarTag from '@/components/atoms/starTag/StarTag';
+import StarTag from '@/components/atoms/tags/starTag/StarTag';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import TagIconLeft from '@/components/atoms/tagIconLeft/TagIconLeft';
-import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
+import LikeTag from '@/components/atoms/tags/likeTag/LikeTag';
+import { ProjectCategoryType } from '@/types/category';
 
 interface PopularExpertItemProps {
   imageSrc: string;
   name: string;
-  categoryId: ProjectCategoryIdType;
+  category: ProjectCategoryType;
   expertId: string;
   rating: number;
   reviewCount: number;
@@ -20,7 +20,7 @@ interface PopularExpertItemProps {
 export default function PopularExpertItem({
   imageSrc,
   name,
-  categoryId,
+  category,
   expertId,
   rating,
   reviewCount,
@@ -30,7 +30,6 @@ export default function PopularExpertItem({
 }: PopularExpertItemProps) {
   const [imagePath, setImagePath] = useState(imageSrc);
   const isLikeOn = isLike ? 'like-on' : 'like-off';
-  const category = PROJECT_CATEGORY[categoryId];
   return (
     <Link
       href={`/expert/${expertId}`}
@@ -51,7 +50,7 @@ export default function PopularExpertItem({
         </div>
         <div className="flex items-center justify-center gap-8">
           <button onClick={() => onLikeClick(expertId)} className="cursor-pointer h-32">
-            <TagIconLeft type={isLikeOn} count={likeCount} />
+            <LikeTag type={isLikeOn} count={likeCount} />
           </button>
           <StarTag rating={rating} reviewCount={reviewCount} />
         </div>
