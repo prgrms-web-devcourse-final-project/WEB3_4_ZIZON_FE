@@ -7,9 +7,9 @@ interface BannerProps {
 
 export default function Banner({ title, subTitle }: BannerProps) {
   return (
-    <div className="relative w-1280 h-300">
+    <div className="relative w-full h-300">
       <Image
-        src="public/images/ExpertBanner.png"
+        src="/images/ExpertBanner.png"
         width={1280}
         height={300}
         alt="expert-banner-image w-full h-full"
