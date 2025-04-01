@@ -3,28 +3,28 @@ import ArrowsRightLeftBlack from "public/icons/ArrowsRightLeftBlack.svg"
 import ArrowsRightLeftWhite from "public/icons/ArrowsRightLeftWhite.svg"
 import Image from 'next/image';
 
-interface props {
+interface ChangePositionButtonProps {
   isState: boolean;
-  onChangeState: (isState: boolean) => boolean;
+  onChangeState: () => void;
 }
-function ChangePositionButton({isState, onChangeState}: props) {
+function ChangePositionButton({isState, onChangeState}: ChangePositionButtonProps) {
   if (isState) {
     return (
-      <div onClick={() => {onChangeState(isState)}} className="text-center bg-black12 border border-black3 max-w-fit rounded-full py-8 px-62">
-        <div className="flex">
-          <Image src={ArrowsRightLeftWhite} alt={""} width={22} height={22} />
-          <label className="text-black1 ml-8 text-13 font-medium">전문가로 전환</label>
+      <button onClick={onChangeState} className="text-center cursor-pointer bg-black12 border border-black3 max-w-fit rounded-full py-8 px-62">
+        <div className="flex cursor-pointer">
+          <Image className="cursor-pointer" src={ArrowsRightLeftWhite} alt={""} width={14} height={14} />
+          <label className="text-black1 ml-8 text-13 cursor-pointer font-medium">전문가로 전환</label>
         </div>
-      </div>
+      </button>
     );
   } else {
     return (
-      <div onClick={() => {onChangeState(isState)}} className="text-center bg-black2 border border-black7 max-w-fit rounded-full py-8 px-62">
+      <button onClick={onChangeState} className="text-center bg-black2 border border-black7 max-w-fit rounded-full py-8 px-62">
         <div className="flex">
-          <Image src={ArrowsRightLeftBlack} alt={""} width={22} height={22} />
-          <label className="text-black12 ml-8 text-13 font-medium">의뢰인로 전환</label>
+          <Image className="cursor-pointer" src={ArrowsRightLeftBlack} alt={""} width={14} height={14} />
+          <label className="text-black12 cursor-pointer ml-8 text-13 font-medium">의뢰인로 전환</label>
         </div>
-      </div>
+      </button>
    );
   }
 }

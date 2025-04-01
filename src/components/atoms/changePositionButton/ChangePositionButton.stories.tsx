@@ -11,16 +11,16 @@ export default meta;
 
 type Story = StoryObj<typeof ChangePositionButton>;
 
-export const ExpertChangeButton: Story = {
+export const ExpertButton: Story = {
   args: {
     isState: true,
-    onChangeState: (isState: boolean) => !isState
+    onChangeState: () => alert("전문가 전환")
   },
 };
 
 export const CommissionButton: Story = {
   args: {
     isState: false,
-    onChangeState: (isState: boolean) => !isState
+    onChangeState: () => alert("의뢰인 전환")
   },
 };

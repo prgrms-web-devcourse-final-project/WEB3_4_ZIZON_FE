@@ -62,7 +62,6 @@ export const Edit = () => {
     />
   );
 };
-
 export const DebouncedSearchBar = () => {
   const [value, setValue] = React.useState<string>('');
   const debouncedValue = useDebounce(value, 500);
@@ -85,3 +84,4 @@ export const DebouncedSearchBar = () => {
     </div>
   );
 };
+
