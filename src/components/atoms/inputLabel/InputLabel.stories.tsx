@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import InputLabel from './InputLabel';
-import { fn } from '@storybook/test';
-import React from 'react';
 
 const meta = {
   title: 'Atoms/InputLabel',
