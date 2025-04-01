@@ -13,12 +13,14 @@ function DesktopNavigation({ isLoggedIn = false }: DesktopNavigationProps) {
   const router = useRouter();
 
   return (
-    <header className="w-full px-320 py-20 flex justify-between items-center border-b border-black4">
-      <div className="flex items-center gap-40">
-        <DopdangLogo />
-        <NavigationLinks />
+    <header className="w-full py-20 flex justify-center items-center border-b border-black4">
+      <div className="flex justify-between items-center w-1920 px-320">
+        <div className="flex items-center gap-40">
+          <DopdangLogo />
+          <NavigationLinks />
+        </div>
+        <AuthButtons isLoggedIn={isLoggedIn} onLoginClick={() => router.push('/')} />
       </div>
-      <AuthButtons isLoggedIn={isLoggedIn} onLoginClick={() => router.push('/')} />
     </header>
   );
 }
