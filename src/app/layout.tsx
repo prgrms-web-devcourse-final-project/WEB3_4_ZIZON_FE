@@ -27,7 +27,7 @@ export default function RootLayout({
       <ReactQueryClientProvider>
         <body className={`${pretendard.className}`}>
           <DesktopNavigation />
-          <main className="w-full mx-320">{children}</main>
+          <main className="w-full">{children}</main>
         </body>
       </ReactQueryClientProvider>
     </html>
