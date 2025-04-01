@@ -1,4 +1,4 @@
-import SmallTag from '@/components/atoms/smallTag/SmallTag';
+import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 import Image from 'next/image';
 import Link from 'next/link';

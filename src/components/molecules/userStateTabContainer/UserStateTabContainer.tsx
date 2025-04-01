@@ -1,6 +1,6 @@
 import React from 'react';
-import VerticalTabTitle from '@/components/atoms/verticalTabTitle/VerticalTabTitle';
-import VerticalTabItem from '@/components/atoms/verticalTabItem/VerticalTabItem';
+import VerticalTabTitle from '@/components/atoms/tabs/verticalTabTitle/VerticalTabTitle';
+import VerticalTabItem from '@/components/atoms/tabs/verticalTabItem/VerticalTabItem';
 import { useRouter } from 'next/router';
 
 type TabManager = "myInfo" | "expertInfo" | "myProject" | "boughtProduct" | "saleProject";
