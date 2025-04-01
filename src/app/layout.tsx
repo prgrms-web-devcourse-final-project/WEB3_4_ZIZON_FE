@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
       <ReactQueryClientProvider>
-        <body className={`${pretendard.className}`}>
+        <body className={`${pretendard.className} bg-black2`}>
           <DesktopNavigation />
-          <main className="w-full mx-320">{children}</main>
+          <main className="w-full px-320">{children}</main>
         </body>
       </ReactQueryClientProvider>
     </html>
