@@ -14,8 +14,7 @@ export default meta;
 type Story = StoryObj<typeof ProductListItem>;
 
 const baseArgs = {
-  imageUrl:
-    'https://t4.ftcdn.net/jpg/02/70/95/21/360_F_270952103_2zSDVMWHM7KFOXmO0Dko0pYOE9aCs07k.jpg',
+  imageUrl: '',
   category: '디지털 컨텐츠' as const,
   title: '디테일이 살아있는 차트 UI',
   seller_name: '코딩천재',
