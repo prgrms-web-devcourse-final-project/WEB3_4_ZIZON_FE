@@ -41,7 +41,7 @@ export default function StandardButton({
       type="button"
       disabled={disabled}
       onClick={() => onClick()}
-      className={`min-w-100 px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer 
+      className={`px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer 
         ${stateVariants[state]} ${widthVariants[size]}`}
     >
       {text}
