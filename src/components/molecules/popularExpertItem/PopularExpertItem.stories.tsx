@@ -18,7 +18,7 @@ export const Default: Story = {
   args: {
     imageSrc: '/public/images/ServiceMock.png',
     name: '조현우',
-    category: '이사/청소',
+    categoryId: 1000,
     rating: 4.5,
     reviewCount: 100,
     likeCount: 50,
@@ -32,7 +32,7 @@ export const ErrorImage: Story = {
   args: {
     imageSrc: '/public/images/Service.png',
     name: '조현우',
-    category: '이사/청소',
+    categoryId: 1000,
     rating: 4.5,
     reviewCount: 100,
     likeCount: 50,

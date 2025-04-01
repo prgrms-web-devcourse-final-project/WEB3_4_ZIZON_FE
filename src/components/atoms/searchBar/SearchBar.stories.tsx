@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SearchBar from './SearchBar';
 import React from 'react';
+import { useState, useEffect } from 'react';
+import useDebounce from '@/hooks/useDebounce';
 
 const meta = {
   title: 'Atoms/SearchBar',
@@ -60,3 +62,26 @@ export const Edit = () => {
     />
   );
 };
+export const DebouncedSearchBar = () => {
+  const [value, setValue] = React.useState<string>('');
+  const debouncedValue = useDebounce(value, 500);
+
+  useEffect(() => {
+    if (debouncedValue) {
+      console.log('Debounced Value:', debouncedValue);
+    }
+  }, [debouncedValue]);
+
+  return (
+    <div>
+      <SearchBar
+        type="default"
+        placedholder="검색어를 입력해주세요"
+        onChange={(value: string) => setValue(value)}
+        value={value}
+      />
+      <p>Debounced Value: {debouncedValue}</p>
+    </div>
+  );
+};
+

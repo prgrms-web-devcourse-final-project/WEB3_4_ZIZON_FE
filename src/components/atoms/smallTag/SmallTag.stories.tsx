@@ -14,7 +14,7 @@ type Story = StoryObj<typeof SmallTag>;
 export const Default: Story = {
   args: {
     text: '키워드',
-    theme: ""
+    theme: "default"
   },
 };
 

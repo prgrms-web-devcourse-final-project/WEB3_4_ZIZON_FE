@@ -25,7 +25,7 @@ function SellStateItem({state, count}:props) {
       <div className="flex bg-black1 drop-shadow-xl py-16 px-20 rounded-lg">
         <div className="flex">
           <Image src={CheckGreen} alt={''} width={30} height={30} />
-          <label className="text-13 w-[148px] font-medium text-black10 ml-8 content-center">작언 완료 대기</label>
+          <label className="text-13 w-[148px] font-medium text-black10 ml-8 content-center">작업 완료 대기</label>
         </div>
         <label className="text-[20px] text-right  ml-32 w-full font-semiBold content-center">{value}</label>
       </div>
