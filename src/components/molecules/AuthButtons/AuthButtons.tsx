@@ -1,8 +1,6 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 
 interface AuthButtonsProps {
   isLoggedIn: boolean;

@@ -1,9 +1,9 @@
 'use client';
 
-import Logo from '@/components/atoms/Logo/Logo';
-import NavigationLinks from '@/components/molecules/NavigationLinks/NavigationLinks';
-import AuthButtons from '@/components/molecules/AuthButtons/AuthButtons';
 import { useRouter } from 'next/navigation';
+import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
+import NavigationLinks from '@/components/molecules/navigationLink/NavigationLinks';
+import AuthButtons from '@/components/molecules/authButtons/AuthButtons';
 
 interface DesktopNavigationProps {
   isLoggedIn?: boolean;
@@ -15,7 +15,7 @@ function DesktopNavigation({ isLoggedIn = false }: DesktopNavigationProps) {
   return (
     <header className="w-full px-320 py-20 flex justify-between items-center">
       <div className="flex items-center gap-40">
-        <Logo />
+        <DopdangLogo/>
         <NavigationLinks />
       </div>
       <AuthButtons isLoggedIn={isLoggedIn} onLoginClick={() => router.push('/')} />

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import InputTemplate from './InputTemplate';
 import React from 'react';
-import TextInput from '@/components/atoms/textInput/TextInput';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
-import InputLabel from '@/components/atoms/inputLabel/InputLabel';
-import TextButton from '@/components/atoms/textButton/TextButton';
+import TextInput from '@/components/atoms/inputs/textInput/TextInput';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
+import InputLabel from '@/components/atoms/texts/inputLabel/InputLabel';
+import TextButton from '@/components/atoms/buttons/textButton/TextButton';
 
 const meta = {
   title: 'molecules/InputTemplate',

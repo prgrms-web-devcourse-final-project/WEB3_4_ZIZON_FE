@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import AuthButtons from './AuthButtons';
 
+
 const meta = {
   title: 'Molecules/AuthButtons',
   component: AuthButtons,
