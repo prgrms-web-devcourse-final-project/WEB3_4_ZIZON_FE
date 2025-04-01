@@ -1,4 +1,4 @@
-import { getDotSeparatedDate } from '@/utils/dateFormat';
+import { getContractedDotSeparatedDate } from '@/utils/dateFormat';
 import Image from 'next/image';
 interface ChatListItemProps {
   chatRoomId: string;
@@ -45,7 +45,7 @@ export default function ChatListItem({
         <div className="flex justify-between items-center mb-8">
           <span className="font-semibold text-13 text-black10">{userName}</span>
           <span className="font-regular text-13 text-black7">
-            {getDotSeparatedDate(recentChatDate)}
+            {getContractedDotSeparatedDate(recentChatDate)}
           </span>
         </div>
         {/* 메세지 내용 */}
