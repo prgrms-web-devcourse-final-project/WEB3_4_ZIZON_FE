@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ProgressBar from './ProgressBar';
+import ProgressBar, { ProgressStep } from './ProgressBar';
 
 const meta: Meta<typeof ProgressBar> = {
   title: 'Atoms/ProgressBar',
@@ -22,30 +22,30 @@ type Story = StoryObj<typeof ProgressBar>;
 
 export const Default: Story = {
   args: {
-    progress: 'default',
+    step: ProgressStep.STEP1,
   },
 };
 
 export const Quarter: Story = {
   args: {
-    progress: 'quarter',
+    step: ProgressStep.STEP2,
   },
 };
 
 export const Half: Story = {
   args: {
-    progress: 'half',
+    step: ProgressStep.STEP3,
   },
 };
 
 export const ThreeQuarters: Story = {
   args: {
-    progress: 'three-quarters',
+    step: ProgressStep.STEP4,
   },
 };
 
 export const Done: Story = {
   args: {
-    progress: 'done',
+    step: ProgressStep.STEP5,
   },
 };
