@@ -14,7 +14,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof ExpertList>;
 
-const EXPERT_LIST: Array<ExpertListItemProps> = [
+export const EXPERT_LIST: Array<ExpertListItemProps> = [
   {
     expert_id: '1',
     name: '이상훈',
