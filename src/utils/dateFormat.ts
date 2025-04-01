@@ -17,7 +17,16 @@ export const getTimeAgo = (date: Date): string => {
   return '방금 전';
 };
 
+// Date 객체를 받아서 "YYYY.MM.DD" 형식의 문자열로 변환
 export const getDotSeparatedDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}.${month}.${day}`;
+};
+
+// Date 객체를 받아서 "YY.MM.DD" 형식의 문자열로 변환
+export const getContractedDotSeparatedDate = (date: Date) => {
   const year = String(date.getFullYear()).slice(-2);
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
