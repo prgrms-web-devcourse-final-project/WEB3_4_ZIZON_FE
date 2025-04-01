@@ -3,12 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import TagIconLeft from '@/components/atoms/tagIconLeft/TagIconLeft';
-import { ProjectCategoryType } from '@/types/category';
+import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 
 interface PopularExpertItemProps {
   imageSrc: string;
   name: string;
-  category: ProjectCategoryType;
+  categoryId: ProjectCategoryIdType;
   expertId: string;
   rating: number;
   reviewCount: number;
@@ -20,7 +20,7 @@ interface PopularExpertItemProps {
 export default function PopularExpertItem({
   imageSrc,
   name,
-  category,
+  categoryId,
   expertId,
   rating,
   reviewCount,
@@ -30,6 +30,7 @@ export default function PopularExpertItem({
 }: PopularExpertItemProps) {
   const [imagePath, setImagePath] = useState(imageSrc);
   const isLikeOn = isLike ? 'like-on' : 'like-off';
+  const category = PROJECT_CATEGORY[categoryId];
   return (
     <Link
       href={`/expert/${expertId}`}
