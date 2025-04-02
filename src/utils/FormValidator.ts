@@ -34,6 +34,8 @@ export class FormValidator {
   private static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   private static readonly PHONE_REGEX = /^010-\d{4}-\d{4}$/;
   private static readonly AUTH_CODE_REGEX = /^\d{6}$/;
+  private static readonly PASSWORD_REGEX =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
   static validateEmail(email: string): ValidationResult {
     if (!this.EMAIL_REGEX.test(email)) {
@@ -49,10 +51,10 @@ export class FormValidator {
   }
 
   static validatePassword(password: string): ValidationResult {
-    if (password.length < 8) {
+    if (!this.PASSWORD_REGEX.test(password)) {
       return {
         isValid: false,
-        errorMessage: '비밀번호는 8자 이상이어야 합니다.',
+        errorMessage: '비밀번호는 8자 이상이며, 영문, 숫자, 특수문자를 포함해야 합니다.',
       };
     }
     return {
@@ -178,5 +180,9 @@ export class FormValidator {
     }
 
     return errors;
+  }
+
+  static sanitizeInput(input: string): string {
+    return input.replace(/[<>]/g, '');
   }
 }
