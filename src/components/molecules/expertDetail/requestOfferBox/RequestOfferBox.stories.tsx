@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import RequestOfferBox from './RequestOfferBox';
 
 const meta = {
-  title: 'Molecules/RequestOfferBox',
+  title: 'Molecules/ExpertDetail/RequestOfferBox',
   component: RequestOfferBox,
   parameters: {
     layout: 'centered',
