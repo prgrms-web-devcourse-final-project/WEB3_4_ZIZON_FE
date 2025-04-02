@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import localFont from 'next/font/local';
-import DesktopNavigation from '@/components/organizms/desktopNavigation/DesktopNavigation';
+import DesktopNavigation from '@/components/organisms/desktopNavigation/DesktopNavigation';
 
 export const metadata: Metadata = {
   title: '💫DopDang',
@@ -24,12 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
-      <ReactQueryClientProvider>
-        <body className={`${pretendard.className}`}>
+      <body className={`${pretendard.className}`}>
+        <ReactQueryClientProvider>
           <DesktopNavigation />
           <main className="w-full">{children}</main>
-        </body>
-      </ReactQueryClientProvider>
+        </ReactQueryClientProvider>
+      </body>
     </html>
   );
 }
