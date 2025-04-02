@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import localFont from 'next/font/local';
-import DesktopNavigation from '@/components/organism/desktopNavigation/DesktopNavigation';
+import DesktopNavigation from '@/components/organisms/desktopNavigation/DesktopNavigation';
 
 export const metadata: Metadata = {
   title: '💫DopDang',
