@@ -1,7 +1,7 @@
 'use client';
 
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
-import OrderInfoList from '@/components/organisms/orderInfoList/OrderInfoList';
+import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import OrderTemplate from '@/components/templates/orderTemplate/OrderTemplate';
 import { PaymentType } from '@/types/payment';
 import { useSearchParams } from 'next/navigation';
