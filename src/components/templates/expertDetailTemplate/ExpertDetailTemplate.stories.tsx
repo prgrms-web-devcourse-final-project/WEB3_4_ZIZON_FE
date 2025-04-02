@@ -6,7 +6,7 @@ import ExpertProfile from '@/components/organisms/expertDetail/expertProfile/Exp
 import RequestOfferBox from '@/components/molecules/expertDetail/requestOfferBox/RequestOfferBox';
 
 const meta = {
-  title: 'Template/ExpertDetailTemplate',
+  title: 'Templates/ExpertDetailTemplate',
   component: ExpertDetailTemplate,
   parameters: {
     layout: 'fullscreen',
