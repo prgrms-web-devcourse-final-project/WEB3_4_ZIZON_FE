@@ -11,7 +11,6 @@ export default function LabeledInput({
   value,
   color = 'transparent',
   disabled = false,
-  error = false,
   errorText = '',
   label,
   children,
@@ -30,7 +29,7 @@ export default function LabeledInput({
         value={value}
         color={color}
         disabled={disabled}
-        error={error}
+        error={errorText !== ''}
         errorText={errorText}
       />
     </div>
