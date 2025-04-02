@@ -5,6 +5,7 @@ import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
 import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
 
+
 interface DesktopNavigationProps {
   isLoggedIn?: boolean;
 }
