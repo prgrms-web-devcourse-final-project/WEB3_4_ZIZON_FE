@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.69.0",
+    "@tosspayments/payment-sdk": "^1.9.1",
+    "@tosspayments/tosspayments-sdk": "^2.3.4",
     "next": "15.2.3",
     "react": "^19.0.0",
     "react-day-picker": "^9.6.4",
