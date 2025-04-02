@@ -32,7 +32,7 @@ export default function AuthButtons({ isLoggedIn, onLoginClick }: AuthButtonsPro
 
   return (
     <div className="flex items-center gap-32">
-      <Link href="/" className="block">
+      <Link href="/signup" className="block">
         <span>회원가입</span>
       </Link>
       <StandardButton text="로그인" state="blue" onClick={onLoginClick} disabled={false} />
