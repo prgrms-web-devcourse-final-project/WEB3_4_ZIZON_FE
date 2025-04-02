@@ -8,7 +8,7 @@ export default function ExpertIdPage() {
   //여기서 전문가 정보 호출
 
   return (
-    <div className="w-full min-x-1280 px-320">
+    <div className="w-full min-x-1280 px-410">
       <ExpertDetailTemplate
         ExpertProfileComponent={
           <ExpertProfile
