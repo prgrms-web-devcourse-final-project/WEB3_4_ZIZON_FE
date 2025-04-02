@@ -9,7 +9,7 @@ interface SearchBarProps {
 const typeVariation = {
   default: 'w-411 rounded-[12px]  border-1 border-black4 pl-44',
   rounded: 'w-402 rounded-full border-1 border-black4 pr-36',
-  large: 'w-540 rounded-[12px]  pl-44 shadow-searchBar',
+  large: 'w-540 rounded-[12px]  pl-44 shadow-style2',
 } as const;
 
 export default function SearchBar({
