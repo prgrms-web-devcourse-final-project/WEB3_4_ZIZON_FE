@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'react';
 import Image from 'next/image';
-import LockClosed from '../../../../../public/icons/LockClosed.svg';
 
 type TextInputType = 'text' | 'email' | 'password' | 'tel';
 
@@ -35,7 +34,7 @@ export default function TextInput({
   // disabled 상태는
   // 1. editable이 true이면 disabled는 true, false모두 가능
   // 2. editable이 false이면 disabled는 true만 가능
-  let disabledState = !isEditable || disabled;
+  const disabledState = !isEditable || disabled;
   return (
     <div className="flex flex-col gap-2 w-full relative">
       <input
@@ -52,7 +51,7 @@ export default function TextInput({
       />
       {!isEditable && (
         <Image
-          src={LockClosed}
+          src={'/icons/LockClosed.svg'}
           alt="lock"
           width={20}
           height={20}
@@ -60,7 +59,7 @@ export default function TextInput({
         />
       )}
       {isEditable && error && errorText && (
-        <span className="text-redWarning text-13 font-regular">{errorText}</span>
+        <span className="text-redWarning text-13 font-regular mt-2 pl-2">{errorText}</span>
       )}
     </div>
   );
