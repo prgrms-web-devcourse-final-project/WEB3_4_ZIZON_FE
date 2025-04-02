@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ExpertTemplate from './ExpertTemplate';
 
 const meta = {
-  title: 'Template/ExpertTemplate',
+  title: 'Templates/ExpertTemplate',
   component: ExpertTemplate,
 
   parameters: {

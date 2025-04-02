@@ -15,24 +15,22 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof OrderResultTemplate>;
 
-export const Default = () => {
-  return (
-    <OrderResultTemplate
-      OrderResultComponent={
-        <OrderResult
-          infoList={[
-            {
-              attribute: '구매 상품',
-              value: '이사 서비스',
-            },
-            {
-              attribute: '전문가',
-              value: '이상훈',
-            },
-          ]}
-          totalPrice={1000000}
-        />
-      }
-    />
-  );
+export const Default: Story = {
+  args: {
+    OrderResultComponent: (
+      <OrderResult
+        infoList={[
+          {
+            attribute: '구매 상품',
+            value: '이사 서비스',
+          },
+          {
+            attribute: '전문가',
+            value: '이상훈',
+          },
+        ]}
+        totalPrice={1000000}
+      />
+    ),
+  },
 };
