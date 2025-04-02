@@ -35,7 +35,7 @@ export default function ExpertInfoCard({ infoArray, type }: ExpertInfoCardProps)
   return (
     <div className={` flex ${bgVariant[type]}`}>
       {infoArray.map((info, index) => (
-        <div className={`flex ${gapVariant[type]} `}>
+        <div className={`flex ${gapVariant[type]} `} key={index}>
           <Info title={info.title} content={info.content} key={index} />
           {index !== infoArray.length - 1 && <div className={`${dividerVariant[type]}`}></div>}
         </div>

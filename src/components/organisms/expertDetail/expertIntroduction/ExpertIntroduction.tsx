@@ -1,3 +1,5 @@
+'use client';
+
 import TabItem from '@/components/atoms/tabs/tabItem/TabItem';
 import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import ServiceIntroduction from '@/components/atoms/texts/serviceIntroduction/ServiceIntroduction';
