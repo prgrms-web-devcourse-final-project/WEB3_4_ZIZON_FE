@@ -8,7 +8,7 @@ import StoreCategorySection from '@/components/organisms/HomePage/storeCategoryS
 
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center gap-100">
+    <div className="flex flex-col items-center gap-100 mb-120">
       <BannerSection />
       <PopularServiceSection />
       <PopularExpertSection />
