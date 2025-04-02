@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 interface LoginButtonProps {
-  type: 'kakao' | 'naver' | 'default' | 'blue';
+  type: 'kakao' | 'naver' | 'default' | 'signup' | 'login';
   onClick: () => void;
   disabled?: boolean;
 }
@@ -20,7 +20,11 @@ export default function LoginButton({ type, onClick, disabled }: LoginButtonProp
       color: 'bg-white text-black9',
       text: '로그인',
     },
-    blue: {
+    signup: {
+      color: 'bg-primary5 text-black1',
+      text: '회원가입',
+    },
+    login: {
       color: 'bg-primary5 text-black1',
       text: '로그인',
     },
