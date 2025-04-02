@@ -4,35 +4,51 @@ import Banner from '@/components/atoms/banner/Banner';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
 import ExpertList from '@/components/molecules/expert/expertList/ExpertList';
-import { EXPERT_LIST } from '@/components/molecules/expert/expertList/ExpertList.stories';
-
-import ExpertListItem from '@/components/molecules/expert/expertListItem/ExpertListItem';
+import ExpertListItem, {
+  ExpertListItemProps,
+} from '@/components/molecules/expert/expertListItem/ExpertListItem';
 import SortButtons, { SortType } from '@/components/molecules/sortButtons/SortButtons';
 import ExpertSidebar from '@/components/organisms/sidebar/ExpertSidebar/ExpertSidebar';
 import { CareerCategoryIdType, ProjectCategoryIdType } from '@/constants/category';
-import { useState } from 'react';
 
-export default function Template() {
-  const [search, setSearch] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<ProjectCategoryIdType>(1000);
-  const [selectedCareer, setSelectedCareer] = useState<CareerCategoryIdType>('junior');
-  const [selectedSort, setSelectedSort] = useState<SortType>('latest');
+interface ExpertTemplateProps {
+  search: string;
+  selectedCategory: ProjectCategoryIdType;
+  selectedCareer: CareerCategoryIdType;
+  selectedSort: SortType;
+  onSearchChange: (value: string) => void;
+  onCategoryChange: (categoryId: ProjectCategoryIdType, checked: boolean) => void;
+  onCareerChange: (careerId: CareerCategoryIdType) => void;
+  onSortChange: (sort: SortType) => void;
+  onReset: () => void;
+  expertList: Array<ExpertListItemProps>;
+}
 
+export default function ExpertTemplate({
+  search,
+  selectedCategory,
+  selectedCareer,
+  selectedSort,
+  onSearchChange,
+  onCareerChange,
+  onCategoryChange,
+  onSortChange,
+  onReset,
+  expertList,
+}: ExpertTemplateProps) {
   return (
-    <div className="w-full h-fit">
+    <div className="w-full h-fit mt-46">
       <Banner />
 
       {/* 사이드바 영역 */}
       <div className="w-full flex gap-24 mt-40">
         <ExpertSidebar
           onReset={() => {
-            setSearch('');
-            setSelectedCategory(1000);
-            setSelectedCareer('junior');
+            onReset();
           }}
           SearchBarComponent={
             <SearchBar
-              onChange={(value: string) => setSearch(value)}
+              onChange={(value: string) => onSearchChange(value)}
               placedholder="검색어를 입력해주세요"
               type="default"
               value={search}
@@ -43,9 +59,9 @@ export default function Template() {
               selectedCategory={selectedCategory}
               selectedCareer={selectedCareer}
               onCategoryChange={(categoryId: ProjectCategoryIdType, checked: boolean) =>
-                setSelectedCategory(categoryId)
+                onCategoryChange(categoryId, checked)
               }
-              onCareerChange={(careerId: CareerCategoryIdType) => setSelectedCareer(careerId)}
+              onCareerChange={(careerId: CareerCategoryIdType) => onCareerChange(careerId)}
             />
           }
         />
@@ -54,12 +70,11 @@ export default function Template() {
           <SortButtons
             selectedSort={selectedSort}
             onSortChange={(sort: SortType) => {
-              setSelectedSort(sort);
+              onSortChange(sort);
             }}
           />
           <ExpertList>
-            {/* TODO : DUMMYDATA로 대체 */}
-            {EXPERT_LIST.map(expert => (
+            {expertList.map(expert => (
               <ExpertListItem {...expert} key={expert.expert_id} />
             ))}
           </ExpertList>
