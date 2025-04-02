@@ -1,6 +1,6 @@
-import InputLabel from '@/components/atoms/inputLabel/InputLabel';
-import StandardButton from '@/components/atoms/standardButton/StandardButton';
-import TextInput from '@/components/atoms/textInput/TextInput';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
+import TextInput from '@/components/atoms/inputs/textInput/TextInput';
+import InputLabel from '@/components/atoms/texts/inputLabel/InputLabel';
 import React, { ReactElement } from 'react';
 
 interface InputTemplateProps {

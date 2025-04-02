@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import Moving from '../../../../../public/images/Moving.png';
-import Fix from '../../../../../public/images/Fix.png';
-import Tutoring from '../../../../../public/images/Tutoring.png';
-import Hobby from '../../../../../public/images/Hobby.png';
-import Contents from '../../../../../public/images/Contents.png';
+import Moving from 'public/images/Moving.png';
+import Fix from 'public/images/Fix.png';
+import Tutoring from 'public/images/Tutoring.png';
+import Hobby from 'public/images/Hobby.png';
+import Contents from 'public/images/Contents.png';
 import Link from 'next/link';
 
 interface ServiceCategoryItemProps {
