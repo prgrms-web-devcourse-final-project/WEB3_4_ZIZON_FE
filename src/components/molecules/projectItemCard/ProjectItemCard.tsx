@@ -1,4 +1,4 @@
-import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
+import SmallTag, { Theme } from '@/components/atoms/tags/smallTag/SmallTag';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 import Image from 'next/image';
@@ -12,6 +12,10 @@ export interface ProjectItemCardProps {
   dueDate: string;
   comissionId: string;
 }
+
+type TagColorType = {
+  [key in ProjectCategoryIdType]: Theme;
+};
 
 export default function ProjectItemCard({
   categoryId,
