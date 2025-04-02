@@ -15,7 +15,9 @@ export default function TabItem({ name, text, onClick, isFocused = false }: TabI
       onClick={() => onClick(name)}
       className={`box-content cursor-pointer list-none text-black6 text-16 font-semibold pb-10 transition-colors duration-500 ${tabItemStyle}`}
     >
-      {text}
+      <a className="w-full h-full" href={`#${name}`}>
+        {text}
+      </a>
     </li>
   );
 }
