@@ -2,10 +2,11 @@
 
 import Banner from '@/components/atoms/banner/Banner';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
-import ExpertFilterTab from '@/components/molecules/expertFilterTab/ExpertFilterTab';
-import ExpertList from '@/components/molecules/expertList/ExpertList';
-import { EXPERT_LIST } from '@/components/molecules/expertList/ExpertList.stories';
-import ExpertListItem from '@/components/molecules/expertListItem/ExpertListItem';
+import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
+import ExpertList from '@/components/molecules/expert/expertList/ExpertList';
+import { EXPERT_LIST } from '@/components/molecules/expert/expertList/ExpertList.stories';
+
+import ExpertListItem from '@/components/molecules/expert/expertListItem/ExpertListItem';
 import SortButtons, { SortType } from '@/components/molecules/sortButtons/SortButtons';
 import ExpertSidebar from '@/components/organisms/sidebar/ExpertSidebar/ExpertSidebar';
 import { CareerCategoryIdType, ProjectCategoryIdType } from '@/constants/category';
@@ -19,10 +20,7 @@ export default function Template() {
 
   return (
     <div className="w-full h-fit">
-      <Banner
-        title="원하는 전문가를 \n 쉽고 빠르게 찾아보세요!"
-        subTitle="다양한 분야의 검증된 전문가들과 함께, 당신의 프로젝트를 성공적으로 완성하세요."
-      />
+      <Banner />
 
       {/* 사이드바 영역 */}
       <div className="w-full flex gap-24 mt-40">

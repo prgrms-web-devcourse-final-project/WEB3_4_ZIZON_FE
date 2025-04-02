@@ -4,8 +4,9 @@ import ExpertTemplate from './ExpertTemplate';
 const meta = {
   title: 'Template/ExpertTemplate',
   component: ExpertTemplate,
+
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
     componentSubtitle: '',
   },
   tags: ['autodocs'],
