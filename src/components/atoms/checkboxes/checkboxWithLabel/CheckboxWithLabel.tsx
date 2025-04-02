@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   label: string;
   caption: string;
   checked: boolean;

@@ -1,15 +1,15 @@
 import CardIcon, { CardIconProps } from '@/components/atoms/icons/cardIcon/CardIcon';
 
-interface SelectedCardProps extends CardIconProps {
+export interface SelectedCardProps extends CardIconProps {
   type: 'left' | 'center';
   title: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 function SelectedCard({ type, title, subtitle, category, isOn }: SelectedCardProps) {
   return (
     <div
-      className={`rounded-2xl p-16 cursor-pointer transition-colors duration-200
+      className={`rounded-2xl p-16 cursor-pointer transition-colors w-full duration-200
         ${isOn ? 'bg-primary1/30' : 'bg-black2'}
         ${type === 'center' ? 'w-262 text-center pt-20' : 'w-548 '}`}
     >
