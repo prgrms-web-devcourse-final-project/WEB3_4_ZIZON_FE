@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import OrderTemplate from './OrderTemplate';
-import OrderInfoList from '@/components/organisms/orderInfoList/OrderInfoList';
+import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
 
 const meta = {
-  title: 'Templates/OrderTemplate',
+  title: 'Templates/Order/OrderTemplate',
   component: OrderTemplate,
   parameters: {
     layout: 'fullscreen',
@@ -13,7 +13,6 @@ const meta = {
 } satisfies Meta<typeof OrderTemplate>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
 export const Default = () => {
   const handlePayment = () => {
