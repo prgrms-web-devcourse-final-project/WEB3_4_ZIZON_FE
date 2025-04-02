@@ -1,13 +1,14 @@
-import SmallTag, { Theme } from '@/components/atoms/tags/smallTag/SmallTag';
+import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
+import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 import Image from 'next/image';
 import Link from 'next/link';
 import ArrowUpRight from 'public/icons/ArrowUpRight.svg';
 
-interface ProjectItemCardProps {
+export interface ProjectItemCardProps {
   categoryId: ProjectCategoryIdType;
   title: string;
-  budget: string;
+  budget: number;
   dueDate: string;
   comissionId: string;
 }
@@ -23,7 +24,10 @@ export default function ProjectItemCard({
   dueDate,
   comissionId,
 }: ProjectItemCardProps) {
-  const tagColorVariation: TagColorType = {
+  const tagColorVariation: Record<
+    ProjectCategoryIdType,
+    'lightBlue' | 'lightGreen' | 'lightPurple' | 'lightOrange'
+  > = {
     1000: 'lightBlue',
     2000: 'lightGreen',
     3000: 'lightPurple',
@@ -31,11 +35,16 @@ export default function ProjectItemCard({
   };
 
   return (
-    <button className="w-411 flex justify-center items-end px-28 py-24 rounded-lg bg-black1 shadow-card focus:ring-2 focus:ring-primary3">
+    <button className="w-411 flex justify-center items-end bg-black1 px-28 py-24 rounded-2xl shadow-style1 hover:ring-2 hover:ring-primary3 transition-all duration-300">
       <div className="w-323 flex flex-col items-start gap-12">
         <SmallTag theme={tagColorVariation[categoryId]} text={PROJECT_CATEGORY[categoryId]} />
         <p className="text-16 font-bold text-black12">{title}</p>
-        <span className="text-16 font-regular text-black7"> 예산 : {budget}원</span>
+        <p className="flex gap-4 text-16 font-regular text-black7">
+          <span>예산 : </span>
+          <span className="flex">
+            <NumberReadability value={budget} />원
+          </span>
+        </p>
         <span className="text-16 font-regular text-black7">마감 : {dueDate}</span>
       </div>
       <Link

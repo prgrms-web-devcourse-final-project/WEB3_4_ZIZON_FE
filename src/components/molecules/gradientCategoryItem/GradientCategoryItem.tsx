@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-interface GradientCategoryItemProps {
+export interface GradientCategoryItemProps {
   categoryName: string;
   caption: string;
   linkTo: string;
@@ -14,15 +14,17 @@ export default function GradientCategoryItem({
   imageSrc,
 }: GradientCategoryItemProps) {
   return (
-    <Link href={linkTo} className="block relative w-302 h-420 rounded-[16px] overflow-hidden">
+    <Link href={linkTo} className="block relative w-302 h-420 rounded-[16px] overflow-hidden group">
       {/* 배경이미지 */}
-      <Image
-        src={imageSrc}
-        width={302}
-        height={420}
-        alt={`${categoryName}-thumbnail-image`}
-        className="object-cover w-full h-full rounded-16"
-      />
+      <div className="w-302 h-420 rounded-16 overflow-hidden">
+        <Image
+          src={imageSrc}
+          width={302}
+          height={420}
+          alt={`${categoryName}-thumbnail-image`}
+          className="size-full object-cover group-hover:scale-110 transition-all duration-300"
+        />
+      </div>
       {/* 그라디언트 오버레이 */}
       <div className="absolute top-0 left-0 bg-linear-to-b from-transparent  to-black/80 z-10 w-full h-full rounded-16"></div>
       {/* 텍스트 */}

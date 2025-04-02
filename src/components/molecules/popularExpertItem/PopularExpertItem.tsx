@@ -5,7 +5,7 @@ import { useState } from 'react';
 import LikeTag from '@/components/atoms/tags/likeTag/LikeTag';
 import { ProjectCategoryType } from '@/types/category';
 
-interface PopularExpertItemProps {
+export interface PopularExpertItemProps {
   imageSrc: string;
   name: string;
   category: ProjectCategoryType;
@@ -33,7 +33,7 @@ export default function PopularExpertItem({
   return (
     <Link
       href={`/expert/${expertId}`}
-      className="flex flex-col items-center gap-20 px-24 py-24 bg-black1 border-1 border-black4 rounded-[20px] hover:shadow-card hover:border-none"
+      className="flex flex-col items-center gap-20 px-24 py-24 bg-black1 border border-black3 rounded-[20px]  hover:shadow-style1 hover:border-transparent transition-all duration-300"
     >
       <Image
         src={imagePath}
