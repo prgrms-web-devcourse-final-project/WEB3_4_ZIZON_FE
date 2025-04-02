@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-interface PopularServiceItemProps {
+export interface PopularServiceItemProps {
   imageSrc: string;
   title: string;
   numberOfUsers: number;
@@ -19,14 +19,14 @@ export default function PopularServiceItem({
   const [imagePath, setImagePath] = useState(imageSrc);
 
   return (
-    <Link href={linkTo} className="flex flex-col gap-12 items-start">
+    <Link href={linkTo} className="flex flex-col gap-12 items-start group">
       <Image
         src={imagePath}
         alt="service-thumbnail-image"
         width={302}
         height={180}
-        className="rounded-[16px]"
-        onError={() => setImagePath('/public/images/DefaultImage.png')}
+        className="rounded-2xl group-hover:shadow-style1 transition-all duration-300"
+        onError={() => setImagePath('/images/DefaultImage.png')}
       />
       <h4 className="font-semibold text-20 text-black10">{title}</h4>
       <span className="flex gap-4 items-center font-regular text-16 text-black7 object-contain">

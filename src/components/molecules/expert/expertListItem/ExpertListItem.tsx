@@ -4,7 +4,7 @@ import MediumTag from '@/components/atoms/tags/mediumTag/MediumTag';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import Image from 'next/image';
 
-interface ExpertListItemProps {
+export interface ExpertListItemProps {
   expert_id: string;
   name: string;
   profile_image: string;

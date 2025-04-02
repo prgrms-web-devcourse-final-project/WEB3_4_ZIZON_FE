@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ExpertInfoCard from './ExpertInfoCard';
 
 const meta: Meta<typeof ExpertInfoCard> = {
-  title: 'Molecules/ExpertInfoCard',
+  title: 'Molecules/Expert/ExpertInfoCard',
   component: ExpertInfoCard,
   tags: ['autodocs'],
   parameters: {

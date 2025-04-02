@@ -24,12 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="kr" className={`${pretendard.variable}`}>
-      <ReactQueryClientProvider>
-        <body className={`${pretendard.className}`}>
+      <body className={`${pretendard.className}`}>
+        <ReactQueryClientProvider>
           <DesktopNavigation />
-          <main className="w-full mx-320">{children}</main>
-        </body>
-      </ReactQueryClientProvider>
+          <main className="w-full">{children}</main>
+        </ReactQueryClientProvider>
+      </body>
     </html>
   );
 }
