@@ -1,7 +1,7 @@
 'use client';
 
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
-import ExpertFilterTab from '@/components/molecules/expertFilterTab/ExpertFilterTab';
+import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
 import Image from 'next/image';
 import ResetIcon from 'public/icons/Refresh.svg';
 import { ReactElement } from 'react';

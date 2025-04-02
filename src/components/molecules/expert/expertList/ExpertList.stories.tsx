@@ -3,7 +3,7 @@ import ExpertList from './ExpertList';
 import ExpertListItem, { ExpertListItemProps } from '../expertListItem/ExpertListItem';
 
 const meta = {
-  title: 'Molecules/ExpertList',
+  title: 'Molecules/Expert/ExpertList',
   component: ExpertList,
   parameters: {
     layout: 'centered',

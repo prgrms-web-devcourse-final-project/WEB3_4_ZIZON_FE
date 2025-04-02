@@ -3,7 +3,7 @@ import ExpertSidebar from './ExpertSidebar';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import { useState } from 'react';
 import { CareerCategoryIdType, ProjectCategoryIdType } from '@/constants/category';
-import ExpertFilterTab from '@/components/molecules/expertFilterTab/ExpertFilterTab';
+import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
 const meta = {
   title: 'Organisms/ExpertSidebar',
   component: ExpertSidebar,

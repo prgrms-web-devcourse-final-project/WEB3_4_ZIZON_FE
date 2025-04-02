@@ -3,7 +3,7 @@ import ExpertFilterTab from './ExpertFilterTab';
 import { useState } from 'react';
 import { CareerCategoryIdType, ProjectCategoryIdType } from '@/constants/category';
 const meta = {
-  title: 'Molecules/ExpertFilterTab',
+  title: 'Molecules/Expert/ExpertFilterTab',
   component: ExpertFilterTab,
   parameters: {
     layout: 'centered',

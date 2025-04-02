@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ExpertListItem from './ExpertListItem';
 
 const meta = {
-  title: 'Molecules/ExpertListItem',
+  title: 'Molecules/Expert/ExpertListItem',
   component: ExpertListItem,
   parameters: {
     layout: 'centered',
