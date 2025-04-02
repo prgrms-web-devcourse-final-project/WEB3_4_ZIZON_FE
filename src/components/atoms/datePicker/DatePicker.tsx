@@ -2,7 +2,7 @@ import React from 'react';
 import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 import "react-day-picker/style.css";
 
-interface DatePickerProps {
+export interface DatePickerProps {
   selectedDay: Date;
   setSelectedDay: () => void;
 }
