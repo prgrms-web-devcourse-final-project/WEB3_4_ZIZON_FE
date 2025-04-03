@@ -3,12 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 
-export type ButtonValue = 'move' | 'fix' | 'tutor' | 'hobby';
+export type ExpertCategory = 'move' | 'fix' | 'tutor' | 'hobby';
 export type ButtonState = 'default' | 'active';
 
 interface LabelWithIconButtonProps {
   onClick: () => void;
-  value: ButtonValue;
+  value: ExpertCategory;
   state: ButtonState;
   name: string;
 }
@@ -58,9 +58,9 @@ export default function LabelWithIconButton({
         onChange={onClick}
         className="hidden"
       />
-      <div className="flex items-center">
-        <Image className="mr-20" src={icon} alt={label} width={30} height={30} />
-        <p className="max-h-fit my-auto">{label}</p>
+      <div className="flex items-center gap-20">
+        <Image src={icon} alt={label} width={30} height={30} />
+        <p>{label}</p>
       </div>
     </label>
   );

@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ExpertStepFooterProps {
   state: 'next' | 'register';
   onClickBefore: () => void;
@@ -39,5 +37,4 @@ function ExpertStepFooterButton({
     </div>
   );
 }
-
 export default ExpertStepFooterButton;
