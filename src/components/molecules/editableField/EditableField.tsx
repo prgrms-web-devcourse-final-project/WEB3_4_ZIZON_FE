@@ -40,6 +40,7 @@ export default function EditableField({
           onChange={onChange}
           placeholder={placeholder}
           disabled={disabled || !isEditable}
+          isEditable={id !== 'email'}
         />
       }
       LabelComponent={<InputLabel label={label} htmlFor={id} />}
