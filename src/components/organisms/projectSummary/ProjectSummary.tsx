@@ -1,6 +1,6 @@
 import Image from 'next/image';
 // 의뢰서에서 파생된 정보가 필요함
-interface ProjectSummaryProps {
+export interface ProjectSummaryProps {
   clientProfile: string; // 클라이언트 프로필 이미지 경로
   clientName: string; // 클라이언트 이름
   location: string; // 위치 정보
@@ -20,7 +20,7 @@ export default function ProjectSummary({
   description,
 }: ProjectSummaryProps) {
   return (
-    <div className="w-402 rounded-[8px] flex flex-col gap-32 px-32 py-32 bg-black1">
+    <div className="w-402 min-w-300 rounded-[8px] flex flex-col gap-32 px-32 py-32 bg-black1">
       {/* 유저 프로필 이미지과 정보영역 */}
       <div className="flex gap-20">
         <Image
