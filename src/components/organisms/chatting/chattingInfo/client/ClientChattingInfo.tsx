@@ -19,7 +19,7 @@ export default function ClientChattingInfo() {
   return (
     <div className="w-full max-w-402 flex flex-col gap-16">
       <ChattingButtonGroup />
-      <OfferInfo {...dummyOfferInfo} />
+      <OfferInfo offerInfo={dummyOfferInfo} type="client" />
       <ChattingExpertInfo />
     </div>
   );
