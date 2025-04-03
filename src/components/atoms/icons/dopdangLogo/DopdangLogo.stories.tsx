@@ -14,3 +14,9 @@ export default meta;
 type Story = StoryObj<typeof DopdangLogo>;
 
 export const Default: Story = {};
+
+export const En: Story = {
+  args: {
+    type: 'en',
+  },
+};

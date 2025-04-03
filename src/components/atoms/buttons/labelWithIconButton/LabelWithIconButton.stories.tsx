@@ -13,33 +13,32 @@ type Story = StoryObj<typeof LabelWithIconButton>;
 
 export const MoveClear: Story = {
   args: {
-    onClick: () => alert("active 상태로 변경"),
-    value: "이사",
-    state: 'default'
+    onClick: () => alert('active 상태로 변경'),
+    value: 'move',
+    state: 'default',
   },
 };
 
 export const Setting: Story = {
   args: {
-    onClick: () => alert("active 상태로 변경"),
-    value: "설치",
-    state: 'active'
+    onClick: () => alert('active 상태로 변경'),
+    value: 'fix',
+    state: 'active',
   },
 };
 
 export const Lesson: Story = {
   args: {
-    onClick: () => alert("active 상태로 변경"),
-    value: "과외",
-    state: 'default'
+    onClick: () => alert('active 상태로 변경'),
+    value: 'tutor',
+    state: 'default',
   },
 };
 
 export const Hobby: Story = {
   args: {
-    onClick: () => alert("active 상태로 변경"),
-    value: "취미",
-    state: 'default'
+    onClick: () => alert('active 상태로 변경'),
+    value: 'hobby',
+    state: 'default',
   },
 };
-

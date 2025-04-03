@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-interface CheckboxProps {
+export interface CheckboxProps {
   label: string;
   caption: string;
   checked: boolean;
@@ -10,7 +10,7 @@ interface CheckboxProps {
 export default function Checkbox({ label, caption, checked = false, onChange }: CheckboxProps) {
   return (
     <div
-      className={`flex items-center justify-between gap-8 min-w-548 rounded-lg px-20 py-12 cursor-pointer ${
+      className={`flex items-center justify-between gap-8 w-full rounded-lg px-20 py-12 cursor-pointer ${
         checked ? 'bg-primary0' : 'bg-black2'
       }`}
       onClick={() => onChange(!checked)}
