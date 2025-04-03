@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import Image from 'next/image';
 import LockClosed from '../../../../../public/icons/LockClosed.svg';
 
-type TextInputType = 'text' | 'email' | 'password' | 'tel';
+export type TextInputType = 'text' | 'email' | 'password' | 'tel';
 
 export interface TextInputProps {
   id: string;

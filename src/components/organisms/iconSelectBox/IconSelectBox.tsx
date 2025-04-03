@@ -1,13 +1,12 @@
 import React from 'react';
 import SelectedCard, { SelectedCardProps } from '@/components/molecules/selectedCard/SelectedCard';
-import StandardButton, { StandardButtonProps } from '@/components/atoms/buttons/standardButton/StandardButton';
 import SemiBoldText20Black10 from '@/components/atoms/texts/semiBoldText20Black10/SemiBoldText20Black10';
 
-interface IconSelectBoxProps extends StandardButtonProps{
+export interface IconSelectBoxProps {
   iconSelectBoxProps: SelectedCardProps[];
   title: string;
 }
-export default function IconSelectBox({title, iconSelectBoxProps, text, onClick}: IconSelectBoxProps) {
+export default function IconSelectBox({title, iconSelectBoxProps}: IconSelectBoxProps) {
   return (
     <div className="p-40 rounded-lg bg-black1">
       <SemiBoldText20Black10 title={title}/>

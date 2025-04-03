@@ -2,9 +2,10 @@ import React from 'react';
 import { DayPicker, getDefaultClassNames } from 'react-day-picker';
 import "react-day-picker/style.css";
 
+
 export interface DatePickerProps {
-  selectedDay: Date;
-  setSelectedDay: () => void;
+  selectedDay:  Date | undefined ;
+  setSelectedDay: React.Dispatch<React.SetStateAction<Date | undefined>>;
 }
 function DatePicker({selectedDay, setSelectedDay}: DatePickerProps) {
   const defaultClassNames = getDefaultClassNames();

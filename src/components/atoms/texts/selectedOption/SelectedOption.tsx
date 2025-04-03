@@ -39,7 +39,7 @@ function SelectedOption({ type, leftText, rightText }: SelectedOptionProps) {
   const styles = OPTION_STYLES[type];
 
   return (
-    <div className={`w-full flex items-center ${styles.container}`}>
+    <div className={`w-full flex items-center mb-12 ${styles.container}`}>
       <span className={`inline-block min-w-[72px] ${styles.left}`}>{leftText}</span>
       <span className={`inline-block ${styles.right}`}>{rightText}</span>
     </div>

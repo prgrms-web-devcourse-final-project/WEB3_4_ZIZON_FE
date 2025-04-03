@@ -17,7 +17,7 @@ export interface StandardButtonProps {
 
 export default function StandardButton({
   text,
-  onClick = () => {},
+  onClick,
   disabled = false,
   size = 'fit',
   state = 'default',
@@ -40,7 +40,7 @@ export default function StandardButton({
     <button
       type="button"
       disabled={disabled}
-      onClick={() => onClick()}
+      onClick={onClick}
       className={`px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer 
         ${stateVariants[state]} ${widthVariants[size]}`}
     >
