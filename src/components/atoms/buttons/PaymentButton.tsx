@@ -21,7 +21,8 @@ export default function PaymentButton({
     if (!process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY) {
       throw new Error('NEXT_PUBLIC_TOSS_KEY is not defined');
     }
-
+    // clientKey는 돕당용 : 결제 페이지 랜더링 시 사용
+    // customerKey는 고객용
     // TRY : loadTossPayments(customerKey)
     loadTossPayments(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY)
       .then(tossPayments => {
