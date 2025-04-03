@@ -84,7 +84,7 @@ export default function ChattingList({ chatList }: ChattingListProps) {
       {/* 서치바 */}
       <SearchBar
         type="rounded"
-        placedholder="검색어를 입력해주세요"
+        placeholder="검색어를 입력해주세요"
         value={search}
         onChange={(value: string) => setSearch(value)}
       />
