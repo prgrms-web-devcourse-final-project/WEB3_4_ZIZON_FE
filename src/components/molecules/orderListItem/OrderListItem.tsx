@@ -1,57 +1,88 @@
+'use client';
+
 import React from 'react';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import Image from 'next/image';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
+import { SellState, sellStateConfig } from '@/types/sellState';
 
-type SellState = "진행" | "대기" | "취소" | "구매";
-interface OrderListItemProps {
+export interface OrderListItemProps {
   imageUrl: string;
   price: number;
   sellState: SellState;
   onClickAskButton: () => void;
   category: string;
+  isExpertView?: boolean;
 }
 
-export default function OrderListItem({ 
-                                        imageUrl, 
-                                        price,
-                                        sellState,
-                                        onClickAskButton,
-                                        category
-}:OrderListItemProps) {
+interface ButtonStyle {
+  text: string;
+  state: 'default' | 'dark' | 'red' | 'green';
+}
+
+const buttonStyle: Record<SellState, ButtonStyle> = {
+  inProgress: {
+    text: '문의하기',
+    state: 'default',
+  },
+  waiting: {
+    text: '완료하기',
+    state: 'green',
+  },
+  completed: {
+    text: '리뷰작성',
+    state: 'dark',
+  },
+  cancelled: {
+    text: '취소하기',
+    state: 'red',
+  },
+} as const;
+
+export default function OrderListItem({
+  imageUrl,
+  price,
+  sellState,
+  onClickAskButton,
+  category,
+  isExpertView = false,
+}: OrderListItemProps) {
+  const stateConfig = sellStateConfig[sellState];
+  const buttonConfig = isExpertView
+    ? { text: '문의하기', state: 'default' as const }
+    : buttonStyle[sellState];
+
   return (
-    <div className="flex bg-black2 border border-black4 px-16 py-16 rounded-lg items-center justify-between">
-      <div className="flex h-85 items-center content-between">
-        <Image className="mr-16" src={imageUrl} alt={""} width={85} height={85}/>
-        <div className="h-full">
-          <div className="mb-12">{SellState(sellState)}</div>
-          <label className="mt-8">{category}</label>
-          <div className="flex text-16 mt-12 text-semibold">
-            <NumberReadability value={price}/>원
+    <div className="flex bg-black1 border border-black3 p-20 rounded-xl items-center justify-between">
+      <div className="flex items-center gap-16">
+        <div className="w-85 h-85 rounded-lg overflow-hidden">
+          <Image
+            className={`size-full object-cover ${sellState === 'completed' && 'saturate-0'}`}
+            src={imageUrl}
+            alt={category}
+            width={85}
+            height={85}
+          />
+        </div>
+        <div className="flex flex-col gap-12">
+          <label className={`text-16 font-semibold ${stateConfig.textColor}`}>
+            {stateConfig.label}
+          </label>
+          <div className="flex flex-col gap-8">
+            <span className="text-16 font-regular">{category}</span>
+            <p className="text-16 font-semibold">
+              <NumberReadability value={price} />원
+            </p>
           </div>
         </div>
       </div>
-      <StandardButton text={"문의하기"} state={"default"} size={"fit"} onClick={onClickAskButton} disabled={false}/>
+      <StandardButton
+        text={buttonConfig.text}
+        state={buttonConfig.state}
+        size="fit"
+        onClick={onClickAskButton}
+        disabled={false}
+      />
     </div>
   );
-}
-
-function SellState(sellState: SellState) {
-  if(sellState === "진행") {
-    return (
-      <label className="text-16 font-semibold text-primary4 mb-12 max-w-fit">진행중</label>
-    );
-  } else if(sellState === "대기") {
-    return (
-      <label className="text-16 font-semibold text-greenComplete max-w-fit">작업 완료 대기</label>
-    );
-  } else if(sellState === "취소") {
-    return (
-      <label className="text-16 font-semibold text-redWarning max-w-fit">취소•문제 해결</label>
-    );
-  } else if(sellState === "구매") {
-    return (
-      <label className="text-16 font-semibold text-black6 max-w-fit">구매 확정</label>
-    );
-  }
 }
