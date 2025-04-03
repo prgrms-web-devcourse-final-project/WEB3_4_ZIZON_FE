@@ -46,7 +46,7 @@ export default function StandardButton({
       disabled={disabled}
       onClick={onClick}
       className={`px-16 py-12 rounded-[8px] text-16 text-black7 font-semibold cursor-pointer 
-        ${stateVariants[state]} ${widthVariants[size]}`}
+        ${stateVariants[state]} ${widthVariants[size]} disabled:bg-gray-300`}
     >
       {text}
     </button>
