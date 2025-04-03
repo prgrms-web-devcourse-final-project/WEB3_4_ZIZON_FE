@@ -21,7 +21,7 @@ export default function ChattingInputBox() {
       />
 
       {/* 채팅 전송 */}
-      <div className="flex justify-between ">
+      <div className="flex justify-between items-center">
         <FileInput
           label="첨부파일"
           name="file-input"

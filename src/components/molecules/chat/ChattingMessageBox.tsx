@@ -27,13 +27,13 @@ export default function ChattingMessageBox() {
   const searchParams = useSearchParams();
   const clientId = searchParams.get('clientId');
   return (
-    <div className="w-full flex flex-col gap-32 bg-black1 px-32 py-32 rounded-[8px]">
+    <div className="w-full flex flex-col gap-32 bg-black1 px-32 py-32 rounded-[8px] h-745 overflow-y-scroll mb-16">
       {CHATTING_LIST_DUMMY_DATA.map(message => (
         <MessageTemplate
           key={message.id}
           dateTime={new Date(message.created_at)}
           message={message.content}
-          tag={message.sender_id === Number(clientId) ? 'send' : 'get'}
+          tag={message.sender_id === Number(clientId) ? 'get' : 'send'}
         />
       ))}
     </div>
