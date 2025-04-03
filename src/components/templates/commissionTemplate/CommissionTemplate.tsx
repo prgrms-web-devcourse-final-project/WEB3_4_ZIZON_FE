@@ -16,7 +16,7 @@ function CommissionTemplate({value, onChange}: CommissionTemplateProps) {
 
         </div>
         <div>
-          
+
         </div>
       </div>
     </div>
