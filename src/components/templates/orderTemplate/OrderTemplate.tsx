@@ -1,15 +1,17 @@
 import { PaymentType } from '@/types/payment';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import PaymentNotice from '@/components/molecules/order/paymentNotice/PaymentNotice';
+import { PropsWithChildren, ReactElement } from 'react';
+import PaymentButton from '@/components/atoms/buttons/PaymentButton';
 
-interface OrderTemplateProps {
+interface OrderTemplateProps extends PropsWithChildren {
   paymentType: PaymentType;
-  onPaymentClick: () => void;
-  children?: React.ReactNode;
+  paymentButton: ReactElement<typeof PaymentButton>;
 }
+
 export default function OrderTemplate({
   paymentType,
-  onPaymentClick,
+  paymentButton,
   children,
 }: OrderTemplateProps) {
   return (
@@ -24,15 +26,7 @@ export default function OrderTemplate({
       <div className="w-full flex flex-col gap-32">{children}</div>
 
       {/* 결제하기 버튼 */}
-      <div className="w-193 absolute right-0 bottom-[-80px]">
-        <StandardButton
-          text="결제하기"
-          onClick={() => onPaymentClick()}
-          disabled={false}
-          size="full"
-          state="blue"
-        />
-      </div>
+      <div className="w-193 absolute right-0 bottom-[-80px]">{paymentButton}</div>
     </div>
   );
 }

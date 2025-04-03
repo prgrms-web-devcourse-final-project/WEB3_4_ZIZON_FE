@@ -1,28 +1,36 @@
+'use client';
+
 import TextButton from '@/components/atoms/buttons/textButton/TextButton';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export type SortType = 'latest' | 'rating';
 
-interface SortButtonsProps {
-  selectedSort: SortType;
-  onSortChange: (sort: SortType) => void;
-}
+export default function SortButtons() {
+  const searchParams = useSearchParams();
+  const sort = searchParams.get('sort');
+  const router = useRouter();
 
-export default function SortButtons({ selectedSort, onSortChange }: SortButtonsProps) {
+  const handleParameterChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('sort', value);
+    router.push(`/expert?${params.toString()}`);
+  };
+
   return (
     <div className="flex gap-12">
       <TextButton
         text="최신 업데이트 순"
         onClick={() => {
-          onSortChange('latest');
+          handleParameterChange('latest');
         }}
-        type={selectedSort === 'latest' ? 'dark' : 'normal'}
+        type={sort === 'latest' ? 'dark' : 'normal'}
       />
       <TextButton
         text="평점 높은 순"
         onClick={() => {
-          onSortChange('rating');
+          handleParameterChange('rating');
         }}
-        type={selectedSort === 'rating' ? 'dark' : 'normal'}
+        type={sort === 'rating' ? 'dark' : 'normal'}
       />
     </div>
   );
