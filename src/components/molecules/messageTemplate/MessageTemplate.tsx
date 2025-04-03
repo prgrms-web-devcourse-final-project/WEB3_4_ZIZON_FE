@@ -24,33 +24,37 @@ function MessageTemplate({ dateTime, message, tag, senderProfileImage }: Message
 
   if (tag === 'send' || senderProfileImage) {
     return (
-      <div className="flex items-center w-2/3 ">
-        <Image
-          className="place-self-start rounded-full mb-16 mr-8"
-          src={senderProfileImage || '/images/DefaultImage.png'}
-          alt={''}
-          width={30}
-          height={30}
-        />
-        <div className="bg-black2 px-16 py-12 rounded-lg text-base/24">
-          <p className="text-black10 text-16">{message}</p>
-        </div>
-        <div className="place-self-end text-black8 text-13 font-medium ml-8">
-          <p>{yearMMDD}</p>
+      <div className="w-full flex items-center justify-start ">
+        <div className="flex">
+          <Image
+            className="place-self-start rounded-full mb-16 mr-8 w-30 h-30"
+            src={senderProfileImage || '/images/DefaultImage.png'}
+            alt={''}
+            width={30}
+            height={30}
+          />
+          <div className="bg-black2 px-16 py-12 rounded-lg text-base/24 ">
+            <p className="text-black10 text-16">{message}</p>
+          </div>
+          <div className="place-self-end text-black8 text-13 font-medium ml-8">
+            <p>{yearMMDD}</p>
 
-          <p>{hourMinute}</p>
+            <p>{hourMinute}</p>
+          </div>
         </div>
       </div>
     );
   } else if (tag === 'get') {
     return (
-      <div className="flex items-center w-2/3 float-end">
-        <div className="place-self-end text-black8 text-13 font-medium mr-8">
-          <p className="float-end">{yearMMDD}</p> <br />
-          <p className="float-end">{hourMinute}</p>
-        </div>
-        <div className="bg-primary0 px-16 py-12 rounded-lg text-base/24">
-          <p className="text-black10 text-16">{message}</p>
+      <div className="flex items-center w-full justify-end">
+        <div className="flex ">
+          <div className="place-self-end text-black8 text-13 font-medium mr-8">
+            <p className="float-end">{yearMMDD}</p> <br />
+            <p className="float-end">{hourMinute}</p>
+          </div>
+          <div className="bg-primary0 px-16 py-12 rounded-lg text-base/24 ">
+            <p className="text-black10 text-16">{message}</p>
+          </div>
         </div>
       </div>
     );
