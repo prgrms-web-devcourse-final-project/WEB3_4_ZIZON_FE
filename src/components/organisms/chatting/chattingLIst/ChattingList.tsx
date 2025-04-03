@@ -61,7 +61,7 @@ export default function ChattingList({ chattingRoomList }: ChattingListProps) {
   const handleChatItemClick = (chatRoomId: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('roomId', chatRoomId);
-    router.push(`/client/chat?${params.toString()}`);
+    router.push(`/${userType}/chat?${params.toString()}`);
   };
 
   return (
