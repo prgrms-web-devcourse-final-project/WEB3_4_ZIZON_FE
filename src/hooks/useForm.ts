@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import {
   FormValidator,
   SignupFormData,
@@ -6,6 +6,7 @@ import {
   BaseFormData,
   BaseFormErrors,
 } from '@/utils/FormValidator';
+import useDebounce from './useDebounce';
 
 type FormType = 'signup' | 'login';
 
@@ -55,6 +56,8 @@ const useForm = <T extends FormType>({
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [currentField, setCurrentField] = useState<keyof FormDataMap[T] | null>(null);
+  const [currentValue, setCurrentValue] = useState<string>('');
 
   const validateField = useCallback(
     (field: keyof FormDataMap[T], value: string): string => {
@@ -86,19 +89,32 @@ const useForm = <T extends FormType>({
     [formData, type],
   );
 
-  const handleChange = useCallback(
-    (field: keyof FormDataMap[T], value: string) => {
-      setFormData(prev => ({ ...prev, [field]: value }));
+  // 디바운스된 값 설정
+  const debouncedValue = useDebounce(currentValue, 300);
 
-      if (value.trim() !== '') {
-        const newError = validateField(field, value);
-        setErrors(prev => ({ ...prev, [field]: newError }));
+  // 디바운스된 값이 변경될 때마다 검증 실행
+  useEffect(() => {
+    if (currentField && debouncedValue) {
+      if (debouncedValue.trim() !== '') {
+        const newError = validateField(currentField, debouncedValue);
+        setErrors(prev => ({ ...prev, [currentField]: newError }));
       } else {
-        setErrors(prev => ({ ...prev, [field]: '' }));
+        setErrors(prev => ({ ...prev, [currentField]: '' }));
       }
-    },
-    [validateField],
-  );
+    }
+  }, [debouncedValue, currentField, validateField]);
+
+  const handleChange = useCallback((field: keyof FormDataMap[T], value: string) => {
+    // 입력값 sanitize
+    const sanitizedValue = FormValidator.sanitizeInput(value);
+
+    // 즉시 폼 데이터 업데이트
+    setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
+
+    // 디바운스 검증을 위한 상태 업데이트
+    setCurrentField(field);
+    setCurrentValue(sanitizedValue);
+  }, []);
 
   const setAuthCodeError = useCallback(
     (errorMessage: string) => {
@@ -127,6 +143,12 @@ const useForm = <T extends FormType>({
     [formData, type],
   );
 
+  const resetForm = useCallback(() => {
+    setFormData(initialFormData);
+    setErrors(initialErrorStateMap[type]);
+    setSubmitError(null);
+  }, [initialFormData, type]);
+
   return {
     formData,
     setFormData,
@@ -140,6 +162,7 @@ const useForm = <T extends FormType>({
     handleChange,
     validateForm,
     setAuthCodeError,
+    resetForm,
   };
 };
 

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import LoginButton from '@/components/atoms/buttons/loginButton/LoginButton';
 import LabeledInput from '@/components/molecules/labeledInput/LabeledInput';
+import PasswordInput from '@/components/molecules/passwordInput/PasswordInput';
 import PhoneAuthField from '@/components/molecules/phoneAuthField/PhoneAuthField';
 import { SignupFormData } from '@/utils/FormValidator';
 import useForm from '@/hooks/useForm';
@@ -81,27 +82,18 @@ function SignupForm({
         type="email"
         value={formData.email}
       />
-      <LabeledInput
-        color="transparent"
+      <PasswordInput
         errorText={errors.password}
-        htmlFor="password"
-        id="password"
-        label="비밀번호"
         onChange={value => handleChange('password', value)}
-        placeholder="비밀번호를 입력해주세요"
-        type="password"
         value={formData.password}
       />
-      <LabeledInput
-        color="transparent"
+      <PasswordInput
         errorText={errors.passwordCheck}
-        htmlFor="passwordCheck"
-        id="passwordCheck"
-        label="비밀번호 확인"
         onChange={value => handleChange('passwordCheck', value)}
-        placeholder="비밀번호를 다시 입력해주세요"
-        type="password"
         value={formData.passwordCheck}
+        label="비밀번호 확인"
+        placeholder="비밀번호를 다시 입력해주세요"
+        id="passwordCheck"
       />
 
       <PhoneAuthField

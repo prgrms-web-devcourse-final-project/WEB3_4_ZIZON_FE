@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import LoginButton from '@/components/atoms/buttons/loginButton/LoginButton';
 import LabeledInput from '@/components/molecules/labeledInput/LabeledInput';
+import PasswordInput from '@/components/molecules/passwordInput/PasswordInput';
 import { BaseFormData } from '@/utils/FormValidator';
 import useForm from '@/hooks/useForm';
 
@@ -36,8 +37,10 @@ function LoginForm({ onSubmit }: LoginFormProps) {
   };
 
   return (
-    <form className="flex flex-col gap-32 mt-64" onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-32 mt-64" onSubmit={handleSubmit} aria-label="로그인 폼">
       <LabeledInput
+        aria-required="true"
+        aria-invalid={!!errors.email}
         color="transparent"
         errorText={errors.email}
         htmlFor="email"
@@ -48,15 +51,9 @@ function LoginForm({ onSubmit }: LoginFormProps) {
         type="email"
         value={formData.email}
       />
-      <LabeledInput
-        color="transparent"
+      <PasswordInput
         errorText={errors.password}
-        htmlFor="password"
-        id="password"
-        label="비밀번호"
         onChange={value => handleChange('password', value)}
-        placeholder="비밀번호를 입력해주세요"
-        type="password"
         value={formData.password}
       />
       <LoginButton disabled={isSubmitting} onClick={() => {}} type="login" />
