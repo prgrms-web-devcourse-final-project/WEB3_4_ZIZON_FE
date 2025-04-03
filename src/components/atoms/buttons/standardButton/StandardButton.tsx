@@ -5,7 +5,9 @@ type ButtonStateType =
   | 'blue-outline'
   | 'dark'
   | 'gray'
-  | 'white';
+  | 'white'
+  | 'red'
+  | 'green';
 
 export interface StandardButtonProps {
   text: string;
@@ -30,6 +32,8 @@ export default function StandardButton({
     dark: 'bg-black12 text-white',
     gray: 'bg-black2 text-black7',
     white: 'bg-black1 text-black7',
+    red: 'bg-redWarning/10 text-redWarning',
+    green: 'bg-greenComplete/10 text-greenComplete',
   };
 
   const widthVariants = {

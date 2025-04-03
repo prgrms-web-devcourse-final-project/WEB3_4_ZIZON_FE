@@ -1,32 +1,47 @@
-import React from 'react';
-import ArrowsRightLeftBlack from "public/icons/ArrowsRightLeftBlack.svg"
-import ArrowsRightLeftWhite from "public/icons/ArrowsRightLeftWhite.svg"
+'use client';
+
 import Image from 'next/image';
 
 interface ChangePositionButtonProps {
-  isState: boolean;
+  isState: 'client' | 'expert';
   onChangeState: () => void;
 }
-function ChangePositionButton({isState, onChangeState}: ChangePositionButtonProps) {
-  if (isState) {
-    return (
-      <button onClick={onChangeState} className="text-center cursor-pointer bg-black12 border border-black3 max-w-fit rounded-full py-8 px-62">
-        <div className="flex cursor-pointer">
-          <Image className="cursor-pointer" src={ArrowsRightLeftWhite} alt={""} width={14} height={14} />
-          <label className="text-black1 ml-8 text-13 cursor-pointer font-medium">전문가로 전환</label>
-        </div>
-      </button>
-    );
-  } else {
-    return (
-      <button onClick={onChangeState} className="text-center bg-black2 border border-black7 max-w-fit rounded-full py-8 px-62">
-        <div className="flex">
-          <Image className="cursor-pointer" src={ArrowsRightLeftBlack} alt={""} width={14} height={14} />
-          <label className="text-black12 cursor-pointer ml-8 text-13 font-medium">의뢰인로 전환</label>
-        </div>
-      </button>
-   );
-  }
+
+const buttonConfig = {
+  client: {
+    bgColor: 'bg-black12',
+    borderColor: 'border-black3',
+    textColor: 'text-black1',
+    icon: '/icons/ArrowsRightLeftWhite.svg',
+    label: '전문가로 전환',
+  },
+  expert: {
+    bgColor: 'bg-black2',
+    borderColor: 'border-black7',
+    textColor: 'text-black12',
+    icon: '/icons/ArrowsRightLeftBlack.svg',
+    label: '의뢰인으로 전환',
+  },
+} as const;
+
+type ButtonConfigKey = keyof typeof buttonConfig;
+
+function ChangePositionButton({ isState, onChangeState }: ChangePositionButtonProps) {
+  const config = buttonConfig[isState as ButtonConfigKey] || buttonConfig.client;
+
+  return (
+    <button
+      onClick={onChangeState}
+      className={`w-194 cursor-pointer ${config.bgColor} border ${config.borderColor} rounded-full py-8 hover:opacity-80 transition-opacity`}
+    >
+      <div className="flex items-center justify-center">
+        <Image src={config.icon} alt="" width={14} height={14} className="cursor-pointer" />
+        <span className={`${config.textColor} ml-8 text-16 font-medium cursor-pointer`}>
+          {config.label}
+        </span>
+      </div>
+    </button>
+  );
 }
 
 export default ChangePositionButton;
