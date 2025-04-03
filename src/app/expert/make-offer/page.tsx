@@ -17,7 +17,7 @@ export default function MakeOfferPage() {
   };
 
   return (
-    <div className="px-520 mt-46">
+    <div className="px-520 mt-46 flex justify-center">
       <MakeOfferTemplate projectSummary={PROJECT_SUMMARY} />
     </div>
   );

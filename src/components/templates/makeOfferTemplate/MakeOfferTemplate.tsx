@@ -14,7 +14,7 @@ export default function MakeOfferTemplate({ projectSummary }: MakeOfferTemplateP
   // TODO : 견적 보내는 요청
 
   return (
-    <div className="w-full flex gap-64">
+    <div className="w-876 flex gap-64">
       <ProjectSummary {...projectSummary} />
       <OfferForm onSubmit={handleOfferSubmit} />
     </div>
