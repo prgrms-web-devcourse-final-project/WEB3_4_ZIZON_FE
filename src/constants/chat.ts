@@ -16,3 +16,5 @@ export const CHATTING_STATE = [
     name: '즐겨찾기',
   },
 ] as const;
+// 'state' 값만 묶은 타입 생성
+export type ChattingStateType = (typeof CHATTING_STATE)[number]['state'];

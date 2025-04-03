@@ -3,7 +3,7 @@
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import ChatListItem from '@/components/molecules/chatListItem/ChatListItem';
-import { CHATTING_STATE } from '@/constants/chat';
+import { CHATTING_STATE, ChattingStateType } from '@/constants/chat';
 import { ChattingRoomType } from '@/types/chat';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
@@ -56,8 +56,8 @@ export const chattingRoomDummyData: ChattingRoomType[] = [
 ];
 
 export default function ChattingList({ chatList }: ChattingListProps) {
-  const [filter, setFilter] = useState(CHATTING_STATE[0].state);
-  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<ChattingStateType>(CHATTING_STATE[0].state);
+  const [search, setSearch] = useState<string>('');
   const searchParams = useSearchParams();
   const id = searchParams.get('id'); // 현재 선택된 채팅방 id
   const router = useRouter();
@@ -75,11 +75,9 @@ export default function ChattingList({ chatList }: ChattingListProps) {
       {/* 필터 태그 */}
       <div className="flex gap-8">
         {CHATTING_STATE.map(item => (
-          <SmallTag
-            key={item.state}
-            text={item.name}
-            theme={filter === item.state ? 'dark' : 'default'}
-          />
+          <div onClick={() => setFilter(item.state)} key={item.state}>
+            <SmallTag text={item.name} theme={filter === item.state ? 'dark' : 'default'} />
+          </div>
         ))}
       </div>
 
