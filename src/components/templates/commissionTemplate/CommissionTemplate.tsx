@@ -1,5 +1,7 @@
 import React from 'react';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
+import VerticalTabTitle from '@/components/atoms/tabs/verticalTabTitle/VerticalTabTitle';
+import VerticalTabItem from '@/components/atoms/tabs/verticalTabItem/VerticalTabItem';
 
 interface CommissionTemplateProps {
   value: string;
@@ -13,7 +15,11 @@ function CommissionTemplate({value, onChange}: CommissionTemplateProps) {
       <SearchBar type={'default'} placedholder={'검색어를 입력해주세요.'} onChange={onChange} value={value}/>
       <div>
         <div>
-
+          <VerticalTabTitle text={'요청 항목'} size={'small'}/>
+          {/*<VerticalTabItem name={} isFocused={} text={} onClick={} size={}/>*/}
+          {/*<VerticalTabItem name={} isFocused={} text={} onClick={} size={}/>*/}
+          {/*<VerticalTabItem name={} isFocused={} text={} onClick={} size={}/>*/}
+          {/*<VerticalTabItem name={} isFocused={} text={} onClick={} size={}/>*/}
         </div>
         <div>
 
