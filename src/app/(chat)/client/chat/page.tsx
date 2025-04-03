@@ -1,13 +1,16 @@
+import ClientChattingInfo from '@/components/organisms/chatting/chattingInfo/client/ClientChattingInfo';
 import ChattingList, {
-  chattingRoomDummyData,
+  dummyChattingRooms,
 } from '@/components/organisms/chatting/chattingLIst/ChattingList';
 import ChattingRoom from '@/components/organisms/chatting/chattingRoom/ChattingRoom';
+import ChattingTemplate from '@/components/templates/chatTemplate/ChattingTemplate';
 
 export default function ClientChatPage() {
   return (
-    <div className="w-full flex gap-24 mt-46 ">
-      <ChattingList chatList={chattingRoomDummyData} />
+    <ChattingTemplate>
+      <ChattingList chattingRoomList={dummyChattingRooms} />
       <ChattingRoom />
-    </div>
+      <ClientChattingInfo />
+    </ChattingTemplate>
   );
 }
