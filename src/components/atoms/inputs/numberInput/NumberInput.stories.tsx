@@ -1,14 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import NumberInput from './NumberInput';
 import { fn } from '@storybook/test';
-import React from 'react';
 
 const meta = {
   title: 'Atoms/NumberInput',
   component: NumberInput,
   parameters: {
     layout: 'centered',
-    componentSubtitle: '문자열 타입을 받는 Input 컴포넌트',
+    componentSubtitle: '숫자 타입을 받는 Input 컴포넌트',
   },
   tags: ['autodocs'],
   args: { onChange: fn() },
