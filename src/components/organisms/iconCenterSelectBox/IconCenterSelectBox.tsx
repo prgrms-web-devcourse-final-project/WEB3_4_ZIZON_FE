@@ -8,7 +8,7 @@ interface IconCenterSelectBoxProps {
 }
 function IconCenterSelectBox({title, selectedCardProps}:IconCenterSelectBoxProps) {
   return (
-    <div>
+    <div className="px-40 pt-40">
       <SemiBoldText20Black10 title={title} />
       <div className={`grid grid-cols-${selectedCardProps.length} grid-rows-1 gap-24`}>
         {selectedCardProps.map((item, index) => {

@@ -20,3 +20,10 @@ export const TestValue: Story = {
     ],
   },
 };
+export const TestValue2: Story = {
+  args: {
+    selectedOptionIndex: [
+      {'과외 학생': '고등학교 1학년'},
+    ],
+  },
+};
