@@ -2,7 +2,7 @@ import Image from 'next/image';
 import SearchLarge from 'public/icons/SearchLarge.svg';
 interface SearchBarProps {
   type: 'default' | 'rounded' | 'large';
-  placedholder: string;
+  placeholder: string;
   onChange: (value: string) => void;
   value: string;
 }
@@ -14,7 +14,7 @@ const typeVariation = {
 
 export default function SearchBar({
   type = 'default',
-  placedholder,
+  placeholder,
   onChange,
   value,
 }: SearchBarProps) {
@@ -25,7 +25,7 @@ export default function SearchBar({
       <input
         type="text"
         value={value}
-        placeholder={placedholder}
+        placeholder={placeholder}
         onChange={event => onChange(event.target.value)}
         className={`bg-black1 py-16 px-20 text-13 font-regular  placeholder:font-light placeholder:text-13 focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent focus:shadow-input ${typeVariation[type]}`}
       />

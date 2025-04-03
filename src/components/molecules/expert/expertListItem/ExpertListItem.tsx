@@ -1,8 +1,6 @@
-'use client';
-
 import MediumTag from '@/components/atoms/tags/mediumTag/MediumTag';
-import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export interface ExpertListItemProps {
   expert_id: string;
@@ -11,7 +9,6 @@ export interface ExpertListItemProps {
   introduction: string;
   career_years: number;
   skill: string;
-  onClick: (expert_id: string) => void;
 }
 
 function ExpertListItem({
@@ -21,7 +18,6 @@ function ExpertListItem({
   career_years,
   skill,
   expert_id,
-  onClick,
 }: ExpertListItemProps) {
   return (
     <article className="w-410 flex flex-col p-24 bg-black1 rounded-[20px] border-2 border-black1 hover:border-primary3 transition-all duration-300">
@@ -46,13 +42,12 @@ function ExpertListItem({
           </span>
         </div>
       </div>
-      <StandardButton
-        onClick={() => onClick(expert_id)}
-        text="프로필 보기"
-        disabled={false}
-        state="gray"
-        size="full"
-      />
+      <Link
+        href={`/expert/${expert_id}`}
+        className="w-full bg-black2 font-semibold text-16 text-black7 px-16 py-12 text-center rounded-[8px] hover:bg-black3 transition-all duration-300"
+      >
+        프로필 보기
+      </Link>
     </article>
   );
 }

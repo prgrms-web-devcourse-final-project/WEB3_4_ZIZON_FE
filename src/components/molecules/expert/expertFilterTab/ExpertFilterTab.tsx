@@ -1,3 +1,5 @@
+'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   CAREER_CATEGORY,
   CareerCategoryIdType,
@@ -24,32 +26,31 @@ const CAREER_LIST: Array<{
   label: value as CareerCategoryValueType,
 }));
 
-interface ExpertFilterTabProps {
-  selectedCategory: number;
-  selectedCareer: string;
-  onCategoryChange: (categoryId: ProjectCategoryIdType, checked: boolean) => void;
-  onCareerChange: (careerId: CareerCategoryIdType, checked: boolean) => void;
-}
-
 const Divider = () => <div className="w-full h-[1px] bg-black2 my-32" />;
 
-export default function ExpertFilterTab({
-  selectedCategory,
-  selectedCareer,
-  onCategoryChange,
-  onCareerChange,
-}: ExpertFilterTabProps) {
+export default function ExpertFilterTab() {
+  const searchParams = useSearchParams();
+  const category = Number(searchParams.get('category')) as ProjectCategoryIdType;
+  const career = searchParams.get('career');
+  const router = useRouter();
+
+  const handleParameterChange = (key: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(key, value);
+    router.push(`/expert?${params.toString()}`);
+  };
+
   return (
     <div className="w-411 h-fit px-24 py-32 bg-black1 rounded-[16px]">
       <h3 className="mb-24 font-semibold text-24"> 카테고리</h3>
       <div className="flex flex-col gap-8">
-        {CATEGORY_LIST.map(category => (
+        {CATEGORY_LIST.map(item => (
           <DefaultCheckbox
-            key={category.categoryId}
-            label={category.label}
-            checked={category.categoryId === selectedCategory}
+            key={item.categoryId}
+            label={item.label}
+            checked={item.categoryId === category}
             onChange={checked => {
-              onCategoryChange(category.categoryId, checked);
+              handleParameterChange('category', item.categoryId.toString());
             }}
           />
         ))}
@@ -57,13 +58,13 @@ export default function ExpertFilterTab({
       <Divider />
       <h3 className="mb-24 font-semibold text-24"> 경력 </h3>
       <div className="flex flex-col gap-8">
-        {CAREER_LIST.map(career => (
+        {CAREER_LIST.map(item => (
           <DefaultCheckbox
-            key={career.categoryId}
-            label={career.label}
-            checked={career.categoryId === selectedCareer}
+            key={item.categoryId}
+            label={item.label}
+            checked={item.categoryId === career}
             onChange={checked => {
-              onCareerChange(career.categoryId, checked);
+              handleParameterChange('career', item.categoryId.toString());
             }}
           />
         ))}
