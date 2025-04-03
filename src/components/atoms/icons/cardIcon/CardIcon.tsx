@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 export interface CardIconProps {
-  category: 'spanner' | 'home' | 'pallete' | 'pencil' | 'women' | 'cleaning' | 'men' | 'question' | 'truck';
+  category: 'spanner' | 'home' | 'pallete' | 'pencil' | 'women' | 'cleaning' | 'men' | 'question' | 'truck' | 'ball';
   isOn: boolean;
 }
 
@@ -41,6 +41,10 @@ const ICON_PATHS = {
   truck: {
     on: '/icons/TruckBlue.svg',
     off: '/icons/Truck.svg',
+  },
+  ball: {
+    on: '/icons/BallBlue.svg',
+    off: '/icons/Ball.svg',
   },
 } as const;
 

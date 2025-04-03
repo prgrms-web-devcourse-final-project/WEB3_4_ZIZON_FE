@@ -7,7 +7,7 @@ interface DatePickerWithTitleProps extends DatePickerProps {
 }
 function DatePickerWithTitle({selectedDay, setSelectedDay, title}: DatePickerWithTitleProps) {
   return (
-    <div>
+    <div className="px-40 pt-32">
       <SemiBoldText20Black10 title={title} />
       <DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
     </div>

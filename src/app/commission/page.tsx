@@ -1,3 +1,7 @@
+import CommonStartStepperTemplate from '@/components/templates/stepperTemplate/common/CommonStartStepperTemplate';
+
 export default function CommissionPage() {
-  return <div></div>
+  return <div>
+    <CommonStartStepperTemplate />
+  </div>
 }
