@@ -16,7 +16,7 @@ export const dummyChattingRooms: ChattingRoomType[] = [
   {
     roomId: 'room1',
     otherUserName: '김철수',
-    otherUserProfile: '/images/DefaultProfile.png',
+    otherUserProfile: '/images/DefaultImage.png',
     lastMessage: '안녕하세요! 상담 요청드립니다.',
     lastMessageTime: '2025-04-01T10:30:00Z',
     unreadCount: 2,
@@ -24,7 +24,7 @@ export const dummyChattingRooms: ChattingRoomType[] = [
   {
     roomId: 'room2',
     otherUserName: '이영희',
-    otherUserProfile: '/images/DefaultProfile.png',
+    otherUserProfile: '/images/DefaultImage.png',
     lastMessage: '견적서를 확인해주세요.',
     lastMessageTime: '2025-04-02T14:15:00Z',
     unreadCount: 0,
@@ -32,7 +32,7 @@ export const dummyChattingRooms: ChattingRoomType[] = [
   {
     roomId: 'room3',
     otherUserName: '박민수',
-    otherUserProfile: '/images/DefaultProfile.png',
+    otherUserProfile: '/images/DefaultImage.png',
     lastMessage: '감사합니다. 좋은 하루 되세요.',
     lastMessageTime: '2025-04-03T09:45:00Z',
     unreadCount: 5,
@@ -40,7 +40,7 @@ export const dummyChattingRooms: ChattingRoomType[] = [
   {
     roomId: 'room4',
     otherUserName: '최유리',
-    otherUserProfile: '/images/DefaultProfile.png',
+    otherUserProfile: '/images/DefaultImage.png',
     lastMessage: '추가 문의사항이 있습니다.',
     lastMessageTime: '2025-04-04T16:20:00Z',
     unreadCount: 1,
