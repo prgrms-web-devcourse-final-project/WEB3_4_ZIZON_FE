@@ -1,53 +1,67 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
-import MoveTruck from "public/icons/MoveTruck.svg"
-import FixWrench from "public/icons/FixWrench.svg"
-import LessonHat from "public/icons/LessonHat.svg"
-import HobbyPalette from "public/icons/HobbyPalette.svg"
+
+export type ButtonValue = 'move' | 'fix' | 'tutor' | 'hobby';
+export type ButtonState = 'default' | 'active';
 
 interface LabelWithIconButtonProps {
   onClick: () => void;
-  value: "이사" | "설치" | "과외" | "취미";
-  state: 'default' | 'active';
+  value: ButtonValue;
+  state: ButtonState;
+  name: string;
 }
 
-export default function LabelWithIconButton({onClick, value, state}: LabelWithIconButtonProps) {
+const BUTTON_CONFIG = {
+  move: {
+    icon: '/icons/MoveTruck.svg',
+    label: '이사/청소',
+  },
+  fix: {
+    icon: '/icons/FixWrench.svg',
+    label: '설치/수리',
+  },
+  tutor: {
+    icon: '/icons/LessonHat.svg',
+    label: '과외',
+  },
+  hobby: {
+    icon: '/icons/HobbyPalette.svg',
+    label: '취미 생활',
+  },
+} as const;
 
-  if(value === "이사") {
-    return (
-      <button type="button"
-              onClick={onClick}
-              className={`flex text-center min-w-full content-center px-24 py-28 bg-black2 rounded-lg text-20 font-medium text-black12 ${state === "active" ? "bg-primary0" : "hover:bg-black3" }` }>
-        <Image className="mr-20" src={MoveTruck} alt={""} width={30} height={30} />
-        <p className="max-h-fit my-auto">이사/청소</p>
-      </button>
-    );
-  } else if(value === "설치") {
-    return (
-      <button type="button"
-              onClick={onClick}
-              className={`flex text-center min-w-full content-center px-24 py-28 bg-black2 rounded-lg text-20 font-medium text-black12 ${state === "active" ? "bg-primary0" : "hover:bg-black3" }` }>
-        <Image className="mr-20" src={FixWrench} alt={""} width={30} height={30} />
-        <p className="max-h-fit my-auto">설치/수리</p>
-      </button>
-    );
-  } else if(value === "과외") {
-    return (
-      <button type="button"
-              onClick={onClick}
-              className={`flex text-center min-w-full content-center px-24 py-28 bg-black2 rounded-lg text-20 font-medium text-black12 ${state === "active" ? "bg-primary0" : "hover:bg-black3" }` }>
-        <Image className="mr-20" src={LessonHat} alt={""} width={30} height={30} />
-        <p className="max-h-fit my-auto">과외</p>
-      </button>
-    );
-  } else if(value === "취미") {
-    return (
-      <button type="button"
-              onClick={onClick}
-              className={`flex text-center min-w-full content-center px-24 py-28 bg-black2 rounded-lg text-20 font-medium text-black12 ${state === "active" ? "bg-primary0" : "hover:bg-black3" }` }>
-        <Image className="mr-20" src={HobbyPalette} alt={""} width={30} height={30} />
-        <p className="max-h-fit my-auto">취미 생활</p>
-      </button>
-    );
-  }
+const BASE_BUTTON_CLASSES =
+  'flex text-center min-w-full content-center px-24 py-28 rounded-lg text-16 font-medium text-black12 transition-all duration-300';
+const STATE_CLASSES = {
+  default: 'bg-black2 hover:bg-black3',
+  active: 'bg-primary0',
+};
+
+export default function LabelWithIconButton({
+  onClick,
+  value,
+  state,
+  name,
+}: LabelWithIconButtonProps) {
+  const { icon, label } = BUTTON_CONFIG[value];
+  const buttonClasses = `${BASE_BUTTON_CLASSES} ${STATE_CLASSES[state]}`;
+
+  return (
+    <label className={buttonClasses}>
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={state === 'active'}
+        onChange={onClick}
+        className="hidden"
+      />
+      <div className="flex items-center">
+        <Image className="mr-20" src={icon} alt={label} width={30} height={30} />
+        <p className="max-h-fit my-auto">{label}</p>
+      </div>
+    </label>
+  );
 }
