@@ -22,9 +22,9 @@ export default function InputTemplate({
         {LabelComponent}
         {TextButtonComponent}
       </div>
-      <div className="grid grid-cols-4 gap-12">
-        <div className="col-span-3">{InputComponent}</div>
-        <div className="col-span-1">{ButtonComponent}</div>
+      <div className="flex gap-12">
+        <div className="flex-1">{InputComponent}</div>
+        {ButtonComponent && <div>{ButtonComponent}</div>}
       </div>
     </div>
   );
