@@ -1,10 +1,10 @@
 'use client';
 
+import ResetButton from '@/components/atoms/buttons/ResetButton/ResetButton';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import ResetIcon from 'public/icons/Refresh.svg';
 import { useState } from 'react';
 
 export default function ExpertSidebar() {
@@ -35,14 +35,7 @@ export default function ExpertSidebar() {
       {/* 사이드바 헤더 */}
       <div className="flex items-center justify-between">
         <h4 className="font-semibold text-24 text-black11">전문가 필터</h4>
-        <button
-          onClick={() => onReset()}
-          type="button"
-          className="flex items-center gap-4 text-16 text-black10 font-semibold bg-black1 border-1 border-black4 px-12 py-8 rounded-[8px]"
-        >
-          <Image src={ResetIcon} width={12} height={11} alt="reset-category-option-button-icon" />
-          <span>초기화</span>
-        </button>
+        <ResetButton onReset={onReset} />
       </div>
 
       {/* 서치바 */}
