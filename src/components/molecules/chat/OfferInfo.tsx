@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import WonIcon from '/public/icons/Won.svg';
-import ChatIcon from '/public/icons/ChatBubbleLeftEllipsisLine.svg';
+import WonIcon from 'public/icons/Won.svg';
+import ChatIcon from 'public/icons/ChatBubbleLeftEllipsisLine.svg';
 import SelectedOption from '@/components/atoms/texts/selectedOption/SelectedOption';
 import { formatMoney } from '@/utils/moneyFormat';
 import { OfferInfoType } from '@/types/offter';
-
+import Link from 'next/link';
+import ArrowRightIcon from 'public/icons/RightArrowWhite.svg';
 const Divider = () => {
   return <div className="w-full h-1 bg-black4" />;
 };
@@ -30,6 +31,7 @@ export default function OfferInfo(offerInfo: OfferInfoType) {
           rightText={`총 ${formatMoney(offerInfo.price.toLocaleString())} 원`}
         />
       </div>
+
       <Divider />
 
       <div className="flex gap-4">
@@ -38,6 +40,20 @@ export default function OfferInfo(offerInfo: OfferInfoType) {
           견적금액에 대해 궁금한 점을 채팅으로 물어보세요.
         </span>
       </div>
+
+      <Link
+        href={`/expert/${offerInfo.expert_id}`}
+        className="flex bg-primary6 rounded-[4px] px-20 py-12 justify-between items-center"
+      >
+        <span className="font-regular text-13 text-primary0">전문가 프로필 보기</span>
+        <Image
+          src={ArrowRightIcon}
+          width={7}
+          height={11}
+          className="width-7 height-11"
+          alt="arrow-icon"
+        />
+      </Link>
     </div>
   );
 }
