@@ -9,57 +9,49 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 interface ChattingListProps {
-  chatList: ChattingRoomType[];
+  chattingRoomList: ChattingRoomType[];
 }
 
-export const chattingRoomDummyData: ChattingRoomType[] = [
+export const dummyChattingRooms: ChattingRoomType[] = [
   {
-    id: 'room1',
-    client_id: 'client1',
-    expert_id: 'expert1',
-    created_at: '2025-04-01T10:00:00Z',
-    lasst_message: '안녕하세요, 상담 요청드립니다.',
-    last_message_time: '2025-04-01T10:05:00Z',
-    expert_name: '이상훈',
-    expert_profile_image: '/images/DefaultImage.png',
+    roomId: 'room1',
+    otherUserName: '김철수',
+    otherUserProfile: '/images/DefaultProfile.png',
+    lastMessage: '안녕하세요! 상담 요청드립니다.',
+    lastMessageTime: '2025-04-01T10:30:00Z',
+    unreadCount: 2,
   },
   {
-    id: 'room2',
-    client_id: 'client2',
-    expert_id: 'expert2',
-    created_at: '2025-04-02T11:00:00Z',
-    lasst_message: '견적서를 확인해주세요.',
-    last_message_time: '2025-04-02T11:15:00Z',
-    expert_name: '김민수',
-    expert_profile_image: '/images/DefaultImage.png',
+    roomId: 'room2',
+    otherUserName: '이영희',
+    otherUserProfile: '/images/DefaultProfile.png',
+    lastMessage: '견적서를 확인해주세요.',
+    lastMessageTime: '2025-04-02T14:15:00Z',
+    unreadCount: 0,
   },
   {
-    id: 'room3',
-    client_id: 'client3',
-    expert_id: 'expert3',
-    created_at: '2025-04-03T12:00:00Z',
-    lasst_message: '감사합니다. 좋은 하루 되세요.',
-    last_message_time: '2025-04-03T12:30:00Z',
-    expert_name: '박지훈',
-    expert_profile_image: '/images/DefaultImage.png',
+    roomId: 'room3',
+    otherUserName: '박민수',
+    otherUserProfile: '/images/DefaultProfile.png',
+    lastMessage: '감사합니다. 좋은 하루 되세요.',
+    lastMessageTime: '2025-04-03T09:45:00Z',
+    unreadCount: 5,
   },
   {
-    id: 'room4',
-    client_id: 'client4',
-    expert_id: 'expert4',
-    created_at: '2025-04-04T13:00:00Z',
-    lasst_message: '추가 문의사항이 있습니다.',
-    last_message_time: '2025-04-04T13:20:00Z',
-    expert_name: '최유리',
-    expert_profile_image: '/images/DefaultImage.png',
+    roomId: 'room4',
+    otherUserName: '최유리',
+    otherUserProfile: '/images/DefaultProfile.png',
+    lastMessage: '추가 문의사항이 있습니다.',
+    lastMessageTime: '2025-04-04T16:20:00Z',
+    unreadCount: 1,
   },
 ];
 
-export default function ChattingList({ chatList }: ChattingListProps) {
+export default function ChattingList({ chattingRoomList }: ChattingListProps) {
   const [filter, setFilter] = useState<ChattingStateType>(CHATTING_STATE[0].state);
   const [search, setSearch] = useState<string>('');
   const searchParams = useSearchParams();
-  const id = searchParams.get('id'); // 현재 선택된 채팅방 id
+  const id = searchParams.get('roomId'); // 현재 선택된 채팅방 id
   const router = useRouter();
 
   // 현재 채팅 유저 상태 -> 전역에서 가져오는 방법 고려
@@ -67,7 +59,9 @@ export default function ChattingList({ chatList }: ChattingListProps) {
   const userType = pathname.split('/')[1]; // client or expert
 
   const handleChatItemClick = (chatRoomId: string) => {
-    router.push(`/${userType}/chat?id=${chatRoomId}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('roomId', chatRoomId);
+    router.push(`/client/chat?${params.toString()}`);
   };
 
   return (
@@ -91,16 +85,16 @@ export default function ChattingList({ chatList }: ChattingListProps) {
 
       {/* 채팅 목록 */}
       <div className="flex flex-col rounded-[8px] border-1 border-black4 overflow-hidden ">
-        {chattingRoomDummyData.map((item, index) => (
+        {chattingRoomList.map((item, index) => (
           <ChatListItem
             key={index}
-            chatRoomId={item.id}
-            recentChatDate={new Date(item.last_message_time)}
-            text={item.lasst_message}
-            userName={item.expert_name}
-            userProfile={item.expert_profile_image}
-            isSelected={id === item.id}
-            onClick={() => handleChatItemClick(item.id)}
+            chatRoomId={item.roomId}
+            recentChatDate={new Date(item.lastMessageTime)}
+            text={item.lastMessage}
+            userName={item.otherUserName}
+            userProfile={item.otherUserProfile}
+            isSelected={id === item.roomId}
+            onClick={() => handleChatItemClick(item.roomId)}
           />
         ))}
       </div>
