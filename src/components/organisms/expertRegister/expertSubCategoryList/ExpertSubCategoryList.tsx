@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import ProgressBar from '@/components/atoms/bars/progressBar/ProgressBar';
+import ProgressBar, { ProgressStep } from '@/components/atoms/bars/progressBar/ProgressBar';
 import SemiBoldText from '@/components/atoms/texts/semiBoldText/SemiBoldText';
 import CheckboxWithLabel from '@/components/atoms/checkboxes/checkboxWithLabel/CheckboxWithLabel';
 import type { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
@@ -27,7 +27,7 @@ function ExpertServices({ selectedServices, setSelectedServices }: ExpertService
 
   return (
     <article className="w-636 flex flex-col items-center gap-64 px-54 py-64 bg-black1 rounded-xl">
-      <ProgressBar step={3} />
+      <ProgressBar step={ProgressStep.STEP3} />
       <SemiBoldText title="어떤 서비스를 제공할 수 있나요?" fontSize={28} />
 
       {selectedCategory && (

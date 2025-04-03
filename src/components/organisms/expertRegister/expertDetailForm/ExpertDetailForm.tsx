@@ -64,7 +64,7 @@ function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
 
   return (
     <article className="w-636 flex flex-col items-center gap-64 px-54 py-64 bg-black1 rounded-xl">
-      <ProgressBar step={ProgressStep.STEP3} />
+      <ProgressBar step={ProgressStep.STEP5} />
       <SemiBoldText title="마지막으로 필수 정보를 입력해주세요." fontSize={28} />
 
       <div className="w-full flex flex-col gap-32">

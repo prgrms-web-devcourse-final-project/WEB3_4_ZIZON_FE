@@ -26,6 +26,24 @@ function ExpertRegisterTemplete() {
     accountNumber: '',
   });
 
+  const isStepValid = () => {
+    switch (step) {
+      case 1:
+        return selectedValue !== null;
+      case 2:
+        return selectedServices.length > 0;
+      case 3:
+        return (
+          expertDetail.careerYears !== '' &&
+          expertDetail.introduction !== '' &&
+          expertDetail.bankName !== '' &&
+          expertDetail.accountNumber !== ''
+        );
+      default:
+        return false;
+    }
+  };
+
   useEffect(() => {
     const category = searchParams.get('expert-category') as ExpertCategory | null;
     if (category) {
@@ -34,6 +52,8 @@ function ExpertRegisterTemplete() {
   }, [searchParams]);
 
   const handleNext = () => {
+    if (!isStepValid()) return;
+
     if (step < 3) {
       setStep(step + 1);
     } else if (step === 3) {
@@ -85,6 +105,7 @@ function ExpertRegisterTemplete() {
           onClickBefore={handleBefore}
           onClickNext={handleNext}
           state={step === 3 ? 'register' : 'next'}
+          disabled={!isStepValid()}
         />
       </div>
     </section>

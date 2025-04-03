@@ -3,6 +3,7 @@ interface ExpertStepFooterProps {
   onClickBefore: () => void;
   onClickNext?: () => void;
   onClickRegister?: () => void;
+  disabled?: boolean;
 }
 
 function ExpertStepFooterButton({
@@ -10,6 +11,7 @@ function ExpertStepFooterButton({
   onClickBefore,
   onClickNext,
   onClickRegister,
+  disabled = false,
 }: ExpertStepFooterProps) {
   return (
     <div className="max-w-fit">
@@ -21,15 +23,21 @@ function ExpertStepFooterButton({
       </button>
       {state === 'next' ? (
         <button
-          className="py-12 px-28 bg-black12 rounded-lg border border-black12 text-16 font-semibold text-black1"
+          className={`py-12 px-28 rounded-lg border text-16 font-semibold text-black1 ${
+            disabled ? 'bg-black3 border-black3 cursor-not-allowed' : 'bg-black12 border-black12'
+          }`}
           onClick={onClickNext}
+          disabled={disabled}
         >
           다음
         </button>
       ) : (
         <button
-          className="py-12 px-28 bg-primary5 rounded-lg border border-primary5 text-16 font-semibold text-black1"
+          className={`py-12 px-28 rounded-lg border text-16 font-semibold text-black1 ${
+            disabled ? 'bg-black3 border-black3 cursor-not-allowed' : 'bg-primary5 border-primary5'
+          }`}
           onClick={onClickRegister}
+          disabled={disabled}
         >
           등록
         </button>

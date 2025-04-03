@@ -3,7 +3,7 @@
 import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
 import SemiBoldText from '@/components/atoms/texts/semiBoldText/SemiBoldText';
 import LabelWithIconButton from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
-import ProgressBar from '@/components/atoms/bars/progressBar/ProgressBar';
+import ProgressBar, { ProgressStep } from '@/components/atoms/bars/progressBar/ProgressBar';
 
 interface ExpertCategoryProps {
   selectedValue: ExpertCategory | null;
@@ -17,7 +17,7 @@ function ExpertCategoryList({ selectedValue, setSelectedValue }: ExpertCategoryP
 
   return (
     <article className="w-636 flex flex-col items-center gap-64 px-54 py-64 bg-black1 rounded-xl">
-      <ProgressBar step={1} />
+      <ProgressBar step={ProgressStep.STEP1} />
       <SemiBoldText title="어떤 전문가로 활동하실 건가요?" fontSize={28} />
       <div className="w-full grid grid-cols-2 gap-24">
         <LabelWithIconButton
