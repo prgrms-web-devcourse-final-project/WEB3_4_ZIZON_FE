@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import FindEmailOrPassword from './FindEmailOrPassword';
+import FindEmailOrPassword from './GoToSignUp';
 
 const meta = {
   title: 'Atoms/Texts/FindEmailOrPassword',
