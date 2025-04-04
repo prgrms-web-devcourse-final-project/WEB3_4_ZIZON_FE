@@ -6,7 +6,7 @@ import LoginForm from '@/components/organisms/auth/loginForm/LoginForm';
 import GoToSignUp from '@/components/atoms/texts/goToSignUp/GoToSignUp';
 import SocialLoginButtonConainter from '@/components/molecules/socialLoginButtonConainter/SocialLoginButtonConainter';
 import { BaseFormData } from '@/utils/FormValidator';
-import { apiInstance } from '@/utils/apiInstance';
+import { APIBuilder } from '@/utils/APIBuilder';
 
 const LoginPageTemplate = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const LoginPageTemplate = () => {
   // 로그인 제출 처리
   const handleLoginSubmit = async (data: BaseFormData) => {
     try {
-      const response = await apiInstance.post('/auth/login', data);
+      const response = await APIBuilder.post('/auth/login', data).build().call();
 
       if (response.status === 200) {
         // TODO: 토큰 저장 로직 추가
