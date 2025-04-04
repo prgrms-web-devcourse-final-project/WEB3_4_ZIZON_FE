@@ -30,7 +30,9 @@ export default async function OrderPage({
     // == Template 사용 예 ===
     <OrderTemplate
       paymentType={'PROJECT'}
-      paymentButton={<PaymentButton orderId={orderId} orderInfo={orderInfo} />}
+      orderId={orderId}
+      orderInfo={orderInfo}
+      customerKey={customerKey}
     >
       <OrderInfoList
         title="구매상품"
