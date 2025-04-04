@@ -39,7 +39,7 @@ export default async function MyPageLayout({
     <ReactQueryClientProvider>
       <html lang="kr">
         <body>
-          <div className="grid grid-cols-12 gap-24 w-1920 px-320 mx-auto mt-72">
+          <div className="grid grid-cols-12 gap-24 w-1920 px-320 mx-auto my-72">
             <MypageSidebar
               profileInfo={profileInfo}
               initialRole={userRole === 'expert' ? 'expert' : 'client'}
