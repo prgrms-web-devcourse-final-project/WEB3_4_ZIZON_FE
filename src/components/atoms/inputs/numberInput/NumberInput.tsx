@@ -38,6 +38,7 @@ export default function NumberInput({
         value={value}
         disabled={disabled}
         id={id}
+        min={0}
       />
       {error && errorText && (
         <span className="text-redWarning text-13 font-regular mt-2 pl-2">{errorText}</span>
