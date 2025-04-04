@@ -15,7 +15,7 @@ interface SettingFixStepTwoTemplateProps extends DatePickerProps{
 export default function SettingFixStepTwoTemplate({checkSelectBoxProps, onClickBefore, onClickNext, selectedDay, setSelectedDay}: SettingFixStepTwoTemplateProps) {
 
   return (
-    <div className='px-230 bg-black2'>
+    <div className='w-1062 bg-black2'>
       <h1 className="text-24 font-semibold pt-78 mb-28">견적 요청서를 작성하는 중이에요</h1>
       <CommissionTopBox title={'2.서비스 날짜 및 지역'} progressStep={4} isBefore={true} onClickBefore={onClickBefore} />
       <div className='flex mt-24 items-start w-full'>
