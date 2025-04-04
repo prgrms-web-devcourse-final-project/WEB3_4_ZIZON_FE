@@ -21,7 +21,7 @@ function CommissionListItem({
   created_at,
 }: CommissionListItemProps) {
   return (
-    <article className="w-953 flex justify-between gap-44 px-44 py-40 rounded-2xl hover:shadow-project-item-card transition-all duration-300">
+    <article className="w-953 flex justify-between bg-black1 gap-44 px-44 py-40 rounded-2xl hover:shadow-project-item-card transition-all duration-300">
       <div className="flex flex-col gap-40">
         <div className="flex flex-col gap-24">
           <div className="flex gap-8 items-center">

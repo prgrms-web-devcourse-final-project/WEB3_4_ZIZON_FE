@@ -11,7 +11,7 @@ export default function SettingFixStepOneTemplate() {
 
   }
   return (
-    <div className='px-230 bg-black2'>
+    <div className='w-1062 bg-black2'>
       <h1 className="text-24 font-semibold pt-78 mb-28">견적 요청서를 작성하는 중이에요</h1>
       <CommissionTopBox title={'2.대상 선정'} progressStep={2} isBefore={true} onClickBefore={() => {}} />
       <div className='flex mt-24 items-start w-full'>
