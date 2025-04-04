@@ -1,25 +1,39 @@
-import React from 'react';
+'use client';
+
 import Image from 'next/image';
 import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
 import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
 
-interface ProfileInfoProps {
+export interface ProfileInfoProps {
   profileImage: string;
   userName: string;
-  isState: boolean;
+  isState: 'client' | 'expert';
   certificationBadgeText?: string;
-  onChangeState: () => void
+  onChangeState: () => void;
 }
-export default function ProfileInfo({profileImage, isState, certificationBadgeText, userName, onChangeState}: ProfileInfoProps) {
+
+export default function ProfileInfo({
+  profileImage,
+  userName,
+  isState,
+  certificationBadgeText,
+  onChangeState,
+}: ProfileInfoProps) {
   return (
-    <div className="grid grid-cols-1 gap-y-20 text-center items-center max-w-fit">
-      <div className="flex max-w-full justify-center">
-        <Image className="rounded-full m-auto" src={profileImage} alt={""} width={150} height={150} />
+    <div className="flex flex-col items-center gap-20">
+      <div className="w-150 h-150 overflow-hidden rounded-full shadow-style1">
+        <Image
+          src={profileImage}
+          alt="프로필 이미지"
+          width={150}
+          height={150}
+          className="size-full object-cover"
+        />
       </div>
-      {isState && typeof certificationBadgeText == 'string'? <div className="max-w-fit mx-auto"><CertificationTag text={certificationBadgeText}/></div>: null}
-      <div className="text-[20px] font-medium">
-        <label>{userName}</label>
-      </div>
+      {isState === 'expert' && certificationBadgeText && (
+        <CertificationTag text={certificationBadgeText} />
+      )}
+      <h2 className="text-24 font-bold">{userName}</h2>
       <ChangePositionButton isState={isState} onChangeState={onChangeState} />
     </div>
   );

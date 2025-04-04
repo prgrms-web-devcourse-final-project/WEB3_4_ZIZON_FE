@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import Image from 'next/image';
 
-export type TextInputType = 'text' | 'email' | 'password' | 'tel';
+export type TextInputType = 'text' | 'email' | 'password' | 'tel' | 'number';
 
 export interface TextInputProps {
   id: string;

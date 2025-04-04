@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import '../globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import localFont from 'next/font/local';
-import DesktopNavigation from '@/components/organisms/desktopNavigation/DesktopNavigation';
 
 export const metadata: Metadata = {
   title: '💫DopDang',
@@ -17,7 +16,7 @@ const pretendard = localFont({
   fallback: ['Arial', 'sans-serif'],
 });
 
-export default function RootLayout({
+export default function CommissionLayout({
                                      children,
                                    }: Readonly<{
   children: React.ReactNode;
@@ -26,7 +25,7 @@ export default function RootLayout({
     <html lang="kr" className={`${pretendard.variable}`}>
     <body className={`${pretendard.className} bg-black2`}>
     <ReactQueryClientProvider>
-      <main className="w-full">{children}</main>
+      <main className="w-fit mx-auto pb-200">{children}</main>
     </ReactQueryClientProvider>
     </body>
     </html>

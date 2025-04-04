@@ -22,7 +22,7 @@ interface MoveStepFiveTemplateProps {
 }
 export default function MoveStepFiveTemplate({id1, id2, id3, value1, value2, value3, onChange1, onChange2, onChange3, checkSelectBoxProps, onClickBefore, onClickNext}: MoveStepFiveTemplateProps) {
   return (
-    <div className='px-230 bg-black2'>
+    <div className='w-1062 bg-black2'>
       <h1 className="text-24 font-semibold pt-78 mb-28">견적 요청서를 작성하는 중이에요</h1>
       <CommissionTopBox title={'6.도착지 정보'} progressStep={4} isBefore={true} onClickBefore={onClickBefore} />
       <div className='flex mt-24 items-start w-full'>
