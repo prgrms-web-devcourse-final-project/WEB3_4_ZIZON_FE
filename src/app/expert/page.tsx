@@ -11,7 +11,7 @@ export default async function ExpertPage() {
   const expertList: Array<ExpertListItemProps> = [...EXPERT_LIST];
 
   return (
-    <div className="w-full min-x-1280 px-320">
+    <div className="w-full px-320 flex justify-center">
       <ExpertTemplate expertList={expertList} />
     </div>
   );
