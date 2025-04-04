@@ -22,7 +22,7 @@ export default function StoreSearchRegister() {
     }
   }, [debouncedValue]);
   return (
-    <div className="w-full flex justify-between">
+    <div className="w-full flex justify-between max-w-1280">
       <SearchBar
         placeholder="검색어를 입력해주세요"
         type="default"

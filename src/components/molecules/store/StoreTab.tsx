@@ -4,7 +4,6 @@ import VerticalTabItem from '@/components/atoms/tabs/verticalTabItem/VerticalTab
 import VerticalTabTitle from '@/components/atoms/tabs/verticalTabTitle/VerticalTabTitle';
 import useSetSearchParams from '@/hooks/useSetSearchParams';
 import { useSearchParams } from 'next/navigation';
-import { text } from 'stream/consumers';
 
 const DIGITAL_CATEGORY_LIST = [
   {
