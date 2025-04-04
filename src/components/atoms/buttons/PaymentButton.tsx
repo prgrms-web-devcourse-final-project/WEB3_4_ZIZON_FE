@@ -1,8 +1,7 @@
-import { PropsWithChildren, isValidElement, ReactElement, cloneElement } from 'react';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 
-interface PaymentInfo {
+export interface PaymentInfo {
   seller: string;
   categoryId: ProjectCategoryIdType;
   charge: number;
@@ -48,7 +47,7 @@ export default function PaymentButton({
       type="button"
       disabled={false}
       onClick={handlePayment}
-      className={`px-16 py-12 rounded-[8px] text-16 font-semibold cursor-pointer bg-primary5 text-primary0`}
+      className={`w-200 px-16 py-12 rounded-[8px] text-16 font-semibold cursor-pointer bg-primary5 text-primary0`}
     >
       결제하기
     </button>

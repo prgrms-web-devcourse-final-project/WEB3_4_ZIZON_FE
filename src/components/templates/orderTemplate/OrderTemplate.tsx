@@ -1,17 +1,20 @@
+'use client';
 import { PaymentType } from '@/types/payment';
-import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import PaymentNotice from '@/components/molecules/order/paymentNotice/PaymentNotice';
 import { PropsWithChildren, ReactElement } from 'react';
-import PaymentButton from '@/components/atoms/buttons/PaymentButton';
+import PaymentButton, { PaymentInfo } from '@/components/atoms/buttons/PaymentButton';
 
 interface OrderTemplateProps extends PropsWithChildren {
   paymentType: PaymentType;
-  paymentButton: ReactElement<typeof PaymentButton>;
+  orderId: string;
+  orderInfo: PaymentInfo;
+  customerKey: string;
 }
 
 export default function OrderTemplate({
   paymentType,
-  paymentButton,
+  orderId,
+  orderInfo,
   children,
 }: OrderTemplateProps) {
   return (
@@ -26,7 +29,9 @@ export default function OrderTemplate({
       <div className="w-full flex flex-col gap-32">{children}</div>
 
       {/* 결제하기 버튼 */}
-      <div className="w-193 absolute right-0 bottom-[-80px]">{paymentButton}</div>
+      <div className="w-193 absolute right-0 bottom-[-80px]">
+        <PaymentButton orderId={orderId} orderInfo={orderInfo} />
+      </div>
     </div>
   );
 }
