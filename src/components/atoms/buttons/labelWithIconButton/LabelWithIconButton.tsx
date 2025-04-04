@@ -4,11 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 
 export type ExpertCategory = 'move' | 'fix' | 'tutor' | 'hobby';
+export type ProductCategory = 'digital' | 'living';
 export type ButtonState = 'default' | 'active';
 
 interface LabelWithIconButtonProps {
   onClick: () => void;
-  value: ExpertCategory;
+  value: ExpertCategory | ProductCategory;
   state: ButtonState;
   name: string;
 }
@@ -30,10 +31,18 @@ const BUTTON_CONFIG = {
     icon: '/icons/HobbyPalette.svg',
     label: '취미 생활',
   },
+  digital: {
+    icon: '/images/DigitalLaptop.png',
+    label: 'IT/Digital',
+  },
+  living: {
+    icon: '/images/LivingHouse.png',
+    label: '리빙',
+  },
 } as const;
 
 const BASE_BUTTON_CLASSES =
-  'flex text-center min-w-full content-center px-24 py-28 rounded-lg text-16 font-medium text-black12 transition-all duration-300';
+  'flex text-center min-w-full items-center px-24 py-28 rounded-lg text-16 font-medium text-black12 transition-all duration-300';
 const STATE_CLASSES = {
   default: 'bg-black2 hover:bg-black3',
   active: 'bg-primary0',
