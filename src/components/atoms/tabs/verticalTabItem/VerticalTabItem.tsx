@@ -24,7 +24,7 @@ export default function VerticalTabItem({
   return (
     <li
       onClick={() => onClick(name)}
-      className={`list-none px-20 py-12 rounded-[8px] hover:bg-black3 font-semibold transition-colors duration-200 ${focusedTabStyle} ${sizeVariation[size]}`}
+      className={`list-none px-20 py-12 rounded-[8px] hover:bg-black3 font-semibold cursor-pointer transition-colors duration-200 ${focusedTabStyle} ${sizeVariation[size]}`}
     >
       {text}
     </li>

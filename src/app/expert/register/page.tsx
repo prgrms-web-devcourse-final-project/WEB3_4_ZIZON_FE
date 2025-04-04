@@ -1,4 +1,4 @@
-import ExpertRegisterTemplete from '@/components/templates/expertRegister/ExpertRegisterTemplete';
+import ExpertRegisterTemplete from '@/components/templates/expertRegisterTemplete/ExpertRegisterTemplete';
 
 export default function RegisterPage() {
   return <ExpertRegisterTemplete />;

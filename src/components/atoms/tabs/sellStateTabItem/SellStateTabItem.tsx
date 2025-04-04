@@ -1,53 +1,93 @@
-import React from 'react';
+'use client';
+
 import Image from 'next/image';
-import ProgressBlue from "public/icons/ProgressBlue.svg"
-import ProblemRed from "public/icons/ProblemRed.svg"
-import CheckGreen from "public/icons/CheckGreen.svg"
+import ProgressBlue from 'public/icons/ProgressBlue.svg';
+import ProblemRed from 'public/icons/ProblemRed.svg';
+import CheckGreen from 'public/icons/CheckGreen.svg';
+import { SellState } from '@/types/sellState';
 
-interface props {
-  state: "진행" | "대기" | "취소" | "구매";
-  count: number
-}
-function SellStateTabItem({state, count}:props) {
-  const value = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-  if(state === "진행") {
-    return (
-      <div className="flex bg-black1 drop-shadow-xl py-16 px-20 rounded-lg">
-        <div className="flex ">
-          <Image src={ProgressBlue} alt={""} width={30} height={30}/>
-          <label className="text-13 w-[64px] font-medium text-black10 ml-8 content-center">진행중</label>
-        </div>
-        <label className="text-[20px] text-right  ml-32 w-full font-semiBold content-center">{value}</label>
-      </div>
-    );
-  } else if(state === "대기") {
-    return (
-      <div className="flex bg-black1 drop-shadow-xl py-16 px-20 rounded-lg">
-        <div className="flex">
-          <Image src={CheckGreen} alt={''} width={30} height={30} />
-          <label className="text-13 w-[148px] font-medium text-black10 ml-8 content-center">작업 완료 대기</label>
-        </div>
-        <label className="text-[20px] text-right  ml-32 w-full font-semiBold content-center">{value}</label>
-      </div>
-    );
-  } else if (state === '취소') {
-    return (
-      <div className="flex bg-black1 drop-shadow-xl py-16 px-20 rounded-lg">
-        <div className="flex">
-          <Image src={ProblemRed} alt={''} width={30} height={30} />
-          <label className="text-13 w-[156px] font-medium text-black10 ml-8 content-center">취소•문제 해결</label>
-        </div>
-        <label className="text-[20px] text-right  ml-32 w-full font-semiBold content-center">{value}</label>
-      </div>
-    );
-  } else if (state === '구매') {
-    return (
-      <div className="flex bg-black1 border border-black4 py-16 px-20 rounded-lg">
-        <label className="text-13 w-[98px] font-medium text-black10 ml-8 content-center">구매 확정</label>
-        <label className="text-[20px] text-right  ml-32 w-full font-semiBold content-center">{value}</label>
-      </div>
-    );
-  }
+interface SellStateTabItemProps {
+  state: SellState;
+  count: number;
+  isSelected?: boolean;
+  isExpertView?: boolean;
 }
 
-export default SellStateTabItem;
+const stateConfig = {
+  inProgress: {
+    icon: ProgressBlue,
+    label: '진행중',
+    hasBorder: false,
+  },
+  waiting: {
+    icon: CheckGreen,
+    label: '작업 완료 대기',
+    expertLabel: '작업 완료 요청',
+    hasBorder: false,
+  },
+  cancelled: {
+    icon: ProblemRed,
+    label: '취소•문제 해결',
+    hasBorder: false,
+  },
+  completed: {
+    icon: null,
+    label: '구매 확정',
+    expertLabel: '거래 완료',
+    hasBorder: true,
+  },
+} as const;
+
+function formatNumber(num: number): string {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+export default function SellStateTabItem({
+  state,
+  count,
+  isSelected = false,
+  isExpertView = false,
+}: SellStateTabItemProps) {
+  const config = stateConfig[state];
+  const formattedCount = formatNumber(count);
+  const label = isExpertView && 'expertLabel' in config ? config.expertLabel : config.label;
+
+  return (
+    <div
+      className={`h-full flex bg-black1 shadow-style2 py-16 px-20 rounded-lg border border-black2 ${
+        config.hasBorder ? 'border-black4' : ''
+      } ${isSelected ? 'border-primary4' : ''}`}
+    >
+      <div className="flex">
+        {config.icon && (
+          <>
+            <Image src={config.icon} alt="" width={30} height={30} />
+            <label
+              className={`text-16 w-150 font-medium text-black10 ml-12 content-center ${
+                isSelected ? 'text-primary' : ''
+              }`}
+            >
+              {label}
+            </label>
+          </>
+        )}
+        {!config.icon && (
+          <label
+            className={`text-16 w-150 font-medium text-black10 ml-8 content-center ${
+              isSelected ? 'text-primary' : ''
+            }`}
+          >
+            {label}
+          </label>
+        )}
+      </div>
+      <label
+        className={`text-20 text-right ml-32 w-full font-semiBold content-center ${
+          isSelected ? 'text-primary' : ''
+        }`}
+      >
+        {formattedCount}
+      </label>
+    </div>
+  );
+}
