@@ -13,7 +13,7 @@ export default function StoreSearchRegister() {
   const router = useRouter();
 
   const handleRegister = () => {
-    router.push('/store/register');
+    router.push('/store/products/register');
   };
 
   useEffect(() => {
