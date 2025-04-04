@@ -7,7 +7,7 @@ import SignupForm from '@/components/organisms/auth/signupForm/SignupForm';
 import OrSeparator from '@/components/atoms/texts/orSeparator/OrSeparator';
 import SocialLoginButtonConainter from '@/components/molecules/socialLoginButtonConainter/SocialLoginButtonConainter';
 import { SignupFormData } from '@/utils/FormValidator';
-import { apiInstance } from '@/utils/apiInstance';
+import { APIBuilder } from '@/utils/APIBuilder';
 
 const initialFormData: SignupFormData = {
   email: '',
@@ -24,7 +24,7 @@ const SignupPageTemplate = () => {
   // 회원가입 제출 처리
   const handleSignupSubmit = async (data: SignupFormData) => {
     try {
-      const response = await apiInstance.post('/auth/signup', data);
+      const response = await APIBuilder.post('/auth/signup', data).build().call();
 
       if (response.status === 201) {
         alert('회원가입이 완료되었습니다.');
@@ -45,10 +45,12 @@ const SignupPageTemplate = () => {
     authCode: string,
   ): Promise<boolean> => {
     try {
-      const response = await apiInstance.post('/auth/verify-phone', {
+      const response = await APIBuilder.post('/auth/verify-phone', {
         phoneNumber,
         authCode,
-      });
+      })
+        .build()
+        .call();
 
       if (response.status === 200) {
         setIsPhoneVerified(true);
