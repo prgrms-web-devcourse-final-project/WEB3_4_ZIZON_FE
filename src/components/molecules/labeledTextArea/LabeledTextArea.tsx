@@ -24,7 +24,7 @@ export default function LabeledTextArea({
         value={value}
         onChange={e => onChange(e.target.value)}
         className="w-full border rounded-sm text-16 px-16 py-12
-      placeholder:font-regular placeholder:text-black6  text-black12 border-black5  focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent
+      placeholder:font-regular placeholder:text-black6  text-black12 border-black5 bg-black1 focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent
       focus:shadow-input"
       />
     </div>
