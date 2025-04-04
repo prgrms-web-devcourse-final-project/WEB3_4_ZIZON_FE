@@ -127,7 +127,7 @@ export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
 
       <EditableField
         id="shortIntro"
-        label="환풍 소개"
+        label="환줄 소개"
         value={shortIntro}
         placeholder="6년 경력의 청소 전문가, 완벽한 클린 환경을 만들어 드립니다."
         onChange={setShortIntro}
@@ -143,6 +143,8 @@ export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
         onChange={setFullIntro}
         isEditable={isFullIntroEditable}
         onEditClick={handleFullIntroEditClick}
+        useTextarea={true}
+        rows={6}
       />
     </div>
   );
