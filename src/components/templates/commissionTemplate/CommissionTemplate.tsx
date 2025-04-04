@@ -12,7 +12,7 @@ interface CommissionTemplateProps {
 
 function CommissionTemplate({value, onChange, onReset}: CommissionTemplateProps) {
   return (
-    <div>
+    <div className="mt-72">
       <h3 className="text-32 font-semibold">등록된 요청</h3>
       <SearchBar type={'default'} placeholder={'검색어를 입력해주세요.'} onChange={onChange} value={value}/>
       <div className="flex mt-38">
