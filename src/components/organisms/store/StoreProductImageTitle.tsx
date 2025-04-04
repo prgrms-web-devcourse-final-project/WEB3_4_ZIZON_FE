@@ -18,6 +18,13 @@ export default function StoreProductImageTitle({ product }: StoreProductImageTit
   const paymentType = product.product_type === 'physical' ? 'PROVISION' : 'ORDER';
   const [amount, setAmount] = useState<number>(1);
   const router = useRouter();
+
+  const handleBuyClick = () => {
+    // TODO : 상품 구매 요청 보내기
+
+    // 결제 페이지로 이동
+    router.push(`/payments?id=${product.product_id}&type=${paymentType}`);
+  };
   return (
     <div className="w-full flex gap-43">
       {/* 상품이미지 */}
@@ -59,9 +66,7 @@ export default function StoreProductImageTitle({ product }: StoreProductImageTit
             text={'구매하기'}
             size="full"
             state="blue"
-            onClick={() =>
-              router.push(`/payments?id=${product.product_id}&type=${paymentType}&amount=${amount}`)
-            }
+            onClick={handleBuyClick}
             disabled={amount > product.stock}
           />
         </div>
