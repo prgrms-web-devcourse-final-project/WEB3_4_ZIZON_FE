@@ -9,7 +9,7 @@ export interface ProductType {
   title: string;
 }
 
-const DUMMY_PRODUCT_LIST: ProductType[] = [
+export const DUMMY_PRODUCT_LIST: ProductType[] = [
   {
     category: '디지털 컨텐츠',
     imageUrl: '/images/DefaultImage.png',
