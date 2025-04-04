@@ -14,7 +14,7 @@ function DesktopNavigation({ isLoggedIn = false }: DesktopNavigationProps) {
 
   return (
     <header className="w-full py-20 flex justify-center items-center border-b border-black4">
-      <div className="flex justify-between items-center w-1920 px-320">
+      <div className="flex justify-between items-center min-w-1920 px-320">
         <div className="flex items-center gap-40">
           <DopdangLogo type="kr" />
           <NavigationLinks />
