@@ -14,7 +14,6 @@ export default function ExpertTemplate({ expertList }: ExpertTemplateProps) {
   return (
     <div className="w-full h-fit mt-46">
       <Banner />
-
       {/* 사이드바 영역 */}
       <div className="w-full flex gap-24 mt-40">
         <ExpertSidebar />
