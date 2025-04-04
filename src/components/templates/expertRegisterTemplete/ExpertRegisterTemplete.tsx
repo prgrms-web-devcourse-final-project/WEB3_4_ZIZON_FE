@@ -86,7 +86,7 @@ function ExpertRegisterTemplete() {
   };
 
   return (
-    <section className="w-full flex justify-center mt-72">
+    <section className="w-full flex justify-center my-72">
       <div className="flex flex-col items-end gap-32">
         {step === 1 && (
           <ExpertCategoryList

@@ -23,7 +23,7 @@ function BannerSection() {
         <BannerButtons />
         <SearchBar
           onChange={() => {}}
-          placedholder="어떤 서비스가 필요하세요?"
+          placeholder="어떤 서비스가 필요하세요?"
           type="large"
           value=""
         />
