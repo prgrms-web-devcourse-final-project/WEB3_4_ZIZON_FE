@@ -2,7 +2,7 @@
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import OfferInfo from '@/components/molecules/chat/OfferInfo';
 import ProjectSummary from '@/components/organisms/projectSummary/ProjectSummary';
-import { OfferInfoType } from '@/types/offter';
+import { OfferInfoType } from '@/types/offer';
 
 const dummyOfferInfo: OfferInfoType = {
   id: 401,

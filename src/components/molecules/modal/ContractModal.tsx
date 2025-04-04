@@ -15,7 +15,7 @@ interface ContractModalProps {
   offerData: ContractInfoProps;
 }
 
-interface FormValue {
+export interface FormValue {
   servicePrice: number;
   serviceStartDate: string;
   serviceEndDate: string;

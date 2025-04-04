@@ -9,14 +9,6 @@ export default async function ExpertPage() {
 
   // Template에 내려줘야 할 정보,
   const expertList: Array<ExpertListItemProps> = [...EXPERT_LIST];
-  const ExpertResponse = await fetch(`${process.env.SERVER_URL}/api/experts`).then(res =>
-    res.json(),
-  );
-
-  if (!ExpertResponse.ok) {
-    throw new Error('Failed to fetch expert list');
-  }
-  console.log('expertResponse, ', ExpertResponse);
 
   return (
     <div className="w-full px-320 flex justify-center">
