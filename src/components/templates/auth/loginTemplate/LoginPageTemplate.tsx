@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import LoginForm from '@/components/organisms/auth/loginForm/LoginForm';
-import FindEmailOrPassword from '@/components/atoms/texts/findEmailOrPassword/FindEmailOrPassword';
+import GoToSignUp from '@/components/atoms/texts/goToSignUp/GoToSignUp';
 import SocialLoginButtonConainter from '@/components/molecules/socialLoginButtonConainter/SocialLoginButtonConainter';
 import { BaseFormData } from '@/utils/FormValidator';
 import { apiInstance } from '@/utils/apiInstance';
@@ -33,7 +33,7 @@ const LoginPageTemplate = () => {
     <div className="flex flex-col items-center mt-72">
       <DopdangLogo type="en" />
       <LoginForm onSubmit={handleLoginSubmit} />
-      <FindEmailOrPassword />
+      <GoToSignUp />
       <SocialLoginButtonConainter />
     </div>
   );

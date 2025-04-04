@@ -5,6 +5,7 @@ import SectionTitle from '@/components/atoms/texts/sectionTitle/SectionTitle';
 import ProjectItemCard, {
   ProjectItemCardProps,
 } from '@/components/molecules/projectItemCard/ProjectItemCard';
+import { useRouter } from 'next/navigation';
 
 const RECENT_PROJECTS: ProjectItemCardProps[] = [
   {
@@ -52,6 +53,8 @@ const RECENT_PROJECTS: ProjectItemCardProps[] = [
 ];
 
 function RecentProjectSection() {
+  const router = useRouter();
+
   return (
     <section className="flex flex-col gap-40">
       <div className="flex justify-between items-end">
@@ -59,7 +62,14 @@ function RecentProjectSection() {
           title="최근 등록된 프로젝트"
           subtitle="의뢰인이 방금 등록한 프로젝트를 확인해보세요."
         />
-        <StandardButton text="모두보기" onClick={() => {}} disabled={false} state="default" />
+        <StandardButton
+          text="모두보기"
+          onClick={() => {
+            router.push('/commission');
+          }}
+          disabled={false}
+          state="default"
+        />
       </div>
       <div className="grid grid-cols-3 gap-24">
         {RECENT_PROJECTS.map((project, index) => (
