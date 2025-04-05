@@ -4,7 +4,7 @@ import StoreProductImageTitle from '@/components/organisms/store/StoreProductIma
 
 export default function StoreProductDetailTemplate({ product }: { product: ProductDetailType }) {
   return (
-    <div className="flex flex-col gap-40">
+    <div className=" max-w-846 flex flex-col gap-40">
       {/* 상품이미지와 이름 */}
       <StoreProductImageTitle product={product} />
 
