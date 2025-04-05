@@ -12,10 +12,10 @@ interface ExpertTemplateProps {
 
 export default function ExpertTemplate({ expertList }: ExpertTemplateProps) {
   return (
-    <div className="w-full h-fit mt-46">
+    <div className="w-full h-fit mt-46 flex flex-col items-center">
       <Banner />
       {/* 사이드바 영역 */}
-      <div className="w-full flex gap-24 mt-40">
+      <div className=" flex gap-24 mt-40 ">
         <ExpertSidebar />
         {/* 컨텐츠 영역 */}
         <div className="w-full flex flex-col gap-16">

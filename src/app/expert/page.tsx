@@ -10,9 +10,5 @@ export default async function ExpertPage() {
   // Template에 내려줘야 할 정보,
   const expertList: Array<ExpertListItemProps> = [...EXPERT_LIST];
 
-  return (
-    <div className="w-full px-320 flex justify-center">
-      <ExpertTemplate expertList={expertList} />
-    </div>
-  );
+  return <ExpertTemplate expertList={expertList} />;
 }
