@@ -9,7 +9,7 @@ interface OrderResultProps {
   totalPrice: number;
 }
 
-const Divider = () => <div className="w-full h-[1px] mt-40 mb-16 bg-black4" />;
+const Divider = () => <div className="w-full h-[1px]  mb-16 bg-black4" />;
 
 export default function OrderResult({ infoList, totalPrice }: OrderResultProps) {
   return (
@@ -27,7 +27,7 @@ export default function OrderResult({ infoList, totalPrice }: OrderResultProps) 
       </div>
       <Divider />
       <SelectedOption
-        type="right-impact"
+        type="price-small"
         leftText="최종 결제금액"
         rightText={`${formatMoney(totalPrice)}원`}
       />
