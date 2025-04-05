@@ -24,12 +24,12 @@ const OPTION_STYLES: Record<OptionType, StyleConfig> = {
     right: 'text-16 text-black12 font-semibold',
   },
   'price-small': {
-    container: '',
+    container: 'justify-between',
     left: 'text-16 text-black7 font-medium',
     right: 'text-16 text-black7 font-semibold',
   },
   'price-large': {
-    container: '',
+    container: 'justify-between',
     left: 'text-20 text-black10 font-medium',
     right: 'text-20 text-black12 font-semibold',
   },

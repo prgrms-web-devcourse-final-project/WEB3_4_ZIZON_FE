@@ -2,6 +2,7 @@ import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
 import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import OrderTemplate from '@/components/templates/orderTemplate/OrderTemplate';
 import PaymentButton from '@/components/atoms/buttons/PaymentButton';
+import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 
 export default async function OrderPage({
   searchParams,
@@ -11,16 +12,28 @@ export default async function OrderPage({
   const { type: paymentType, id } = await searchParams;
 
   // 1. 서버에서 결제 정보(orderId, customerKey, 구매 상품 정보)를 가져오기 -> RQ로 래핑
-  const orderRes = await fetch(`${process.env.SERVER_URL}/payments/orderId`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  // const orderRes = await fetch(`${process.env.SERVER_URL}/payments/orderId`, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     paymentType: paymentType,
+  //     referenceId: id,
+  //   }),
+  // }).then(res => res.json());
+
+  const orderRes = {
+    orderInfo: {
+      seller: '이상훈',
+      categoryId: 2000 as ProjectCategoryIdType,
+      charge: 10000,
+      startDate: '2023-10-01T14:00:00Z',
+      endDate: '2023-10-01T16:00:00Z',
     },
-    body: JSON.stringify({
-      paymentType: paymentType,
-      referenceId: id,
-    }),
-  }).then(res => res.json());
+    orderId: 'order_1234567890',
+    customerKey: 'customer_1234567890',
+  };
 
   // 2. 결제에 필요한 orderId, customerKey
   const { orderId, customerKey, orderInfo } = orderRes;
