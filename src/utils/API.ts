@@ -13,6 +13,7 @@ export class API {
   data?: unknown;
   timeout?: number;
   withCredentials?: boolean;
+  revalidate?: number;
 
   constructor(method: HTTPMethod, url: string) {
     this.method = method;
@@ -46,7 +47,7 @@ export class API {
     };
 
     // 토큰 처리
-    const token = localStorage.getItem('token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
@@ -56,6 +57,7 @@ export class API {
       method: this.method,
       headers,
       credentials: this.withCredentials ? 'include' : 'same-origin',
+      next: { revalidate: this.revalidate },
     };
 
     // 요청 본문 설정

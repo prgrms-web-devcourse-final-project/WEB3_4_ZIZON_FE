@@ -17,6 +17,7 @@ export class APIBuilder {
     };
     this._instance.timeout = 5000;
     this._instance.withCredentials = false;
+    this._instance.revalidate = 0;
   }
 
   // HTTP 메서드에 따라 APIBuilder 객체를 생성하는 메서드들
@@ -53,6 +54,11 @@ export class APIBuilder {
 
   withCredentials(value: boolean): APIBuilder {
     this._instance.withCredentials = value;
+    return this;
+  }
+
+  revalidate(value: number): APIBuilder {
+    this._instance.revalidate = value;
     return this;
   }
 
