@@ -61,16 +61,3 @@ export const SERVICES: Record<ExpertCategory, { value: Service[ExpertCategory]; 
       { value: 'art', label: '미술' },
     ],
   };
-
-export interface ExpertInfoType {
-  introduction: string;
-  career_years: number;
-  certification: string;
-  bank_account: string;
-  availability: string;
-  seller_info: string;
-  // 추가 요청 정보
-  expert_name: string;
-  expert_profile: string;
-  expert_category: string;
-}
