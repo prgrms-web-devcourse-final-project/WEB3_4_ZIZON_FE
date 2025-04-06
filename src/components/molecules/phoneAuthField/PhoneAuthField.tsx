@@ -32,7 +32,7 @@ function PhoneAuthField({
 }: PhoneAuthFieldProps) {
   const phoneInputProps: TextInputProps = {
     id: 'phoneNumber',
-    placeholder: '010-0000-0000',
+    placeholder: '- 없이 입력',
     type: 'tel',
     value: phoneNumber,
     onChange: onPhoneNumberChange,
@@ -59,7 +59,7 @@ function PhoneAuthField({
       <StandardButton
         disabled={isVerifying}
         onClick={onVerifyClick}
-        text="인증하기"
+        text={authCode ? '인증번호 확인' : '인증번호 요청'}
         size="full"
         state="dark"
       />

@@ -92,7 +92,7 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         label="휴대폰 번호"
         type="tel"
         value={phoneNumber}
-        placeholder="010-1312-1231"
+        placeholder="01000000000"
         onChange={setPhoneNumber}
         isEditable={isPhoneEditable}
         onEditClick={handlePhoneEditClick}
