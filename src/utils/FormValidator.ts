@@ -14,6 +14,7 @@ export interface SignupFormData extends BaseFormData {
   passwordCheck: string;
   name: string;
   phoneNumber: string;
+  authCode?: string;
 }
 
 // 기본 폼 에러 인터페이스 (로그인에서 사용)
@@ -32,7 +33,7 @@ export interface SignupFormErrors extends BaseFormErrors {
 
 export class FormValidator {
   private static readonly EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  private static readonly PHONE_REGEX = /^010-\d{4}-\d{4}$/;
+  private static readonly PHONE_REGEX = /^010\d{8}$/;
   private static readonly AUTH_CODE_REGEX = /^\d{6}$/;
   private static readonly PASSWORD_REGEX =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
@@ -77,10 +78,10 @@ export class FormValidator {
   }
 
   static validateName(name: string): ValidationResult {
-    if (name.length < 2) {
+    if (name.length < 2 || name.length > 50) {
       return {
         isValid: false,
-        errorMessage: '이름은 2자 이상이어야 합니다.',
+        errorMessage: '올바른 이름을 입력해주세요.(2 - 50자)',
       };
     }
     return {
@@ -93,7 +94,7 @@ export class FormValidator {
     if (!this.PHONE_REGEX.test(phoneNumber)) {
       return {
         isValid: false,
-        errorMessage: '올바른 전화번호 형식이 아닙니다.',
+        errorMessage: '정확한 휴대폰 번호를 입력해주세요.',
       };
     }
     return {
