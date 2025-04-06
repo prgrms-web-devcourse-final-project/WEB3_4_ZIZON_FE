@@ -18,12 +18,8 @@ export interface ExpertType {
   certificateNames: string[]; // 자격증 이름 목록
 }
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
 export const getExpert = async (request: ExpertRequestType): Promise<ExpertType> => {
   const { expertId } = request;
-
-  await delay(5000);
 
   const response = await APIBuilder.get(`/experts/${expertId}`)
     .baseURL(`${process.env.SERVER_URL}`)

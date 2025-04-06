@@ -3,6 +3,7 @@
 import ResetButton from '@/components/atoms/buttons/ResetButton/ResetButton';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import ExpertFilterTab from '@/components/molecules/expert/expertFilterTab/ExpertFilterTab';
+import useSetSearchParams from '@/hooks/useSetSearchParams';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -12,23 +13,16 @@ export default function ExpertSidebar() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  const setSearchParams = useSetSearchParams();
   const handleSearchChange = (value: string) => {
     setSearch(value);
     // 쿼리 스트링 추가
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('search', value);
-    router.push(`/expert?${params.toString()}`);
+    setSearchParams('search', value, '/expert');
   };
 
   const onReset = () => {
     setSearch('');
-    // 쿼리 스트링 초기화
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('search', '');
-    params.set('category', '1000');
-    params.set('career', 'junior');
-    params.set('sort', 'latest');
-    router.push(`/expert?${params.toString()}`);
+    router.push(`/expert`);
   };
   return (
     <div className="w-411 h-full flex flex-col gap-16">
