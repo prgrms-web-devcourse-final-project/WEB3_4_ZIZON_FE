@@ -11,25 +11,25 @@ const CATEGORY_ARRAY: GradientCategoryItemProps[] = [
   {
     categoryName: '악보',
     caption: '당신의 음악을 완성하다.',
-    linkTo: '/store',
+    linkTo: '/store?search=%EC%95%85%EB%B3%B4',
     imageSrc: '/images/CategorySheetMusic.jpg',
   },
   {
     categoryName: '코드',
     caption: '프로젝트를 위한 완벽한 도구',
-    linkTo: '/store',
+    linkTo: '/store?category=digital-itdesign',
     imageSrc: '/images/CategoryCode.jpg',
   },
   {
     categoryName: '분재(화분)',
     caption: '자연의 아름다움을 집안으로',
-    linkTo: '/store',
+    linkTo: '/store?search=%EB%B6%84%EC%9E%AC',
     imageSrc: '/images/CategoryPot.jpeg',
   },
   {
     categoryName: '가구(DIY)',
     caption: '나만의 스타일로 꾸미다',
-    linkTo: '/store',
+    linkTo: '/store?search=%EA%B0%80%EA%B5%AC',
     imageSrc: '/images/CategoryFurniture.jpeg',
   },
 ] as const;
