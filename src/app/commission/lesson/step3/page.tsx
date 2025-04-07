@@ -39,6 +39,7 @@ export default function LessonThreePage() {
     router.push('/commission/lesson/step1');
   }
   const onClickNextHandler = () => {
+    if (selectedDay === null || selectedTime === null) return;
     localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList, ...selectedOptionListNewItem]));
     router.push('/commission/lesson/step4');
   }
