@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 interface LoginButtonProps {
-  type: 'kakao' | 'naver' | 'default' | 'signup' | 'login';
+  type: 'kakao' | 'naver' | 'google' | 'default' | 'signup' | 'login';
   onClick: () => void;
   disabled?: boolean;
 }
@@ -15,6 +15,10 @@ export default function LoginButton({ type, onClick, disabled }: LoginButtonProp
     naver: {
       color: 'bg-naver text-black1 disabled:bg-naver',
       text: '네이버로 시작하기',
+    },
+    google: {
+      color: 'bg-black1 text-black9 disabled:bg-black2',
+      text: '구글로 시작하기',
     },
     default: {
       color: 'bg-white text-black9',
@@ -42,6 +46,9 @@ export default function LoginButton({ type, onClick, disabled }: LoginButtonProp
       )}
       {type === 'naver' && (
         <Image src="/icons/NaverLogo.svg" alt="naver-logo" width={25} height={25} />
+      )}
+      {type === 'google' && (
+        <Image src="/icons/GoogleLogo.svg" alt="google-logo" width={25} height={25} />
       )}
       <span>{style.text}</span>
     </button>

@@ -18,9 +18,22 @@ export interface ApiResponse<T> {
   statusText: string;
 }
 
+// API 에러 인터페이스
+export interface ApiErrorResponse {
+  status: number;
+  error: string;
+  message: string;
+  code?: string;
+}
+
 // API 에러 클래스
 export class ApiError extends Error {
-  constructor(message: string, public status?: number, public statusText?: string) {
+  constructor(
+    message: string,
+    public status?: number,
+    public statusText?: string,
+    public code?: string,
+  ) {
     super(message);
     this.name = 'ApiError';
   }
