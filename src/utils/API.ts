@@ -83,10 +83,10 @@ export class API {
         // 타임아웃 후 타이머 정리
         setTimeout(() => clearTimeout(timeoutId), this.timeout);
       }
-      console.log('✅request', requestConfig, 'url', fullUrl);
+
       // 요청 실행
       const response = await fetch(fullUrl, requestConfig);
-      console.log('ApiResponse', response);
+
       // 응답 처리
       if (!response.ok) {
         // 에러 응답 파싱
