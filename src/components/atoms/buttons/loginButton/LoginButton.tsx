@@ -17,7 +17,7 @@ export default function LoginButton({ type, onClick, disabled }: LoginButtonProp
       text: '네이버로 시작하기',
     },
     google: {
-      color: 'bg-black1 text-black9 disabled:bg-black2',
+      color: 'bg-black1 text-black9 disabled:bg-black1',
       text: '구글로 시작하기',
     },
     default: {
