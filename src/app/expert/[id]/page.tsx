@@ -9,11 +9,11 @@ export default async function ExpertIdPage({
   params,
 }: {
   params: {
-    expert_id: string;
+    id: string;
   };
 }) {
   //여기서 전문가 정보 호출
-  const { expert_id: expertId } = params;
+  const { id: expertId } = params;
   const data = await getExpert({ expertId });
 
   return (
