@@ -7,14 +7,6 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     domains: [`${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`],
   },
-  async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'http://localhost:8080/:path*',
-      },
-    ];
-  },
 };
 
 export default nextConfig;
