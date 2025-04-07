@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+import { RequestCookiesAdapter } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import {
   HTTPMethod,
   HTTPHeaders,
@@ -13,7 +15,7 @@ interface ExtendedRequestInit extends RequestInit {
 }
 
 // 기본 API URL 설정
-const BASE_URL = `${process.env.LOCAL_SERVER_URL}`;
+const BASE_URL = process.env.LOCAL_SERVER_URL;
 
 // API 클래스 정의
 export class API {
@@ -25,7 +27,6 @@ export class API {
   data?: unknown;
   timeout?: number;
   withCredentials?: boolean;
-  revalidate?: number;
 
   constructor(method: HTTPMethod, url: string) {
     this.method = method;
@@ -63,7 +64,6 @@ export class API {
       method: this.method,
       headers,
       credentials: this.withCredentials ? 'include' : 'same-origin',
-      next: { revalidate: this.revalidate },
       allowCredentials: true,
     };
 
@@ -83,10 +83,10 @@ export class API {
         // 타임아웃 후 타이머 정리
         setTimeout(() => clearTimeout(timeoutId), this.timeout);
       }
-
+      console.log('✅request', requestConfig, 'url', fullUrl);
       // 요청 실행
       const response = await fetch(fullUrl, requestConfig);
-
+      console.log('ApiResponse', response);
       // 응답 처리
       if (!response.ok) {
         // 에러 응답 파싱

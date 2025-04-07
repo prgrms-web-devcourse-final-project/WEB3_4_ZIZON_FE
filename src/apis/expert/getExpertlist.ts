@@ -25,9 +25,7 @@ export const getExpertlist = async (
   const response = await APIBuilder.get(
     `/experts?careerLevel=${careerLevel}&categoryNames=${categoryNames}`,
   )
-    .baseURL(`${process.env.SERVER_URL}`)
-    .timeout(10000)
-    .revalidate(10) // 10초마다 재검증
+    .timeout(50000)
     .build()
     .call<ExpertListResponseType>();
 

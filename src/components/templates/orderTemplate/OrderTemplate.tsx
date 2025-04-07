@@ -1,22 +1,27 @@
 'use client';
-import { PaymentType } from '@/types/payment';
 import PaymentNotice from '@/components/molecules/order/paymentNotice/PaymentNotice';
-import { PropsWithChildren, ReactElement } from 'react';
-import PaymentButton, { PaymentInfo } from '@/components/atoms/buttons/PaymentButton';
+import PaymentButton from '@/components/atoms/buttons/PaymentButton';
+import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
+import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
+import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { postPayment } from '@/apis/payment/postPayment';
 
-interface OrderTemplateProps extends PropsWithChildren {
-  paymentType: PaymentType;
-  orderId: string;
-  orderInfo: PaymentInfo;
-  customerKey: string;
-}
+export default function OrderTemplate() {
+  const searchParams = useSearchParams();
+  const paymentType = searchParams.get('type') as string;
+  const referenceId = searchParams.get('id') as string;
 
-export default function OrderTemplate({
-  paymentType,
-  orderId,
-  orderInfo,
-  children,
-}: OrderTemplateProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: ['paymentInfo', referenceId],
+    queryFn: async () => postPayment({ paymentType, referenceId: ~~referenceId }),
+  });
+
+  if (isLoading) {
+    console.log('결제 정보 로딩중');
+  }
+
   return (
     <div className="w-full flex flex-col items-start gap-40 relative">
       {/* 제목과 안내사항 */}
@@ -26,7 +31,37 @@ export default function OrderTemplate({
       )}
 
       {/* 주문 정보 */}
-      <div className="w-full flex flex-col gap-32">{children}</div>
+      <div className="w-full flex flex-col gap-32">
+        <OrderInfoList
+          title="구매상품"
+          infoList={[
+            {
+              attribute: '구매 상품',
+              value: '이사 서비스',
+            },
+            {
+              attribute: '전문가',
+              value: '이상훈',
+            },
+          ]}
+        />
+        {paymentType === 'PROJECT' && (
+          <OrderInfoList
+            title="견적상세"
+            infoList={[
+              {
+                attribute: '이사 날짜',
+                value: '2023년 10월 1일',
+              },
+              {
+                attribute: '이사 시간',
+                value: '오후 2시',
+              },
+            ]}
+          />
+        )}
+        <ChargeInfo serviceFee={10000} totalPrice={8000} />
+      </div>
 
       {/* 결제하기 버튼 */}
       <div className="w-193 absolute right-0 bottom-[-80px]">

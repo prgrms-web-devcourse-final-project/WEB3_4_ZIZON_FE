@@ -2,7 +2,7 @@ import { HTTPMethod, HTTPHeaders, HTTPParams } from '@/types/api';
 import { API } from '@/utils/API';
 
 // TODO: 실제 API URL로 변경 필요
-const BASE_URL = `${process.env.LOCAL_SERVER_URL}`;
+const BASE_URL = 'http://localhost:8080';
 
 // API 빌더 클래스 정의
 export class APIBuilder {
@@ -16,8 +16,7 @@ export class APIBuilder {
       'Content-Type': 'application/json; charset=utf-8',
     };
     this._instance.timeout = 5000;
-    this._instance.withCredentials = false;
-    this._instance.revalidate = 0;
+    this._instance.withCredentials = true;
   }
 
   // HTTP 메서드에 따라 APIBuilder 객체를 생성하는 메서드들
@@ -54,11 +53,6 @@ export class APIBuilder {
 
   withCredentials(value: boolean): APIBuilder {
     this._instance.withCredentials = value;
-    return this;
-  }
-
-  revalidate(value: number): APIBuilder {
-    this._instance.revalidate = value;
     return this;
   }
 
