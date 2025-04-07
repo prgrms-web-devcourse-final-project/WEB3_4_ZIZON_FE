@@ -29,5 +29,6 @@ export const getExpertlist = async (
     .build()
     .call<ExpertListResponseType>();
 
+  //console.log('response', response.data);
   return response.data;
 };

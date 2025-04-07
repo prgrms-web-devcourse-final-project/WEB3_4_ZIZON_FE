@@ -22,7 +22,6 @@ export const getExpert = async (request: ExpertRequestType): Promise<ExpertType>
   const { expertId } = request;
 
   const response = await APIBuilder.get(`/experts/${expertId}`)
-    .baseURL(`${process.env.SERVER_URL}`)
     .timeout(10000)
     .build()
     .call<ExpertType>();
