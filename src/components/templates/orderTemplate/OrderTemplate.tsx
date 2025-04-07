@@ -3,36 +3,14 @@ import PaymentNotice from '@/components/molecules/order/paymentNotice/PaymentNot
 import PaymentButton from '@/components/atoms/buttons/PaymentButton';
 import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { PaymentResponseType, postPayment } from '@/apis/payment/postPayment';
+import { PaymentResponseType } from '@/apis/payment/postPayment';
 
-export default function OrderTemplate() {
-  const searchParams = useSearchParams();
-  const paymentType = searchParams.get('type') as string;
-  const referenceId = searchParams.get('id') as string;
+interface OrderTemplateProps {
+  paymentType: string;
+  data: PaymentResponseType;
+}
 
-  const [data, setData] = useState<PaymentResponseType | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchOrderInfo = async () => {
-      try {
-        const response = await postPayment({ paymentType, referenceId: ~~referenceId });
-        setData(response);
-      } catch (error) {
-        console.error('Error fetching order info:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrderInfo();
-  }, []);
-
-  if (loading) return <p>로딩 중...</p>;
-  if (!data) return <p>주문 정보를 가져올 수 없습니다.</p>;
-
+export default function OrderTemplate({ paymentType, data }: OrderTemplateProps) {
   return (
     <div className="w-full flex flex-col items-start gap-40 relative">
       {/* 제목과 안내사항 */}

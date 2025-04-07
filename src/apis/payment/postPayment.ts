@@ -1,5 +1,5 @@
 import { APIBuilder } from '@/utils/APIBuilder';
-
+import { cookies } from 'next/headers';
 export interface PaymentRequestType {
   referenceId: number;
   paymentType: string;
@@ -62,13 +62,15 @@ export interface RawDataType {
 // 백엔드로 부터 결제창 오픈에 필요한 OrderId, CustomerKey를 가져오는 API
 export const postPayment = async (request: PaymentRequestType) => {
   const { referenceId, paymentType } = request;
-
+  const cookieStore = await cookies();
+  const token = cookieStore.get('accessToken')?.value;
   const response = await APIBuilder.post('/payments/orderId', {
     referenceId: referenceId,
     paymentType: paymentType,
   })
     .headers({
       'Content-Type': 'application/json',
+      Cookie: `accessToken=${token}`,
     })
     .withCredentials(true)
     .timeout(50000)
