@@ -25,12 +25,6 @@ export default function MyProjectPage() {
     {
       imageUrl: '/images/defaultImage.png',
       price: 200000,
-      sellState: 'waiting',
-      category: '청소',
-    },
-    {
-      imageUrl: '/images/defaultImage.png',
-      price: 200000,
       sellState: 'cancelled',
       category: '청소',
     },
@@ -50,7 +44,6 @@ export default function MyProjectPage() {
   const counts = useMemo(() => {
     return {
       inProgress: orders.filter(order => order.sellState === 'inProgress').length,
-      waiting: orders.filter(order => order.sellState === 'waiting').length,
       cancelled: orders.filter(order => order.sellState === 'cancelled').length,
       completed: orders.filter(order => order.sellState === 'completed').length,
     };

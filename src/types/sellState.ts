@@ -1,4 +1,4 @@
-export type SellState = 'inProgress' | 'waiting' | 'cancelled' | 'completed';
+export type SellState = 'inProgress' | 'cancelled' | 'completed';
 
 export interface SellStateConfig {
   label: string;
@@ -9,10 +9,6 @@ export const sellStateConfig: Record<SellState, SellStateConfig> = {
   inProgress: {
     label: '진행중',
     textColor: 'text-primary4',
-  },
-  waiting: {
-    label: '작업 완료 대기',
-    textColor: 'text-greenComplete',
   },
   cancelled: {
     label: '취소•문제 해결',
