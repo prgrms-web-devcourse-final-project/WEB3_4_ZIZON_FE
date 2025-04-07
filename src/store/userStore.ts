@@ -13,17 +13,12 @@ export const useUserStore = create<UserState>()(
       setCurrentRole: (role: UserRole) => set(() => ({ currentRole: role })),
       logout: async () => {
         try {
-          const response = await APIBuilder.post('/users/logout', {}).build().call();
-
-          if (response.status !== 200) {
-            throw new Error('로그아웃 실패');
-          }
-
+          await APIBuilder.post('/users/logout', {}).build().call();
+        } catch (error) {
+          console.error('로그아웃 API 호출 실패:', error);
+        } finally {
           set(() => ({ member: null, expert: null, currentRole: 'client' }));
           window.location.href = '/';
-        } catch (error) {
-          console.error('로그아웃 중 오류 발생:', error);
-          throw error;
         }
       },
     }),

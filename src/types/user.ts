@@ -7,6 +7,7 @@ export interface Member {
   email: string; // 이메일 주소
   name: string; // 사용자 이름
   profileImage: string;
+  phone?: string;
   userRole: UserRole;
 }
 
