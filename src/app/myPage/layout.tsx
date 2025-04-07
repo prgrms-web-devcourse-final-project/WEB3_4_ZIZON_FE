@@ -1,53 +1,87 @@
-import type { Metadata } from 'next';
+'use client';
+
 import '../globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import MypageSidebar from '@/components/organisms/sidebar/mypageSidebar/MypageSidebar';
+import { APIBuilder } from '@/utils/APIBuilder';
+import { Member } from '@/types/user';
+import { useUserStore } from '@/store/userStore';
+import { useEffect, useState } from 'react';
 
-export const metadata: Metadata = {
-  title: '💫DopDang',
-  description: 'Serve you the professional touch',
-};
-
-export default async function MyPageLayout({
+export default function MyPageLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const userRole = cookieStore.get('user_role')?.value || 'expert';
-  const userName = cookieStore.get('name')?.value || '사용자';
-  const profileImage = cookieStore.get('profile_image')?.value || '/images/defaultImage.png';
-  const majorCategory = cookieStore.get('major_category')?.value;
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileInfo, setProfileInfo] = useState<{
+    profileImage: string;
+    name: string;
+  } | null>(null);
+  const { member: storeMember } = useUserStore();
 
-  // 전문가가 아닌 사용자가 전문가 관련 페이지에 접근하려고 할 때
-  if (userRole !== 'expert') {
-    const path = cookieStore.get('path')?.value;
-    if (path?.includes('expertInfo') || path?.includes('saleProduct')) {
-      redirect('/myPage/myInfo');
-    }
+  // 사용자 정보 가져오기
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        // store에 저장된 member가 없으면 로그인되지 않은 상태로 간주하고 로그인 페이지로 리다이렉트
+        // if (!storeMember || !storeMember.id) {
+        //   router.push('/login');
+        //   return;
+        // }
+
+        // 임시 id 조회 로직
+        const userInfo = await APIBuilder.get(`/users/me`).build().call<Member>();
+        const memberId = userInfo.data.id;
+
+        // store에 저장된 member의 id를 사용하여 /users/{id} 엔드포인트 호출
+        const response = await APIBuilder.get(`/users/${memberId}`).build().call<Member>();
+        const memberInfo = response.data as Member;
+
+        // 프로필 정보 설정
+        setProfileInfo({
+          profileImage: memberInfo.profileImage,
+          name: memberInfo.name,
+        });
+      } catch (error) {
+        // API 호출 실패 시 상세 로깅
+        console.error('사용자 정보 조회 실패:', error);
+
+        // 에러 유형에 따른 처리
+        if (error instanceof Error) {
+          console.error(`에러 메시지: ${error.message}`);
+          console.error(`에러 스택: ${error.stack}`);
+        }
+
+        // 로그인 페이지로 리다이렉트
+        router.push('/login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserInfo();
+  }, [router, storeMember]);
+
+  // 로딩 중이거나 프로필 정보가 없는 경우 처리
+  if (isLoading || !profileInfo) {
+    return (
+      <ReactQueryClientProvider>
+        <div className="flex items-center justify-center h-screen">
+          <div>로딩 중...</div>
+        </div>
+      </ReactQueryClientProvider>
+    );
   }
-
-  const profileInfo = {
-    profileImage,
-    userName,
-    ...(userRole === 'expert' && { certificationBadgeText: majorCategory || 'OO' }),
-  };
 
   return (
     <ReactQueryClientProvider>
-      <html lang="kr">
-        <body>
-          <div className="grid grid-cols-12 gap-24 w-1920 px-320 mx-auto my-72">
-            <MypageSidebar
-              profileInfo={profileInfo}
-              initialRole={userRole === 'expert' ? 'expert' : 'client'}
-            />
-            <main className="col-start-5 col-end-11">{children}</main>
-          </div>
-        </body>
-      </html>
+      <div className="grid grid-cols-12 gap-24 w-1280 mx-auto my-72">
+        <MypageSidebar profileInfo={profileInfo} />
+        <main className="col-start-5 col-end-11">{children}</main>
+      </div>
     </ReactQueryClientProvider>
   );
 }
