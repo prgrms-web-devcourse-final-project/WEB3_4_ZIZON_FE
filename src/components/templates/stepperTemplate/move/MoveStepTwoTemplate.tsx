@@ -26,7 +26,7 @@ export default function MoveStepTwoTemplate({selectedOptionListProps, checkSelec
           <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps} title={'이사 형태를 선택해주세요'} />
           <DatePickerWithTitle title={'이사 날짜를 선택해주세요'} selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'다'} disabled={false} onClick={onClickNextAction} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onClickNextAction} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">
