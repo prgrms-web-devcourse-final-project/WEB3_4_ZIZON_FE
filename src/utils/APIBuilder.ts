@@ -2,7 +2,7 @@ import { HTTPMethod, HTTPHeaders, HTTPParams } from '@/types/api';
 import { API } from '@/utils/API';
 
 // TODO: 실제 API URL로 변경 필요
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = 'http://localhost:8080';
 
 // API 빌더 클래스 정의
 export class APIBuilder {
@@ -16,7 +16,7 @@ export class APIBuilder {
       'Content-Type': 'application/json; charset=utf-8',
     };
     this._instance.timeout = 5000;
-    this._instance.withCredentials = false;
+    this._instance.withCredentials = true;
   }
 
   // HTTP 메서드에 따라 APIBuilder 객체를 생성하는 메서드들
@@ -61,37 +61,6 @@ export class APIBuilder {
     return this._instance;
   }
 }
-
-// 기존 apiInstance와 호환성을 위한 래퍼 함수들
-export const apiInstance = {
-  async get<T>(endpoint: string, config?: RequestInit) {
-    return APIBuilder.get(endpoint)
-      .headers((config?.headers as HTTPHeaders) || {})
-      .build()
-      .call<T>();
-  },
-
-  async post<T>(endpoint: string, data: unknown, config?: RequestInit) {
-    return APIBuilder.post(endpoint, data)
-      .headers((config?.headers as HTTPHeaders) || {})
-      .build()
-      .call<T>();
-  },
-
-  async put<T>(endpoint: string, data: unknown, config?: RequestInit) {
-    return APIBuilder.put(endpoint, data)
-      .headers((config?.headers as HTTPHeaders) || {})
-      .build()
-      .call<T>();
-  },
-
-  async delete<T>(endpoint: string, config?: RequestInit) {
-    return APIBuilder.delete(endpoint)
-      .headers((config?.headers as HTTPHeaders) || {})
-      .build()
-      .call<T>();
-  },
-};
 
 export { API };
 
