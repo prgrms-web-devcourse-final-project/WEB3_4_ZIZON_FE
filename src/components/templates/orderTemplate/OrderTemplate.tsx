@@ -4,23 +4,35 @@ import PaymentButton from '@/components/atoms/buttons/PaymentButton';
 import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { postPayment } from '@/apis/payment/postPayment';
+import { PaymentResponseType, postPayment } from '@/apis/payment/postPayment';
 
 export default function OrderTemplate() {
   const searchParams = useSearchParams();
   const paymentType = searchParams.get('type') as string;
   const referenceId = searchParams.get('id') as string;
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['paymentInfo', referenceId],
-    queryFn: async () => postPayment({ paymentType, referenceId: ~~referenceId }),
-  });
+  const [data, setData] = useState<PaymentResponseType | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (isLoading) {
-    console.log('결제 정보 로딩중');
-  }
+  useEffect(() => {
+    const fetchOrderInfo = async () => {
+      try {
+        const response = await postPayment({ paymentType, referenceId: ~~referenceId });
+        setData(response);
+      } catch (error) {
+        console.error('Error fetching order info:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrderInfo();
+  }, []);
+
+  if (loading) return <p>로딩 중...</p>;
+  if (!data) return <p>주문 정보를 가져올 수 없습니다.</p>;
 
   return (
     <div className="w-full flex flex-col items-start gap-40 relative">
@@ -37,11 +49,11 @@ export default function OrderTemplate() {
           infoList={[
             {
               attribute: '구매 상품',
-              value: '이사 서비스',
+              value: `${data.category} 서비스`,
             },
             {
               attribute: '전문가',
-              value: '이상훈',
+              value: data.expertName,
             },
           ]}
         />
@@ -51,21 +63,21 @@ export default function OrderTemplate() {
             infoList={[
               {
                 attribute: '이사 날짜',
-                value: '2023년 10월 1일',
+                value: data.startDate,
               },
               {
                 attribute: '이사 시간',
-                value: '오후 2시',
+                value: data.endDate,
               },
             ]}
           />
         )}
-        <ChargeInfo serviceFee={10000} totalPrice={8000} />
+        <ChargeInfo serviceFee={data.price} totalPrice={data.price} />
       </div>
 
       {/* 결제하기 버튼 */}
       <div className="w-193 absolute right-0 bottom-[-80px]">
-        <PaymentButton orderId={orderId} orderInfo={orderInfo} />
+        <PaymentButton paymentInfo={data} />
       </div>
     </div>
   );
