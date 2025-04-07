@@ -11,10 +11,8 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
 
   const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
   const customerKey = paymentInfo.customerKey;
-  console.log('clientKey', clientKey);
-  console.log('customerKey', customerKey);
+
   useEffect(() => {
-    console.log('useEffect 초기화');
     async function fetchPayment() {
       try {
         if (!clientKey) {
@@ -38,16 +36,10 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
     fetchPayment();
   }, []);
 
-  useEffect(() => {
-    console.log('payment', payment);
-  }, [payment]);
-
   const handlePayment = async () => {
     // clientKey는 돕당용 : 결제 페이지 랜더링 시 사용
     // customerKey는 고객용
-    // TRY : loadTossPayments(customerKey)
 
-    console.log('payment', payment);
     if (!payment) {
       console.error('Payment object is not initialized');
       return;
@@ -60,10 +52,8 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
         value: paymentInfo.price,
       },
       orderName: paymentInfo.category, // 구매상품
-      successUrl: `${process.env.LOCAL_SERVER_URL}/payments/success`, // 결제 성공 시  URL server -> 🔥ERROR
-      failUrl: `${process.env.LOCAL_SERVER_URL}/payments/fail`, // 결제 실패 시 URL server -> 🔥ERROR
-      //successUrl: `${window.location.origin}/payments/result`, // 결제 성공 시  URL -> ✅ SUCCESS
-      //failUrl: `${window.location.origin}/payments/result`, // 결제 실패 시 URL -> ✅ SUCCESS
+      successUrl: `${window.location.origin}/payments/success`, // 결제 성공 시  URL -> ✅ SUCCESS 결제창 열림
+      failUrl: `${window.location.origin}/payments/fail`, // 결제 실패 시 URL -> ✅ SUCCESS
       card: {
         useEscrow: false,
         useCardPoint: false,
@@ -71,23 +61,6 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
         useAppCardOnly: false,
       },
     });
-    // loadTossPayments(process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY)
-    //   .then(tossPayments => {
-    //     tossPayments.requestPayment('카드', {
-    //       orderId: paymentInfo.orderId, // 주문번호
-    //       amount: paymentInfo.price, // 결제 금액
-    //       orderName: paymentInfo.category, // 구매상품
-    //       successUrl: `${process.env.LOCAL_SERVER_URL}/payments/success`, // 결제 성공 시  URL (server)
-    //       failUrl: `${process.env.LOCAL_SERVER_URL}/payments/fail`, // 결제 실패 시 URL (server)
-    //     });
-    //   })
-    //   .catch(function (error) {
-    //     if (error.code === 'USER_CANCEL') {
-    //       // 구매자가 결제창을 닫았을 때 에러 처리
-    //     } else if (error.code === 'INVALID_CARD_COMPANY') {
-    //       // 유효하지 않은 카드 코드에 대한 에러 처리
-    //     }
-    //   });
   };
 
   return (

@@ -5,7 +5,6 @@ import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoL
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { PaymentResponseType, postPayment } from '@/apis/payment/postPayment';
 
 export default function OrderTemplate() {
