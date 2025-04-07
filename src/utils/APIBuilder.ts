@@ -2,7 +2,7 @@ import { HTTPMethod, HTTPHeaders, HTTPParams } from '@/types/api';
 import { API } from '@/utils/API';
 
 // TODO: 실제 API URL로 변경 필요
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = `${process.env.LOCAL_SERVER_URL}`;
 
 // API 빌더 클래스 정의
 export class APIBuilder {

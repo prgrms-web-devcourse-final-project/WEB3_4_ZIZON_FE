@@ -1,7 +1,7 @@
 import { HTTPMethod, HTTPHeaders, HTTPParams, ApiResponse, ApiError } from '@/types/api';
 
 // 기본 API URL 설정
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = `${process.env.LOCAL_SERVER_URL}`;
 
 // API 클래스 정의
 export class API {
