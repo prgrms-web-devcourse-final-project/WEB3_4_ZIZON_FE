@@ -42,7 +42,7 @@ export default function DigitalContentUploadField({
       {fileName && (
         <div className="flex items-center justify-between p-12 border border-black5 rounded-sm bg-black1">
           <div className="flex items-center gap-8">
-            <Image src="/icons/File.svg" alt="파일" width={20} height={20} />
+            <Image src="/icons/Document.svg" alt="파일" width={16} height={16} />
             <span className="text-14 text-black10 truncate">{fileName}</span>
           </div>
           <button

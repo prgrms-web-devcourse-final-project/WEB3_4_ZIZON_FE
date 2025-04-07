@@ -1,4 +1,16 @@
-import { HTTPMethod, HTTPHeaders, HTTPParams, ApiResponse, ApiError } from '@/types/api';
+import {
+  HTTPMethod,
+  HTTPHeaders,
+  HTTPParams,
+  ApiResponse,
+  ApiError,
+  ApiErrorResponse,
+} from '@/types/api';
+
+// RequestInit 타입 확장
+interface ExtendedRequestInit extends RequestInit {
+  allowCredentials?: boolean;
+}
 
 // 기본 API URL 설정
 const BASE_URL = `${process.env.LOCAL_SERVER_URL}`;
@@ -46,18 +58,13 @@ export class API {
       ...this.headers,
     };
 
-    // 토큰 처리
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
     // 요청 설정
-    const requestConfig: RequestInit = {
+    const requestConfig: ExtendedRequestInit = {
       method: this.method,
       headers,
       credentials: this.withCredentials ? 'include' : 'same-origin',
       next: { revalidate: this.revalidate },
+      allowCredentials: true,
     };
 
     // 요청 본문 설정
@@ -82,26 +89,68 @@ export class API {
 
       // 응답 처리
       if (!response.ok) {
+        // 에러 응답 파싱
+        let errorData: ApiErrorResponse;
+        try {
+          errorData = await response.json();
+        } catch {
+          errorData = {
+            status: response.status,
+            error: response.statusText,
+            message: '알 수 없는 오류가 발생했습니다.',
+          };
+        }
+
+        // API 명세서에 맞는 에러 코드 처리
         switch (response.status) {
           case 400:
-            throw new ApiError('잘못된 요청입니다.', response.status, response.statusText);
+            throw new ApiError(
+              errorData.message || '잘못된 요청입니다.',
+              response.status,
+              response.statusText,
+              errorData.code,
+            );
           case 401:
-            throw new ApiError('인증에 실패했습니다.', response.status, response.statusText);
+            throw new ApiError(
+              errorData.message || '인증에 실패했습니다.',
+              response.status,
+              response.statusText,
+              errorData.code,
+            );
           case 403:
-            throw new ApiError('접근이 거부되었습니다.', response.status, response.statusText);
+            throw new ApiError(
+              errorData.message || '접근이 거부되었습니다.',
+              response.status,
+              response.statusText,
+              errorData.code,
+            );
           case 404:
             throw new ApiError(
-              '요청한 리소스를 찾을 수 없습니다.',
+              errorData.message || '요청한 리소스를 찾을 수 없습니다.',
               response.status,
               response.statusText,
+              errorData.code,
+            );
+          case 409:
+            throw new ApiError(
+              errorData.message || '리소스 충돌이 발생했습니다.',
+              response.status,
+              response.statusText,
+              errorData.code,
             );
           case 500:
-            throw new ApiError('서버 오류가 발생했습니다.', response.status, response.statusText);
-          default:
             throw new ApiError(
-              '알 수 없는 오류가 발생했습니다.',
+              errorData.message || '서버 오류가 발생했습니다.',
               response.status,
               response.statusText,
+              errorData.code,
+            );
+          default:
+            throw new ApiError(
+              errorData.message || '알 수 없는 오류가 발생했습니다.',
+              response.status,
+              response.statusText,
+              errorData.code,
             );
         }
       }
