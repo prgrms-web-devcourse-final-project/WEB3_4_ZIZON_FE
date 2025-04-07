@@ -48,7 +48,7 @@ function MypageSidebar({ profileInfo }: MypageSidebarProps) {
   };
 
   return (
-    <aside className="col-start-3 col-end-5 flex flex-col gap-24">
+    <aside className="flex flex-col gap-24">
       <ProfileInfo {...enhancedProfileInfo} isState={currentRole} onChangeState={toggleRole} />
       <UserStateTabContainer isState={currentRole} />
     </aside>

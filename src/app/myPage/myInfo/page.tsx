@@ -1,13 +1,15 @@
 'use client';
 
 import UserInfoForm from '@/components/organisms/userInfoForm/UserInfoForm';
+import { useUserStore } from '@/store/userStore';
 
 export default function MyInfoPage() {
+  const { member: storeMember } = useUserStore();
   const initialData = {
-    nickname: '이진우',
-    email: 'jinu17@naver.com',
-    password: 'jin********',
-    phoneNumber: '010-1312-1231',
+    name: storeMember?.name ?? '',
+    email: storeMember?.email ?? '',
+    password: '********',
+    phone: storeMember?.phone ?? '01000000000',
   };
 
   return (

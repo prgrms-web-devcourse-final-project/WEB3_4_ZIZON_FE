@@ -20,20 +20,20 @@ export default function MyPageLayout({
     profileImage: string;
     name: string;
   } | null>(null);
-  const { member: storeMember } = useUserStore();
+  const { member: storeMember, logout } = useUserStore();
 
   // 사용자 정보 가져오기
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        // store에 저장된 member가 없으면 로그인되지 않은 상태로 간주하고 로그인 페이지로 리다이렉트
-        // if (!storeMember || !storeMember.id) {
-        //   router.push('/login');
-        //   return;
-        // }
-
         // 임시 id 조회 로직
         const userInfo = await APIBuilder.get(`/users/me`).build().call<Member>();
+
+        if (!userInfo.data) {
+          await logout();
+          return;
+        }
+
         const memberId = userInfo.data.id;
 
         // store에 저장된 member의 id를 사용하여 /users/{id} 엔드포인트 호출
@@ -55,15 +55,15 @@ export default function MyPageLayout({
           console.error(`에러 스택: ${error.stack}`);
         }
 
-        // 로그인 페이지로 리다이렉트
-        router.push('/login');
+        // store 초기화 및 로그인 페이지로 리다이렉트
+        await logout();
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUserInfo();
-  }, [router, storeMember]);
+  }, [router, storeMember, logout]);
 
   // 로딩 중이거나 프로필 정보가 없는 경우 처리
   if (isLoading || !profileInfo) {
@@ -78,9 +78,9 @@ export default function MyPageLayout({
 
   return (
     <ReactQueryClientProvider>
-      <div className="grid grid-cols-12 gap-24 w-1280 mx-auto my-72">
+      <div className="flex gap-36 justify-center my-72">
         <MypageSidebar profileInfo={profileInfo} />
-        <main className="col-start-5 col-end-11">{children}</main>
+        <main className="w-750">{children}</main>
       </div>
     </ReactQueryClientProvider>
   );

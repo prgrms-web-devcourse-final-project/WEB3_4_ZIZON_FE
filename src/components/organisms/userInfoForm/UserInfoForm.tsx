@@ -4,30 +4,40 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 
 interface UserInfoFormProps {
   initialData: {
-    nickname: string;
+    name: string;
     email: string;
     password: string;
-    phoneNumber: string;
+    phone: string;
   };
 }
 
 export default function UserInfoForm({ initialData }: UserInfoFormProps) {
-  const [nickname, setNickname] = useState(initialData.nickname);
-  const [email] = useState(initialData.email);
+  const [name, setName] = useState(initialData.name);
+  const [email, setEmail] = useState(initialData.email);
   const [password, setPassword] = useState(initialData.password);
-  const [phoneNumber, setPhoneNumber] = useState(initialData.phoneNumber);
+  const [phone, setPhone] = useState(initialData.phone);
   const [authCode, setAuthCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
-  const [isNicknameEditable, setIsNicknameEditable] = useState(false);
+  const [isNameEditable, setIsNameEditable] = useState(false);
+  const [isEmailEditable, setIsEmailEditable] = useState(false);
   const [isPasswordEditable, setIsPasswordEditable] = useState(false);
   const [isPhoneEditable, setIsPhoneEditable] = useState(false);
 
-  const handleNicknameEditClick = () => {
-    if (isNicknameEditable) {
+  const handleNameEditClick = () => {
+    if (isNameEditable) {
       // 수정 완료 로직 추가 (예: API 호출)
-      setIsNicknameEditable(false);
+      setIsNameEditable(false);
     } else {
-      setIsNicknameEditable(true);
+      setIsNameEditable(true);
+    }
+  };
+
+  const handleEmailEditClick = () => {
+    if (isEmailEditable) {
+      // 수정 완료 로직 추가 (예: API 호출)
+      setIsEmailEditable(false);
+    } else {
+      setIsEmailEditable(true);
     }
   };
 
@@ -56,13 +66,13 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
   return (
     <div className="flex flex-col gap-32">
       <EditableField
-        id="nickname"
-        label="닉네임"
-        value={nickname}
-        placeholder="장난스러운팽구534"
-        onChange={setNickname}
-        isEditable={isNicknameEditable}
-        onEditClick={handleNicknameEditClick}
+        id="name"
+        label="이름"
+        value={name}
+        placeholder={name}
+        onChange={setName}
+        isEditable={isNameEditable}
+        onEditClick={handleNameEditClick}
       />
 
       <EditableField
@@ -70,10 +80,10 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         label="이메일"
         type="email"
         value={email}
-        placeholder="jinu17@naver.com"
-        onChange={() => {}}
-        isEditable={false}
-        disabled={true}
+        placeholder={email}
+        onChange={setEmail}
+        isEditable={isEmailEditable}
+        onEditClick={handleEmailEditClick}
       />
 
       <EditableField
@@ -81,7 +91,7 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         label="비밀번호"
         type="password"
         value={password}
-        placeholder="jin********"
+        placeholder={password}
         onChange={setPassword}
         isEditable={isPasswordEditable}
         onEditClick={handlePasswordEditClick}
@@ -91,9 +101,9 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         id="phone"
         label="휴대폰 번호"
         type="tel"
-        value={phoneNumber}
-        placeholder="01000000000"
-        onChange={setPhoneNumber}
+        value={phone}
+        placeholder={phone}
+        onChange={setPhone}
         isEditable={isPhoneEditable}
         onEditClick={handlePhoneEditClick}
         ButtonComponent={
