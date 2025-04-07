@@ -1,7 +1,7 @@
 import React from 'react';
 import SelectedOption from '@/components/atoms/texts/selectedOption/SelectedOption';
 
-type selectedOptionIndexObject = {
+export type selectedOptionIndexObject = {
   [index: string]: string
 }
 interface SelectedOptionListProps {

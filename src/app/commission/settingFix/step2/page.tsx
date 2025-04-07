@@ -1,25 +1,79 @@
 'use client'
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SettingFixStepTwoTemplate from '@/components/templates/stepperTemplate/settingFix/SettingFixStepTwoTemplate';
+import { selectedOptionIndexObject } from '@/components/molecules/selectedOptionList/SelectedOptionList';
+import { useRouter } from 'next/navigation';
 
-function Page() {
-  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(undefined);
+const options = ["협의 가능", "가능한 빨리", "일주일 이내", "특정 날짜"];
+
+export default function SettingFixTwoPage() {
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(new Date());
+  const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
+  const [selectedOptionListNewItem, setSelectedOptionListNewItem] = React.useState<selectedOptionIndexObject[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('selectedIndex');
+    if (storedData) setSelectedOptionList(JSON.parse(storedData));
+  }, []);
+  useEffect(() => {
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0 || typeof selectedDay === undefined) return prev;
+      const updated = [...prev];
+      const date = new Date(`${selectedDay}`);
+
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      updated[0]['요청 날짜'] = `${month}월 ${day}일`;
+      return updated;
+    });
+  }, [selectedDay]);
+  const handleSelection = (index: number) => {
+    setSelectedIndex(index);
+    if(index === 3) {
+      setSelectedOptionListNewItem(prev => {
+        if (prev.length === 0 || typeof selectedDay === undefined) return prev;
+        const updated = [...prev];
+        const date = new Date(`${selectedDay}`);
+
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+
+        updated[0]['요청 날짜'] = `${month}월 ${day}일`;
+        return updated;
+      });
+    } else {
+      setSelectedOptionListNewItem([{"요청 날짜": options[index]}])
+    }
+  };
+
+  const onNextHandler = () => {
+    if (selectedIndex === null && selectedDay) return;
+    localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList]));
+    router.push('/commission/common/end');
+  };
+
+  const onBeforeHandler = () => {
+    localStorage.setItem('selectedIndex', JSON.stringify(selectedOptionList));
+    router.push('/commission/settingFix/step1');
+  };
 
   return (
-    <div>
-      <SettingFixStepTwoTemplate
-        checkSelectBoxProps={[
-          {label: "협의 가능", caption: "", checked: false, onChange: () => alert('') },
-          {label: "가능한 빨리", caption: "", checked: false, onChange: () => {} },
-          {label: "일주일 이내", caption: "", checked: false, onChange: () => {} },
-          {label: "특정 날짜", caption: "", checked: false, onChange: () => {} },
-        ]}
-        onClickNext={() => alert("다음")}
-        onClickBefore={() => alert('이전')}
-        selectedDay={selectedDay}
-        setSelectedDay={setSelectedDay}/>
-    </div>
+    <SettingFixStepTwoTemplate
+      checkSelectBoxProps={options.map((label, idx) => ({
+        label,
+        caption: '',
+        checked: selectedIndex === idx,
+        onChange: () => handleSelection(idx)
+      }))}
+      selectedIndex={selectedIndex}
+      selectedOptionListProps={[...selectedOptionList, ...selectedOptionListNewItem]}
+      onNextAction={onNextHandler}
+      onBeforeAction={onBeforeHandler}
+      selectedDay={selectedDay}
+      setSelectedDay={setSelectedDay}
+    />
   );
 }
-
-export default Page;

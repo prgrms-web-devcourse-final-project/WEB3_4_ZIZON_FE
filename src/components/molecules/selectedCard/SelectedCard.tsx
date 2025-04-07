@@ -4,11 +4,13 @@ export interface SelectedCardProps extends CardIconProps {
   type: 'left' | 'center';
   title: string;
   subtitle?: string;
+  onClick: () => void;
 }
 
-function SelectedCard({ type, title, subtitle, category, isOn }: SelectedCardProps) {
+function SelectedCard({ type, title, subtitle, category, isOn, onClick }: SelectedCardProps) {
   return (
     <div
+      onClick={onClick}
       className={`rounded-2xl p-16 cursor-pointer transition-colors w-full duration-200
         ${isOn ? 'bg-primary1/30' : 'bg-black2'}
         ${type === 'center' ? 'w-262 text-center pt-20' : 'w-548 '}`}
