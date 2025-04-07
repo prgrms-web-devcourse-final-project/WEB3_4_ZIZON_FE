@@ -12,10 +12,16 @@ interface RequestOfferBoxProps {
 export default function RequestOfferBox({ name, expertId }: RequestOfferBoxProps) {
   const router = useRouter();
 
+  const setCookie = (name: string, value: string, days: number) => {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); // 쿠키 만료일 설정
+    document.cookie = `${name}=${value};expires=${date.toUTCString()};path=/`;
+  };
+
   const onRequestOfferClick = () => {
     // TODO : 유저의 로그인 여부 확인
     // 로그인 완료시 : expertId를 쿠키에 저장하고 /commission 페이지로 이동
-    localStorage.setItem('target_expert_id', expertId);
+    setCookie('target_expert_id', expertId, 1);
     router.push('/commission/common/start');
 
     // 로그인 전 상태 : 로그인 페이지로 이동
