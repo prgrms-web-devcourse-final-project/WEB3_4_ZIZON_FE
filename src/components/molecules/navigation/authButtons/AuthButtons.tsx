@@ -33,12 +33,12 @@ export default function AuthButtons({
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsDropdownVisible(false);
-    }, 500);
+    }, 100);
   };
 
   if (isLoggedIn && member) {
     return (
-      <div className="flex items-center gap-24">
+      <div className="flex items-center gap-32">
         <Link href="/" className="block">
           <Image src="/icons/ChatBubbleLeftEllipsisLine.svg" alt="chat" width={26} height={22} />
         </Link>
@@ -53,12 +53,15 @@ export default function AuthButtons({
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <Link href="/profile" className="w-32 h-32 block rounded-full bg-black1 overflow-hidden">
+          <Link
+            href="/profile"
+            className="w-40 h-40 block rounded-full bg-black1 overflow-hidden border border-black4"
+          >
             <Image
               src={member.profileImage || '/images/DefaultImage.png'}
               alt={member.name ?? 'user0123'}
-              width={32}
-              height={32}
+              width={40}
+              height={40}
               className="size-full object-cover"
             />
           </Link>
