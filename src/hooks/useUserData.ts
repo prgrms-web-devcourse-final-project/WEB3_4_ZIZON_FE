@@ -7,11 +7,10 @@ import { getCurrentUser } from '@/apis/user/getCurrentUser';
 import { getUserById } from '@/apis/user/getUserById';
 import { getExpertById } from '@/apis/expert/getExpertById';
 
-// 에러 타입 정의
-type UserDataError = {
+interface UserDataError {
   message: string;
   source: 'member' | 'expert';
-};
+}
 
 export function useUserData() {
   const { currentRole, setCurrentRole, member: storeMember, setExpert, logout } = useUserStore();
@@ -47,7 +46,6 @@ export function useUserData() {
       if (storeMember?.id) {
         memberId = storeMember.id;
       } else {
-        // 임시 id 조회 로직
         const userInfo = await getCurrentUser();
 
         if (!userInfo) {
