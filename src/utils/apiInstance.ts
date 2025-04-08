@@ -1,5 +1,5 @@
 import { HTTPHeaders } from '@/types/api';
-import { APIBuilder } from '@/utils/APIBuilder';
+import { APIBuilder } from './APIBuilder';
 
 // 기존 apiInstance와 호환성을 위한 래퍼 함수들
 export const apiInstance = {

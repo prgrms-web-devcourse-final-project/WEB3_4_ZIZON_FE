@@ -1,6 +1,5 @@
 import { HTTPMethod, HTTPHeaders, HTTPParams } from '@/types/api';
 import { API } from '@/utils/API';
-
 // TODO: 실제 API URL로 변경 필요
 const BASE_URL = 'http://localhost:8080';
 
@@ -61,8 +60,6 @@ export class APIBuilder {
     return this._instance;
   }
 }
-
-export { API };
 
 // 예시 사용법
 /*

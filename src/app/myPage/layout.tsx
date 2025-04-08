@@ -4,10 +4,10 @@ import '../globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import { useRouter } from 'next/navigation';
 import MypageSidebar from '@/components/organisms/sidebar/mypageSidebar/MypageSidebar';
-import { APIBuilder } from '@/utils/APIBuilder';
-import { Member } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 import { useEffect, useState } from 'react';
+import { getCurrentUser } from '@/apis/user/getCurrentUser';
+import { getUserById } from '@/apis/user/getUserById';
 
 export default function MyPageLayout({
   children,
@@ -26,19 +26,22 @@ export default function MyPageLayout({
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        // 임시 id 조회 로직
-        const userInfo = await APIBuilder.get(`/users/me`).build().call<Member>();
+        let memberId;
 
-        if (!userInfo.data) {
-          await logout();
-          return;
+        if (storeMember && storeMember?.id) {
+          memberId = storeMember.id;
+        } else {
+          // store에 저장된 member의 id가 없는 경우 현재 사용자의 정보를 요청하고 id를 가져옴
+          const userInfo = await getCurrentUser();
+          memberId = userInfo.id;
+
+          if (!userInfo) {
+            await logout();
+            return;
+          }
         }
 
-        const memberId = userInfo.data.id;
-
-        // store에 저장된 member의 id를 사용하여 /users/{id} 엔드포인트 호출
-        const response = await APIBuilder.get(`/users/${memberId}`).build().call<Member>();
-        const memberInfo = response.data as Member;
+        const memberInfo = await getUserById({ userId: memberId });
 
         // 프로필 정보 설정
         setProfileInfo({

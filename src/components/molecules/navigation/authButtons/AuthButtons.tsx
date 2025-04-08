@@ -33,7 +33,7 @@ export default function AuthButtons({
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsDropdownVisible(false);
-    }, 2000);
+    }, 500);
   };
 
   if (isLoggedIn && member) {

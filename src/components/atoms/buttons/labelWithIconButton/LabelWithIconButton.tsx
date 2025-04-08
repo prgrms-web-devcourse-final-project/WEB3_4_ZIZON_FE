@@ -29,7 +29,7 @@ const BUTTON_CONFIG = {
   },
   hobby: {
     icon: '/icons/HobbyPalette.svg',
-    label: '취미 생활',
+    label: '취미생활',
   },
   digital: {
     icon: '/images/DigitalLaptop.png',
