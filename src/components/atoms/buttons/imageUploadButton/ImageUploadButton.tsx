@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import { compressImage } from '@/utils/compressImage';
 
 interface ImageUploadButtonProps {
   onImageUpload: (file: File) => void;
@@ -14,12 +15,18 @@ function ImageUploadButton({ onImageUpload }: ImageUploadButtonProps) {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      onImageUpload(file);
+
+    if (!file) return;
+    try {
+      const compressedFile = await compressImage(file);
+    } catch (err) {
+      console.error('압축 중 오류 발생:', err);
     }
+
   };
+
 
   return (
     <div
