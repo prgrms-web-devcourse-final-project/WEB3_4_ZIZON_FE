@@ -4,10 +4,11 @@ import Image from 'next/image';
 import { useState, useRef } from 'react';
 import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
 import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
-import { APIBuilder } from '@/utils/APIBuilder';
 import { postImageUpload } from '@/apis/imageUpload/postImageUpload';
 import { putS3Upload } from '@/apis/imageUpload/putS3Upload';
 import { compressImage } from '@/utils/compressImage';
+import { updateUser } from '@/apis/user/updateUser';
+import { useUserStore } from '@/store/userStore';
 
 export interface ProfileInfoProps {
   profileImage: string;
@@ -28,6 +29,7 @@ export default function ProfileInfo({
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { member, setMember } = useUserStore();
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -62,11 +64,23 @@ export default function ProfileInfo({
       }
 
       // 프로필 이미지 업데이트
-      await APIBuilder.put('/api/members/profile-image', {
-        profileImage: accessUrl,
-      })
-        .build()
-        .call();
+      if (member?.id) {
+        await updateUser({
+          userId: member.id,
+          data: {
+            profileImage: accessUrl,
+            name: member.name,
+          },
+        });
+
+        // 사용자 정보 업데이트
+        if (member) {
+          setMember({
+            ...member,
+            profileImage: accessUrl,
+          });
+        }
+      }
 
       setSelectedImage(null);
       setPreviewUrl(null);
