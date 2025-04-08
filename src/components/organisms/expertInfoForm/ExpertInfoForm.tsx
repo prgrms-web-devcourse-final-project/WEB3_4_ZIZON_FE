@@ -1,148 +1,126 @@
 import { useState } from 'react';
 import EditableField from '@/components/molecules/editableField/EditableField';
 import TagList from '@/components/molecules/tagList/TagList';
+import { Expert } from '@/types/user';
 
 interface ExpertInfoFormProps {
-  initialData: {
-    businessField: string;
-    services: string[];
-    experience: string;
-    certifications: string[];
-    shortIntro: string;
-    fullIntro: string;
-  };
+  initialData: Expert;
 }
 
 export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
-  const [businessField, setBusinessField] = useState(initialData.businessField);
-  const [services, setServices] = useState(initialData.services);
-  const [newService, setNewService] = useState('');
-  const [experience, setExperience] = useState(initialData.experience);
-  const [certifications, setCertifications] = useState(initialData.certifications);
-  const [newCertification, setNewCertification] = useState('');
-  const [shortIntro, setShortIntro] = useState(initialData.shortIntro);
-  const [fullIntro, setFullIntro] = useState(initialData.fullIntro);
-  const [isBusinessFieldEditable, setIsBusinessFieldEditable] = useState(false);
-  const [isServicesEditable, setIsServicesEditable] = useState(false);
-  const [isExperienceEditable, setIsExperienceEditable] = useState(false);
-  const [isCertificationsEditable, setIsCertificationsEditable] = useState(false);
-  const [isShortIntroEditable, setIsShortIntroEditable] = useState(false);
-  const [isFullIntroEditable, setIsFullIntroEditable] = useState(false);
+  const [categoryName, setCategoryName] = useState(initialData.categoryName);
+  const [subCategoryNames, setSubCategoryNames] = useState(initialData.subCategoryNames);
+  const [newSubCategory, setNewSubCategory] = useState('');
+  const [careerYears, setCareerYears] = useState(initialData.careerYears.toString());
+  const [certificateNames, setCertificateNames] = useState(initialData.certificateNames);
+  const [newCertificate, setNewCertificate] = useState('');
+  const [introduction, setIntroduction] = useState(initialData.introduction);
+  const [isCategoryEditable, setIsCategoryEditable] = useState(false);
+  const [isSubCategoriesEditable, setIsSubCategoriesEditable] = useState(false);
+  const [isCareerEditable, setIsCareerEditable] = useState(false);
+  const [isCertificatesEditable, setIsCertificatesEditable] = useState(false);
+  const [isIntroductionEditable, setIsIntroductionEditable] = useState(false);
 
-  const handleBusinessFieldEditClick = () => {
-    setIsBusinessFieldEditable(!isBusinessFieldEditable);
+  const handleCategoryEditClick = () => {
+    setIsCategoryEditable(!isCategoryEditable);
   };
 
-  const handleServicesEditClick = () => {
-    setIsServicesEditable(!isServicesEditable);
-    setNewService('');
+  const handleSubCategoriesEditClick = () => {
+    setIsSubCategoriesEditable(!isSubCategoriesEditable);
+    setNewSubCategory('');
   };
 
-  const handleExperienceEditClick = () => {
-    setIsExperienceEditable(!isExperienceEditable);
+  const handleCareerEditClick = () => {
+    setIsCareerEditable(!isCareerEditable);
   };
 
-  const handleCertificationsEditClick = () => {
-    setIsCertificationsEditable(!isCertificationsEditable);
-    setNewCertification('');
+  const handleCertificatesEditClick = () => {
+    setIsCertificatesEditable(!isCertificatesEditable);
+    setNewCertificate('');
   };
 
-  const handleShortIntroEditClick = () => {
-    setIsShortIntroEditable(!isShortIntroEditable);
+  const handleIntroductionEditClick = () => {
+    setIsIntroductionEditable(!isIntroductionEditable);
   };
 
-  const handleFullIntroEditClick = () => {
-    setIsFullIntroEditable(!isFullIntroEditable);
-  };
-
-  const handleAddService = () => {
-    if (newService.trim()) {
-      setServices([...services, newService.trim()]);
-      setNewService('');
+  const handleAddSubCategory = () => {
+    if (newSubCategory.trim()) {
+      setSubCategoryNames([...subCategoryNames, newSubCategory.trim()]);
+      setNewSubCategory('');
     }
   };
 
-  const handleAddCertification = () => {
-    if (newCertification.trim()) {
-      setCertifications([...certifications, newCertification.trim()]);
-      setNewCertification('');
+  const handleAddCertificate = () => {
+    if (newCertificate.trim()) {
+      setCertificateNames([...certificateNames, newCertificate.trim()]);
+      setNewCertificate('');
     }
   };
 
-  const handleRemoveService = (index: number) => {
-    const newServices = services.filter((_, i) => i !== index);
-    setServices(newServices);
+  const handleRemoveSubCategory = (index: number) => {
+    const newSubCategories = subCategoryNames.filter((_, i) => i !== index);
+    setSubCategoryNames(newSubCategories);
   };
 
-  const handleRemoveCertification = (index: number) => {
-    const newCertifications = certifications.filter((_, i) => i !== index);
-    setCertifications(newCertifications);
+  const handleRemoveCertificate = (index: number) => {
+    const newCertificates = certificateNames.filter((_, i) => i !== index);
+    setCertificateNames(newCertificates);
   };
 
   return (
     <div className="flex flex-col gap-32">
       <EditableField
-        id="businessField"
+        id="categoryName"
         label="비즈니스 분야"
-        value={businessField}
-        placeholder="청소"
-        onChange={setBusinessField}
-        isEditable={isBusinessFieldEditable}
-        onEditClick={handleBusinessFieldEditClick}
+        value={categoryName}
+        placeholder="이사/청소"
+        onChange={setCategoryName}
+        isEditable={isCategoryEditable}
+        onEditClick={handleCategoryEditClick}
       />
 
       <TagList
         label="제공 서비스"
-        tags={services}
-        isEditable={isServicesEditable}
-        newTagValue={newService}
+        tags={subCategoryNames}
+        isEditable={isSubCategoriesEditable}
+        newTagValue={newSubCategory}
         placeholder="제공하는 서비스를 입력하세요"
-        onEditClick={handleServicesEditClick}
-        onAddTag={handleAddService}
-        onRemoveTag={handleRemoveService}
-        onNewTagChange={setNewService}
+        onEditClick={handleSubCategoriesEditClick}
+        onAddTag={handleAddSubCategory}
+        onRemoveTag={handleRemoveSubCategory}
+        onNewTagChange={setNewSubCategory}
       />
 
       <EditableField
-        id="experience"
+        id="careerYears"
         label="경력"
-        value={experience}
-        placeholder="6년"
-        onChange={setExperience}
-        isEditable={isExperienceEditable}
-        onEditClick={handleExperienceEditClick}
+        value={careerYears}
+        placeholder="5"
+        onChange={setCareerYears}
+        isEditable={isCareerEditable}
+        onEditClick={handleCareerEditClick}
       />
 
       <TagList
         label="자격증"
-        tags={certifications}
-        isEditable={isCertificationsEditable}
-        newTagValue={newCertification}
+        tags={certificateNames}
+        isEditable={isCertificatesEditable}
+        newTagValue={newCertificate}
         placeholder="보유한 자격증을 입력하세요"
-        onEditClick={handleCertificationsEditClick}
-        onAddTag={handleAddCertification}
-        onRemoveTag={handleRemoveCertification}
-        onNewTagChange={setNewCertification}
+        onEditClick={handleCertificatesEditClick}
+        onAddTag={handleAddCertificate}
+        onRemoveTag={handleRemoveCertificate}
+        onNewTagChange={setNewCertificate}
       />
 
       <EditableField
-        id="shortIntro"
-        label="환줄 소개"
-        value={shortIntro}
-        placeholder="6년 경력의 청소 전문가, 완벽한 클린 환경을 만들어 드립니다."
-        onChange={setShortIntro}
-        isEditable={isShortIntroEditable}
-        onEditClick={handleShortIntroEditClick}
-      />
-
-      <EditableField
-        id="fullIntro"
+        id="introduction"
         label="전문가 소개"
-        value={fullIntro}
-        placeholder="안녕하세요, 청소 전문가 이진우입니다..."
-        onChange={setFullIntro}
-        isEditable={isFullIntroEditable}
-        onEditClick={handleFullIntroEditClick}
+        value={introduction}
+        placeholder="안녕하세요, 5년 경력의 웹 개발 전문가입니다..."
+        onChange={setIntroduction}
+        isEditable={isIntroductionEditable}
+        onEditClick={handleIntroductionEditClick}
         useTextarea={true}
         rows={6}
       />
