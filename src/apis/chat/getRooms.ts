@@ -23,8 +23,7 @@ export default async function getRooms() {
   if (!token) {
     throw new Error('AccessToken이 없습니다.');
   }
-  console.log('token', token);
-  // 사용자 이메일을 함께 보내야 하는데...
+
   const email = decodeToken(token)?.username;
   const response = await APIBuilder.get(`/chatrooms/rooms?member=${email}`)
     .headers({
@@ -34,6 +33,5 @@ export default async function getRooms() {
     .build()
     .call<GetRoomsResponse>();
 
-  console.log('채팅방 목록', response.data);
   return response.data;
 }
