@@ -8,15 +8,19 @@ import SelectedOptionList, {
 import DatePickerWithTitle from '@/components/molecules/datePickerWithTitle/DatePickerWithTitle';
 import { DatePickerProps } from '@/components/atoms/datePicker/DatePicker';
 import { CheckboxProps } from '@/components/atoms/checkboxes/checkboxWithLabel/CheckboxWithLabel';
+import TextInputWithTitle from '@/components/molecules/textInputWithTitle/TextInputWithTitle';
 
 interface SettingFixStepTwoTemplateProps extends DatePickerProps{
   onBeforeAction: () => void;
   onNextAction: () => void;
   checkSelectBoxProps:  CheckboxProps[];
   selectedOptionListProps: selectedOptionIndexObject[];
+  id: string;
+  value: string;
+  onChange: ((value: string) => void);
   selectedIndex: number | null;
 }
-export default function SettingFixStepTwoTemplate({selectedIndex, selectedOptionListProps, checkSelectBoxProps, onBeforeAction, onNextAction, selectedDay, setSelectedDay}: SettingFixStepTwoTemplateProps) {
+export default function SettingFixStepTwoTemplate({id, value, onChange, selectedIndex, selectedOptionListProps, checkSelectBoxProps, onBeforeAction, onNextAction, selectedDay, setSelectedDay}: SettingFixStepTwoTemplateProps) {
 
   return (
     <div className='w-1062 bg-black2'>
@@ -25,9 +29,14 @@ export default function SettingFixStepTwoTemplate({selectedIndex, selectedOption
       <div className='flex mt-24 items-start w-full'>
         <div className='mr-24 w-full bg-black1 rounded-lg pb-40'>
           <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps} title={"설치 및 수리의 대상이 무엇인가요?"} />
-          {selectedIndex === 3 ? <DatePickerWithTitle title={'날짜를 선택해주세요'} selectedDay={selectedDay} setSelectedDay={setSelectedDay}/> : null}
+          {selectedIndex === 3 ? <DatePickerWithTitle title={'날짜를 선택해주세요'} selectedDay={selectedDay}
+                                                      setSelectedDay={setSelectedDay} /> : null}
+          <div className="mt-32">
+            <TextInputWithTitle title={'서비스 지역을 선택해주세요'} id={id} placeholder={"예)서울특별시 강남구"} type={'text'} value={value}
+                                onChange={onChange} />
+          </div>
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'완료'} disabled={false} onClick={onNextAction} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onNextAction} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

@@ -34,7 +34,7 @@ export default function CommonEndStepTemplate({selectedOptionListProps, id1, id2
           <TextInputWithTitle title={'예산을 입력해주세요.'} id={id3} placeholder={'예)150000'} type={'text'} value={value3}
                               onChange={onChange3} />
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'다음'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
+            <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

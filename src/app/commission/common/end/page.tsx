@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CommonEndStepTemplate from '@/components/templates/stepperTemplate/common/CommonEndStepTemplate';
 import { selectedOptionIndexObject } from '@/components/molecules/selectedOptionList/SelectedOptionList';
 import { useRouter } from 'next/navigation';
+import { commissionQuestion } from '@/utils/commissionQuestion';
 
 export default function CommonEndPage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
@@ -23,6 +24,7 @@ export default function CommonEndPage() {
     localStorage.setItem('selectedIndex', JSON.stringify(copyList));
   }
   const onClickNextHandler = () => {
+    commissionQuestion([...selectedOptionList])
   }
   const titleChangeHandler = (value: string) => {
     setTile(value);

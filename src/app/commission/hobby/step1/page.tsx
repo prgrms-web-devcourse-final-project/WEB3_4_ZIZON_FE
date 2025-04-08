@@ -35,12 +35,17 @@ export default function HobbyOnePage() {
   }
   const onCheckSelectedHandler = (key: string, label: string) => {
     setSelectedHobby(key);
-    setSelectedOptionListNewItem([{"취미 분류": label}])
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{'취미 분류': label}];
+      const updated = [...prev];
+      updated[0]['취미 분류'] = label;
+      return updated;
+    });
   }
   const onChangeLesson = (value: string) => {
     setLesson(value);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return prev;
+      if (prev.length === 0) return [{'세부 사항': value}];
       const updated = [...prev];
       updated[0]['세부 사항'] = value;
       return updated;
