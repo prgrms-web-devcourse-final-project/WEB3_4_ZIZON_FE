@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import ProgressBlue from 'public/icons/ProgressBlue.svg';
 import ProblemRed from 'public/icons/ProblemRed.svg';
-import CheckGreen from 'public/icons/CheckGreen.svg';
 import { SellState } from '@/types/sellState';
 
 interface SellStateTabItemProps {
@@ -11,6 +10,7 @@ interface SellStateTabItemProps {
   count: number;
   isSelected?: boolean;
   isExpertView?: boolean;
+  onClick?: () => void;
 }
 
 const stateConfig = {
@@ -19,15 +19,9 @@ const stateConfig = {
     label: '진행중',
     hasBorder: false,
   },
-  waiting: {
-    icon: CheckGreen,
-    label: '작업 완료 대기',
-    expertLabel: '작업 완료 요청',
-    hasBorder: false,
-  },
   cancelled: {
     icon: ProblemRed,
-    label: '취소•문제 해결',
+    label: '주문 취소',
     hasBorder: false,
   },
   completed: {
@@ -47,6 +41,7 @@ export default function SellStateTabItem({
   count,
   isSelected = false,
   isExpertView = false,
+  onClick,
 }: SellStateTabItemProps) {
   const config = stateConfig[state];
   const formattedCount = formatNumber(count);
@@ -54,18 +49,17 @@ export default function SellStateTabItem({
 
   return (
     <div
-      className={`h-full flex bg-black1 shadow-style2 py-16 px-20 rounded-lg border border-black2 ${
+      className={`h-full flex items-center justify-between bg-black1 shadow-style2 py-16 px-20 rounded-lg border border-black2 ${
         config.hasBorder ? 'border-black4' : ''
       } ${isSelected ? 'border-primary4' : ''}`}
+      onClick={onClick}
     >
-      <div className="flex">
+      <div className="flex items-center gap-12">
         {config.icon && (
           <>
             <Image src={config.icon} alt="" width={30} height={30} />
             <label
-              className={`text-16 w-150 font-medium text-black10 ml-12 content-center ${
-                isSelected ? 'text-primary' : ''
-              }`}
+              className={`text-16 font-medium text-black10  ${isSelected ? 'text-primary' : ''}`}
             >
               {label}
             </label>
@@ -73,19 +67,13 @@ export default function SellStateTabItem({
         )}
         {!config.icon && (
           <label
-            className={`text-16 w-150 font-medium text-black10 ml-8 content-center ${
-              isSelected ? 'text-primary' : ''
-            }`}
+            className={`text-16 font-medium text-black10  ${isSelected ? 'text-primary' : ''}`}
           >
             {label}
           </label>
         )}
       </div>
-      <label
-        className={`text-20 text-right ml-32 w-full font-semiBold content-center ${
-          isSelected ? 'text-primary' : ''
-        }`}
-      >
+      <label className={`text-20 text-right font-semiBold ${isSelected ? 'text-primary' : ''}`}>
         {formattedCount}
       </label>
     </div>

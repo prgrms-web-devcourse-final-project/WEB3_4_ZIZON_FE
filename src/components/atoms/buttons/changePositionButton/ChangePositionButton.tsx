@@ -32,7 +32,7 @@ function ChangePositionButton({ isState, onChangeState }: ChangePositionButtonPr
   return (
     <button
       onClick={onChangeState}
-      className={`w-194 cursor-pointer ${config.bgColor} border ${config.borderColor} rounded-full py-8 hover:opacity-80 transition-opacity`}
+      className={`w-194 cursor-pointer ${config.bgColor} border ${config.borderColor} rounded-full py-12 hover:opacity-80 transition-opacity`}
     >
       <div className="flex items-center justify-center">
         <Image src={config.icon} alt="" width={14} height={14} className="cursor-pointer" />

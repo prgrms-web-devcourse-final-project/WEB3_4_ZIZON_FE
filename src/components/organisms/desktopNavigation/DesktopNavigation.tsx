@@ -4,13 +4,16 @@ import { useRouter } from 'next/navigation';
 import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
 import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
+import { useUserStore } from '@/store/userStore';
+import { UserRole } from '@/types/user';
 
 interface DesktopNavigationProps {
-  isLoggedIn?: boolean;
+  userRole?: UserRole;
 }
 
-function DesktopNavigation({ isLoggedIn = false }: DesktopNavigationProps) {
+function DesktopNavigation({ userRole = 'client' }: DesktopNavigationProps) {
   const router = useRouter();
+  const member = useUserStore(state => state.member);
 
   return (
     <header className="w-full py-20 flex justify-center items-center border-b border-black4">
@@ -19,7 +22,12 @@ function DesktopNavigation({ isLoggedIn = false }: DesktopNavigationProps) {
           <DopdangLogo type="kr" />
           <NavigationLinks />
         </div>
-        <AuthButtons isLoggedIn={isLoggedIn} onLoginClick={() => router.push('/login')} />
+        <AuthButtons
+          isLoggedIn={!!member}
+          onLoginClick={() => router.push('/login')}
+          member={member}
+          userRole={userRole}
+        />
       </div>
     </header>
   );
