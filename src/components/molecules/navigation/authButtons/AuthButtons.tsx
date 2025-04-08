@@ -3,7 +3,7 @@ import Image from 'next/image';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import { Member, UserRole } from '@/types/user';
 import ProfileDropdown from '@/components/molecules/navigation/profileDropdown/ProfileDropdown';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface AuthButtonsProps {
@@ -22,6 +22,15 @@ export default function AuthButtons({
   const router = useRouter();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true); // 상태 복원 완료 플래그 설정
+  }, []);
+
+  if (!isReady) {
+    return null; // 상태 복원 전에는 아무것도 렌더링하지 않음
+  }
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) {
