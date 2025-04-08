@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import localFont from 'next/font/local';
+import DesktopNavigation from '@/components/organisms/desktopNavigation/DesktopNavigation';
 
 export const metadata: Metadata = {
   title: '💫DopDang',
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
   display: 'swap',
-  weight: '400 700',
+  weight: '300 700',
   variable: '--font-pretendard',
   fallback: ['Arial', 'sans-serif'],
 });
@@ -22,10 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReactQueryClientProvider>
-      <html lang="en" className={`${pretendard.variable}`}>
-        <body className={`${pretendard.className}`}>{children}</body>
-      </html>
-    </ReactQueryClientProvider>
+    <html lang="kr" className={`${pretendard.variable}`}>
+      <body className={`${pretendard.className} bg-black2`}>
+        <ReactQueryClientProvider>
+          <DesktopNavigation />
+          <main className="w-full">{children}</main>
+        </ReactQueryClientProvider>
+      </body>
+    </html>
   );
 }
