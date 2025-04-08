@@ -16,7 +16,14 @@ function BannerButtons() {
         }}
         disabled={false}
       />
-      <StandardButton text="견적요청" state="dark" onClick={() => {}} disabled={false} />
+      <StandardButton
+        text="견적요청"
+        state="dark"
+        onClick={() => {
+          router.push('/commission/common/start');
+        }}
+        disabled={false}
+      />
     </div>
   );
 }
