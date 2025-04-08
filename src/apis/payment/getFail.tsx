@@ -38,6 +38,6 @@ export default async function getFail(params: GetFailRequest): Promise<FailRespo
     .timeout(50000)
     .build()
     .call<FailResponse>();
-  console.log('결제 실패 콜백 응답:', response);
+
   return response.data;
 }
