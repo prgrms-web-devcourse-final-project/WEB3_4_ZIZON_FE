@@ -51,9 +51,9 @@ export default function HobbyTwoPage() {
   const onSelectedShape = (key: string, label: string) => {
     setSelectedShape(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return [{'세부 사항': label}];
+      if (prev.length === 0) return [{'레슨 형태': label}];
       const updated = [...prev];
-      updated[0]['세부 사항'] = label;
+      updated[0]['레슨 형태'] = label;
       return updated;
     });
   }

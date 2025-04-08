@@ -45,7 +45,7 @@ function Page() {
   }
   const onClickNextHandler = () => {
     if (address.length === 0) return;
-    localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList, ...selectedOptionListNewItem, {"지역": address}]));
+    localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList, ...selectedOptionListNewItem]));
     router.push('/commission/common/end');
   }
   const onCheckSelectedHandler = (key: string, label: string) => {

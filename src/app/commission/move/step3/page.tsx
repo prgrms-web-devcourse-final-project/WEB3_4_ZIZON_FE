@@ -38,7 +38,7 @@ export default function MoveThreePage() {
     setSelectedOptionListNewItem(prev => {
       if (prev.length === 0) return prev;
       const updated = [...prev];
-      updated[0]['엘리베이터'] = selectedStartPoint === 'yes' ? '있음' : '없음';
+      updated[0]['l.엘리베이터'] = selectedStartPoint === 'yes' ? '없음': '있음' ;
       return updated;
     });
   }

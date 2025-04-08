@@ -39,9 +39,9 @@ export default function CleaningFourPage() {
   const areaChangeHandler = (value: string) => {
     setArea(value);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return [{"방 개수": value}];
+      if (prev.length === 0) return [{"평 수": value}];
       const updated = [...prev];
-      updated[0]['방 개수'] = value;
+      updated[0]['평 수'] = value;
       return updated;
     });
   }

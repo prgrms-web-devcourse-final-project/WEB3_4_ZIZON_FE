@@ -21,7 +21,7 @@ const selectedAgeBoxItems: {label: string; key: string;}[] = [
   {key: '20', label: "20대"},
   {key: '30', label: "30대"},
 ];
-export default function Page() {
+export default function HobbyThreePage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
   const [selectedOptionListNewItem, setSelectedOptionListNewItem] = useState<selectedOptionIndexObject[]>([]);
   const [selectedAge, setSelectedAge] = useState<string | null>(null);

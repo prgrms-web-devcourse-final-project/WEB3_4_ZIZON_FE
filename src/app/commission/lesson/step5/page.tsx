@@ -30,9 +30,9 @@ export default function LessonFivePage() {
 
       const month = date.getMonth() + 1;
       const day = date.getDate();
-      if (prev.length === 0 || typeof selectedDay === undefined) return [{'이사 날짜': `${month}월 ${day}일`}];
+      if (prev.length === 0 || typeof selectedDay === undefined) return [{'과외 날짜': `${month}월 ${day}일`}];
 
-      updated[0]['이사 날짜'] = `${month}월 ${day}일`;
+      updated[0]['과외 날짜'] = `${month}월 ${day}일`;
       return updated;
     });
   }, [selectedDay]);
@@ -50,9 +50,9 @@ export default function LessonFivePage() {
   const onCheckSelectedHandler = (key: string, label: string) => {
     setCheckSelected(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return [{'희망 날짜': label}];
+      if (prev.length === 0) return [{'과외 날짜': label}];
       const updated = [...prev];
-      updated[0]['희망 날짜'] = label;
+      updated[0]['과외 날짜'] = label;
       return updated;
     });
   }
