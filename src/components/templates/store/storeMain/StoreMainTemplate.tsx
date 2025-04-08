@@ -9,7 +9,6 @@ export default function StoreMainTemplate({ productList }: { productList: Produc
       <h1 className="font-semibold text-32 text-black12 mb-40">스토어</h1>
       <div className="w-full flex flex-col gap-32">
         <StoreSearchRegister />
-
         <StoreMainContent productList={productList} />
       </div>
     </div>

@@ -10,7 +10,7 @@ import ReviewItem, { ReviewItemProps } from '@/components/molecules/reviewItem/R
 interface ExpertIntroduction {
   introduction: string;
   major_category: string;
-  sub_category: string;
+  sub_category_names: string[];
   career_years: number;
   certification?: string[];
   ReviewList?: ReviewItemProps[];
@@ -20,7 +20,7 @@ const Didivder = () => <div className="w-full h-[1px] bg-black4" />;
 export default function ExpertIntroduction({
   introduction,
   major_category,
-  sub_category,
+  sub_category_names,
   career_years,
   certification,
   ReviewList,
@@ -55,7 +55,10 @@ export default function ExpertIntroduction({
           <h3 className="font-bold text-20 text-black12">제공서비스</h3>
           <div className="flex gap-8">
             <SmallTag text={major_category} theme="default" />
-            <SmallTag text={sub_category} theme="default" />
+            {sub_category_names &&
+              sub_category_names?.map((item, index) => (
+                <SmallTag key={index} text={item} theme="default" />
+              ))}
           </div>
         </div>
         {/* 경력 */}

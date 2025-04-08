@@ -54,7 +54,7 @@ export default async function ProductIdPage({
 }) {
   // 상품 상세정보 조회 api 호출
   return (
-    <div className="w-full px-320 mt-72">
+    <div className="flex justify-center mt-72">
       <StoreProductDetailTemplate product={DUMMY_PRODUCT} />
     </div>
   );

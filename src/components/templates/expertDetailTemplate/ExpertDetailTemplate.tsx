@@ -15,7 +15,7 @@ export default function ExpertDetailTemplate({
   RequestOfferBoxComponent,
 }: ExpertDetailTemplateProps) {
   return (
-    <div className="w-full h-fit mt-78 relative">
+    <div className="w-953 relative ">
       <div className="w-628 h-fit flex flex-col gap-24">
         {/* 프로필 영역 */}
         {ExpertProfileComponent}

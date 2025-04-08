@@ -5,14 +5,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   images: {
     formats: ['image/avif', 'image/webp'],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/:path*',
-        destination: 'http://localhost:8080/:path*',
-      },
-    ];
+    domains: [`${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`],
   },
 };
 

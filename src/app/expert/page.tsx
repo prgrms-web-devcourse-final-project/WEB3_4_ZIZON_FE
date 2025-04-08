@@ -1,18 +1,24 @@
-import { EXPERT_LIST } from '@/components/molecules/expert/expertList/ExpertList.stories';
-import { ExpertListItemProps } from '@/components/molecules/expert/expertListItem/ExpertListItem';
-
+import { ExpertListRequestType, getExpertlist } from '@/apis/expert/getExpertlist';
 import ExpertTemplate from '@/components/templates/expertTemplate/ExpertTemplate';
+import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
 
-export default async function ExpertPage() {
-  // 여기서 expert-list 정보를 불러와야 함
-  // expert-list는 검색어, 카테고리, 경력, 정렬 방식이 바뀜에 따라 새롭게 불러와져야 함
+const ALL_CATEGORY = '이사/청소,과외,설치/수리,취미/자기계발';
 
-  // Template에 내려줘야 할 정보,
-  const expertList: Array<ExpertListItemProps> = [...EXPERT_LIST];
+export default async function ExpertPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category: ProjectCategoryIdType;
+    career: string;
+  }>;
+}) {
+  const { category, career } = await searchParams;
 
-  return (
-    <div className="w-full px-320 flex justify-center">
-      <ExpertTemplate expertList={expertList} />
-    </div>
-  );
+  const RequestQuery: ExpertListRequestType = {
+    careerLevel: career?.toUpperCase() || 'JUNIOR',
+    categoryNames: PROJECT_CATEGORY[category as ProjectCategoryIdType] || ALL_CATEGORY,
+  };
+
+  const data = await getExpertlist(RequestQuery);
+  return <ExpertTemplate expertList={data} />;
 }

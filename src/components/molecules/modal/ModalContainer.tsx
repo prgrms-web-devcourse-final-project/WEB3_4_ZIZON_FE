@@ -1,3 +1,5 @@
+'use client';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
 interface ModalProps extends React.PropsWithChildren {
@@ -5,6 +7,14 @@ interface ModalProps extends React.PropsWithChildren {
 }
 
 export default function ModalContainer({ open, children }: ModalProps) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
   return ReactDOM.createPortal(
     <>
       {open ? (

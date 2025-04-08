@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url';
+import { RequestCookiesAdapter } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import {
   HTTPMethod,
   HTTPHeaders,

@@ -54,7 +54,7 @@ export const DUMMY_PRODUCT_LIST: ProductType[] = [
 
 export default function StorePage() {
   return (
-    <div className="w-full px-320 mt-72 flex justify-center">
+    <div className="mt-72 flex justify-center">
       <StoreMainTemplate productList={DUMMY_PRODUCT_LIST} />
     </div>
   );

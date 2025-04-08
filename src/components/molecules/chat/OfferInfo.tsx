@@ -3,7 +3,7 @@ import WonIcon from 'public/icons/Won.svg';
 import ChatIcon from 'public/icons/ChatBubbleLeftEllipsisLine.svg';
 import SelectedOption from '@/components/atoms/texts/selectedOption/SelectedOption';
 import { formatMoney } from '@/utils/moneyFormat';
-import { OfferInfoType } from '@/types/offter';
+import { OfferInfoType } from '@/types/offer';
 import Link from 'next/link';
 import ArrowRightIcon from 'public/icons/RightArrowWhite.svg';
 const Divider = () => {
