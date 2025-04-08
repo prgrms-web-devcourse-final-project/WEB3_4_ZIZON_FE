@@ -13,7 +13,7 @@ export default function IconSelectBox({title, iconSelectBoxProps}: IconSelectBox
       <div className="grid grid-cols-1 gap-16 place-items-end">
         {iconSelectBoxProps.map((item, index) => {
           return (
-            <SelectedCard key={index} type={item.type} title={item.title} subtitle={item.subtitle}
+            <SelectedCard key={index} type={item.type} onClick={item.onClick} title={item.title} subtitle={item.subtitle}
                           category={item.category} isOn={item.isOn} />
           )
         })}

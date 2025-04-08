@@ -1,11 +1,11 @@
 import React from 'react';
 import SelectedOption from '@/components/atoms/texts/selectedOption/SelectedOption';
 
-type selectedOptionIndexObject = {
-  [index: string]: string
+export type selectedOptionIndexObject = {
+  [index: string]: string;
 }
 interface SelectedOptionListProps {
-  selectedOptionIndex: selectedOptionIndexObject[]
+  selectedOptionIndex: selectedOptionIndexObject[];
 }
 function SelectedOptionList({selectedOptionIndex}:SelectedOptionListProps) {
   const selectedOptionRow:  React.JSX.Element[] = [];

@@ -13,7 +13,7 @@ function IconCenterSelectBox({title, selectedCardProps}:IconCenterSelectBoxProps
       <div className={`grid grid-cols-${selectedCardProps.length} grid-rows-1 gap-24`}>
         {selectedCardProps.map((item, index) => {
           return(
-            <SelectedCard key={index} type={'center'} title={item.title} subtitle={''} category={item.category} isOn={item.isOn} />
+            <SelectedCard key={index} type={'center'} title={item.title} onClick={item.onClick} subtitle={''} category={item.category} isOn={item.isOn} />
           )
         })}
       </div>
