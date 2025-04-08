@@ -15,6 +15,11 @@ function MypageSidebar({ profileInfo }: MypageSidebarProps) {
 
   // 역할 전환 함수
   const toggleRole = () => {
+    if (currentRole === 'client' && !expertInfo) {
+      alert('전문가 등록이 되지 않은 사용자입니다.');
+      return;
+    }
+
     setCurrentRole(currentRole === 'client' ? 'expert' : 'client');
   };
 
@@ -43,7 +48,7 @@ function MypageSidebar({ profileInfo }: MypageSidebarProps) {
     ...profileInfo,
     ...(currentRole === 'expert' &&
       expertInfo && {
-        certificationBadgeText: expertInfo.certification ? '인증완료' : '인증필요',
+        certificationBadgeText: expertInfo.categoryName || '00',
       }),
   };
 
