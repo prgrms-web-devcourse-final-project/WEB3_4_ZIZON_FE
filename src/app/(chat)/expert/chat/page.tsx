@@ -1,16 +1,12 @@
-import ExpertChattingInfo from '@/components/organisms/chatting/chattingInfo/expert/ExpertChattingInfo';
-import ChattingList, {
-  dummyChattingRooms,
-} from '@/components/organisms/chatting/chattingLIst/ChattingList';
-import ChattingRoom from '@/components/organisms/chatting/chattingRoom/ChattingRoom';
-import ChattingTemplate from '@/components/templates/chatTemplate/ChattingTemplate';
+import getRooms, { GetRoomsResponse } from '@/apis/chat/getRooms';
+import ExpertChattingTemplate from '@/components/templates/chatTemplate/ExpertChattingTemplate';
 
-export default function ExpertChatPage() {
+export default async function ExpertChatPage() {
+  const chatRoomList: GetRoomsResponse = await getRooms();
+
   return (
-    <ChattingTemplate>
-      <ChattingList chattingRoomList={dummyChattingRooms} />
-      <ChattingRoom />
-      <ExpertChattingInfo />
-    </ChattingTemplate>
+    <div className="w-full flex justify-center">
+      <ExpertChattingTemplate chatRoomList={chatRoomList} />;
+    </div>
   );
 }

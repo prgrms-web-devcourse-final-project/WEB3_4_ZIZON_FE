@@ -8,10 +8,9 @@ export function decodeToken(token: string): Record<string, any> | null {
 
     // Base64 디코딩 후 JSON 파싱
     const decodedPayload = JSON.parse(atob(payload));
-    console.log('디코딩된 페이로드:', decodedPayload);
+
     return decodedPayload;
   } catch (error) {
-    console.error('토큰 디코딩에 실패했습니다.', error);
     return null;
   }
 }
