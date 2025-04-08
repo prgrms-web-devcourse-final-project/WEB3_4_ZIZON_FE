@@ -27,7 +27,7 @@ export default function LessonStepTwoTemplate({iconSelectedItem, selectedOptionL
           {iconSelectedItem === 'humanities' ? <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps1} title={'어떤 교과 과목을 공부하고 싶나요?'}/>: null}
           {iconSelectedItem === 'entertainment' ? <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps2} title={'어떤 교과 외 과목을 공부하고 싶나요?'}/>: null}
           <div className="float-end mr-40 mt-16">
-            <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

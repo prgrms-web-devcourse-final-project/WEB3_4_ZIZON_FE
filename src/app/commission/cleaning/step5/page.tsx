@@ -11,7 +11,7 @@ const checkSelectedBoxItems: {label: string; key: string;}[] = [
   {key: 'particular', label: "특정 날짜"},
 ];
 function Page() {
-  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(undefined);
+  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(new Date());
   const [address, setAddress] = React.useState<string>('');
   const [question, setQuestion] = React.useState<string>('');
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
@@ -24,13 +24,14 @@ function Page() {
     if (storedData) setSelectedOptionList(JSON.parse(storedData));
   }, []);
   useEffect(() => {
+    if (checkSelected === null) return;
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0 || typeof selectedDay === undefined) return prev;
       const updated = [...prev];
       const date = new Date(`${selectedDay}`);
 
       const month = date.getMonth() + 1;
       const day = date.getDate();
+      if (prev.length === 0 || typeof selectedDay === undefined) return [{'희망 날짜': `${month}월 ${day}일`}];
 
       updated[0]['희망 날짜'] = `${month}월 ${day}일`;
       return updated;
@@ -49,7 +50,12 @@ function Page() {
   }
   const onCheckSelectedHandler = (key: string, label: string) => {
     setCheckSelected(key);
-    setSelectedOptionListNewItem([{"희망 날짜": label}])
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{"희망 날짜": label}];
+      const updated = [...prev];
+      updated[0]['희망 날짜'] = label;
+      return updated;
+    });
   }
   const addressChangeHandler = (value: string) => {
     setAddress(value);

@@ -47,7 +47,7 @@ export default function Page() {
   const onSelectedAge = (key: string, label: string) => {
     setSelectedAge(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return [{"학생 연령": label}];
+      if (prev.length === 0) return [{'학생 연령': label}];
       const updated = [...prev];
       updated[0]['학생 연령'] = label;
       return updated;
@@ -56,7 +56,7 @@ export default function Page() {
   const onSelectedGender = (key: string, label: string) => {
     setSelectedGender(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return prev;
+      if (prev.length === 0) return  [{'학생 성별': label}];
       const updated = [...prev];
       updated[0]['학생 성별'] = label;
       return updated;
@@ -65,7 +65,7 @@ export default function Page() {
   const onSelectedPreferGender = (key: string, label: string) => {
     setSelectedPreferGender(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return prev;
+      if (prev.length === 0) return [{'희망 성별': label}];
       const updated = [...prev];
       updated[0]['희망 성별'] = label;
       return updated;

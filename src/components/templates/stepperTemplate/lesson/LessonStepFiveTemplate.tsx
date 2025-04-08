@@ -33,7 +33,7 @@ export default function LessonStepFiveTemplate({checkSelected, selectedOptionLis
             <TextInputWithTitle title={'서비스 지역을 선택해주세요'} id={id} placeholder={placeholder} type={type} value={value} onChange={onChange}/>
           </div>
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

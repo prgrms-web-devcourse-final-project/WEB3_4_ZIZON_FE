@@ -24,7 +24,7 @@ export default function LessonStepOneTemplate({selectedOptionListProps, checkSel
           <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps1} title={'과외생은 어디에 속해있나요?'}/>
           <CheckSelectBox checkSelectBoxProps={checkSelectBoxProps2} title={'어떤 과외 형태를 원하나요?'}/>
           <div className="float-end mr-40 mt-16">
-            <StandardButton text={'완료'} disabled={false} onClick={onNextAction} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onNextAction} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

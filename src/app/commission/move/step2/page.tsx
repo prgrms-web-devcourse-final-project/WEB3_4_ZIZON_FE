@@ -13,7 +13,7 @@ const checkSelectedBoxItems: {label: string; key: string;}[] = [
 export default function MoveTwoPage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
   const [selectedOptionListNewItem, setSelectedOptionListNewItem] = useState<selectedOptionIndexObject[]>([]);
-  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(undefined);
+  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(new Date());
   const [checkSelected, setCheckSelected] = useState<string | null>(null);
   const router = useRouter();
 
@@ -23,12 +23,12 @@ export default function MoveTwoPage() {
   }, []);
   useEffect(() => {
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0 || typeof selectedDay === undefined) return prev;
       const updated = [...prev];
       const date = new Date(`${selectedDay}`);
 
       const month = date.getMonth() + 1;
       const day = date.getDate();
+      if (prev.length === 0 || typeof selectedDay === undefined) return [{'이사 날짜': `${month}월 ${day}일`}];
 
       updated[0]['이사 날짜'] = `${month}월 ${day}일`;
       return updated;
@@ -47,7 +47,12 @@ export default function MoveTwoPage() {
   }
   const onCheckSelectedHandler = (key: string, label: string) => {
     setCheckSelected(key);
-    setSelectedOptionListNewItem([{"이사 형태": label}])
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{'이사 형태': label}];
+      const updated = [...prev];
+      updated[0]['이사 형태'] = label;
+      return updated;
+    });
   }
   return (
     <div>
