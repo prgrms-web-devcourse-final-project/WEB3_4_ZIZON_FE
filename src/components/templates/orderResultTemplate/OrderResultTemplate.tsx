@@ -1,60 +1,63 @@
 'use client';
 
+import { SuccessResponse } from '@/apis/payment/getSuccess';
 import PaymentNotice from '@/components/molecules/order/paymentNotice/PaymentNotice';
 import ResultBanner from '@/components/molecules/order/resultBanner/ResultBanner';
 import ResultButtons from '@/components/molecules/order/resultButtons/ResultButtons';
 import OrderResult from '@/components/organisms/order/orderResult/OrderResult';
-import { APIBuilder } from '@/utils/APIBuilder';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-export default function OrderResultTemplate() {
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get('orderId') as string;
-  const paymentKey = searchParams.get('paymentKey') as string;
-  const amount = searchParams.get('amount') as string;
+type SuccessResultType = Pick<SuccessResponse, 'amount' | 'expertName' | 'paymentName' | 'status'>;
+type FailResultType = Pick<SuccessResponse, 'errorCode' | 'message' | 'status'>;
 
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+interface OrderResultTemplateProps<T extends 'SUCCESS' | 'FAIL'> {
+  status: T;
+  resultData: T extends 'SUCCESS' ? SuccessResultType : FailResultType;
+}
 
-  useEffect(() => {
-    console.log('useEffect 내부 실행');
-    const fetchPaymentResult = async () => {
-      try {
-        console.log('실행중');
-        const response = await APIBuilder.get(
-          `/payments/success?orderId=${orderId}&paymentKey=${paymentKey}&amount=${amount}`,
-        )
-          .withCredentials(true)
-          .build()
-          .call<any>();
-        console.log('res', response);
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPaymentResult();
-  }, []);
-
-  if (loading) return <p>로딩 중...</p>;
+export default function OrderResultTemplate<T extends 'SUCCESS' | 'FAIL'>({
+  status,
+  resultData,
+}: OrderResultTemplateProps<T>) {
   return (
     <div className="flex flex-col items-center justify-center gap-40">
-      <ResultBanner />
-      <PaymentNotice text="결제 금액은 서비스 완료 후 전문가에게 전달됩니다." />
-      <OrderResult
-        infoList={[
-          {
-            attribute: '구매 상품',
-            value: '이사 서비스',
-          },
-          {
-            attribute: '전문가',
-            value: '이상훈',
-          },
-        ]}
-        totalPrice={1000000}
-      />
+      <ResultBanner status={status} />
+      {status === 'SUCCESS' ? (
+        <>
+          <PaymentNotice text="결제 금액은 서비스 완료 후 전문가에게 전달됩니다." />
+          <OrderResult
+            infoList={[
+              {
+                attribute: '구매 상품',
+                value: (resultData as SuccessResultType).paymentName,
+              },
+              {
+                attribute: '전문가',
+                value: (resultData as SuccessResultType).expertName,
+              },
+              {
+                attribute: '가격',
+                value: (resultData as SuccessResultType).amount.toLocaleString('ko-KR') + '원',
+              },
+            ]}
+            totalPrice={(resultData as SuccessResultType).amount}
+          />
+        </>
+      ) : (
+        <OrderResult
+          infoList={[
+            {
+              attribute: '구매 실패 코드',
+              value: (resultData as FailResultType).errorCode!.toString(),
+            },
+            {
+              attribute: '구매 실패 사유',
+              value: (resultData as FailResultType).message!,
+            },
+          ]}
+          totalPrice={1000000}
+        />
+      )}
+
       <ResultButtons />
     </div>
   );
