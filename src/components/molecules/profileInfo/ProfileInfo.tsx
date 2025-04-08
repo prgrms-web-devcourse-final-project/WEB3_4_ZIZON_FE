@@ -5,11 +5,9 @@ import { useState, useRef } from 'react';
 import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
 import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
 import { APIBuilder } from '@/utils/APIBuilder';
-
-interface S3Response {
-  presignedUrl: string;
-  accessUrl: string;
-}
+import { postImageUpload } from '@/apis/imageUpload/postImageUpload';
+import { putS3Upload } from '@/apis/imageUpload/putS3Upload';
+import { compressImage } from '@/utils/compressImage';
 
 export interface ProfileInfoProps {
   profileImage: string;
@@ -46,26 +44,20 @@ export default function ProfileInfo({
       setIsUploading(true);
 
       // Presigned URL 요청
-      const response = await APIBuilder.post('/api/s3/upload-url', {
+      const presignedUrlResponse = await postImageUpload({
         folder: 'members',
         fileName: selectedImage.name,
-        contentType: selectedImage.type,
-      })
-        .build()
-        .call<S3Response>();
-
-      const { presignedUrl, accessUrl } = response.data;
-
-      // S3에 이미지 업로드
-      const uploadResponse = await fetch(presignedUrl, {
-        method: 'PUT',
-        body: selectedImage,
-        headers: {
-          'Content-Type': selectedImage.type,
-        },
+        contentType: 'image/webp',
       });
 
-      if (!uploadResponse.ok) {
+      const { presignedUrl, accessUrl } = presignedUrlResponse;
+
+      const compressedImage = await compressImage(selectedImage);
+
+      // S3에 이미지 업로드
+      const uploadResponse = await putS3Upload(presignedUrl, compressedImage);
+
+      if (uploadResponse.status !== 200) {
         throw new Error('이미지 업로드 실패');
       }
 
