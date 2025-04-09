@@ -1,23 +1,26 @@
 'use client';
 
 import { GetRoomsResponse } from '@/apis/chat/getRooms';
-import { getExpert } from '@/apis/expert/getExpert';
 import getOfferList from '@/apis/offer/getOffer';
-import ClientChattingInfo from '@/components/organisms/chatting/chattingInfo/client/ClientChattingInfo';
+import getProject from '@/apis/project/getProject';
+import ExpertChattingInfo from '@/components/organisms/chatting/chattingInfo/expert/ExpertChattingInfo';
 import ChattingList from '@/components/organisms/chatting/chattingLIst/ChattingList';
 import ChattingRoom from '@/components/organisms/chatting/chattingRoom/ChattingRoom';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
-export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRoomsResponse }) {
+export default function ExpertChattingTemplate({
+  chatRoomList,
+}: {
+  chatRoomList: GetRoomsResponse;
+}) {
   const [room, setRoom] = useState<string | null>(null);
   const [projectId, setProjectId] = useState<number | null>(null); // 현제 선택된 프로젝트 Id
-  const [expertId, setExpertId] = useState<number | null>(null); // 현제 선택된 전문가 Id
 
-  const { data: expertData, isLoading: isLoadingExpert } = useQuery({
-    queryKey: ['expert', expertId],
-    queryFn: () => getExpert({ expertId: String(expertId) }),
-    enabled: !!expertId,
+  const { data: projectData, isLoading: isLoadingProject } = useQuery({
+    queryKey: ['project', projectId],
+    queryFn: () => getProject({ projectId: String(projectId) }),
+    enabled: !!projectId,
   });
 
   const { data: offerData, isLoading: isLoadingOffer } = useQuery({
@@ -39,10 +42,9 @@ export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRo
   const handleRoomChange = (roomId: string, projectId: number, userId: number) => {
     setRoom(roomId);
     setProjectId(projectId);
-    setExpertId(userId);
   };
 
-  if (isLoadingExpert || isLoadingOffer) {
+  if (isLoadingProject || isLoadingOffer) {
     return <div>로딩중</div>;
   }
 
@@ -50,7 +52,7 @@ export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRo
     <div className="flex gap-24 mt-46 items-start jusitfy-center w-1670">
       <ChattingList chatRoomList={chatRoomList} handleRoomChange={handleRoomChange} room={room} />
       <ChattingRoom />
-      <ClientChattingInfo expertData={expertData} offerData={offerData} expertId={expertId} />
+      <ExpertChattingInfo projectData={projectData} offerData={offerData} />
     </div>
   );
 }

@@ -26,7 +26,5 @@ export const getExpert = async (request: ExpertRequestType): Promise<ExpertType>
     .build()
     .call<ExpertType>();
 
-  console.log('response', response.data);
-
   return response.data;
 };

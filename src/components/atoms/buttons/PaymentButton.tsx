@@ -49,9 +49,10 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
       orderId: paymentInfo.orderId, // 주문번호
       amount: {
         currency: 'KRW',
-        value: paymentInfo.price,
+        //value: paymentInfo.price,
+        value: 20,
       },
-      orderName: paymentInfo.category, // 구매상품
+      orderName: paymentInfo.expertName, // 구매상품
       successUrl: `${window.location.origin}/payments/success`, // 결제 성공 시  URL -> ✅ SUCCESS 결제창 열림
       failUrl: `${window.location.origin}/payments/fail`, // 결제 실패 시 URL -> ✅ SUCCESS
       card: {

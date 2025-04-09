@@ -3,15 +3,15 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 import { useState } from 'react';
 import ModalContainer from '../modal/ModalContainer';
 import ContractModal, { FormValue } from '../modal/ContractModal';
-import { OfferInfoType } from '@/types/offer';
-import { ExpertInfoType } from '@/types/expert';
+import { OfferResponseType } from '@/apis/offer/getOffer';
+import { ExpertType } from '@/apis/expert/getExpert';
 
 export default function ChattingButtonGroup({
   offerInfo,
   expertInfo,
 }: {
-  offerInfo: OfferInfoType;
-  expertInfo: ExpertInfoType;
+  offerInfo: OfferResponseType;
+  expertInfo: ExpertType;
 }) {
   const [openContract, setOpenContract] = useState(false);
 
@@ -19,9 +19,9 @@ export default function ChattingButtonGroup({
   const handleSubmitContract = (formValue: FormValue) => {};
 
   const contractInfo = {
-    expertProfileImage: expertInfo.expert_profile,
-    expertName: expertInfo.expert_name,
-    expertCategory: expertInfo.expert_category,
+    expertProfileImage: expertInfo.profileImage,
+    expertName: expertInfo.name,
+    expertCategory: expertInfo.categoryName,
     charge: offerInfo.price,
   };
 

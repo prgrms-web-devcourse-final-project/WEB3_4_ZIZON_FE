@@ -1,53 +1,21 @@
 'use client';
 
+import { GetRoomsResponse } from '@/apis/chat/getRooms';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import ChatListItem from '@/components/molecules/chatListItem/ChatListItem';
 import { CHATTING_STATE, ChattingStateType } from '@/constants/chat';
-import { ChattingRoomType } from '@/types/chat';
+
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 interface ChattingListProps {
-  chattingRoomList: ChattingRoomType[];
+  chatRoomList: GetRoomsResponse;
+  handleRoomChange: (roomId: string, projectId: number, userId: number) => void;
+  room: string | null; // 선택된 채팅방 id
 }
 
-export const dummyChattingRooms: ChattingRoomType[] = [
-  {
-    roomId: 'room1',
-    otherUserName: '김철수',
-    otherUserProfile: '/images/DefaultImage.png',
-    lastMessage: '안녕하세요! 상담 요청드립니다.',
-    lastMessageTime: '2025-04-01T10:30:00Z',
-    unreadCount: 2,
-  },
-  {
-    roomId: 'room2',
-    otherUserName: '이영희',
-    otherUserProfile: '/images/DefaultImage.png',
-    lastMessage: '견적서를 확인해주세요.',
-    lastMessageTime: '2025-04-02T14:15:00Z',
-    unreadCount: 0,
-  },
-  {
-    roomId: 'room3',
-    otherUserName: '박민수',
-    otherUserProfile: '/images/DefaultImage.png',
-    lastMessage: '감사합니다. 좋은 하루 되세요.',
-    lastMessageTime: '2025-04-03T09:45:00Z',
-    unreadCount: 5,
-  },
-  {
-    roomId: 'room4',
-    otherUserName: '최유리',
-    otherUserProfile: '/images/DefaultImage.png',
-    lastMessage: '추가 문의사항이 있습니다.',
-    lastMessageTime: '2025-04-04T16:20:00Z',
-    unreadCount: 1,
-  },
-];
-
-export default function ChattingList({ chattingRoomList }: ChattingListProps) {
+export default function ChattingList({ chatRoomList, handleRoomChange, room }: ChattingListProps) {
   const [filter, setFilter] = useState<ChattingStateType>(CHATTING_STATE[0].state);
   const [search, setSearch] = useState<string>('');
   const searchParams = useSearchParams();
@@ -57,12 +25,6 @@ export default function ChattingList({ chattingRoomList }: ChattingListProps) {
   // 현재 채팅 유저 상태 -> 전역에서 가져오는 방법 고려
   const pathname = usePathname();
   const userType = pathname.split('/')[1]; // client or expert
-
-  const handleChatItemClick = (chatRoomId: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set('roomId', chatRoomId);
-    router.push(`/${userType}/chat?${params.toString()}`);
-  };
 
   return (
     <div className="w-402 flex flex-col gap-20 justify-end">
@@ -85,7 +47,7 @@ export default function ChattingList({ chattingRoomList }: ChattingListProps) {
 
       {/* 채팅 목록 */}
       <div className="flex flex-col rounded-[8px] border-1 border-black4 overflow-hidden ">
-        {chattingRoomList.map((item, index) => (
+        {chatRoomList.map((item, index) => (
           <ChatListItem
             key={index}
             chatRoomId={item.roomId}
@@ -93,8 +55,8 @@ export default function ChattingList({ chattingRoomList }: ChattingListProps) {
             text={item.lastMessage}
             userName={item.otherUserName}
             userProfile={item.otherUserProfile}
-            isSelected={id === item.roomId}
-            onClick={() => handleChatItemClick(item.roomId)}
+            isSelected={room === item.roomId}
+            onClick={() => handleRoomChange(item.roomId, item.projectId, item.otherUserId)}
           />
         ))}
       </div>
