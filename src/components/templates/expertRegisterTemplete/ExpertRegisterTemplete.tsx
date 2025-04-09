@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ExpertStepFooterButton from '@/components/atoms/buttons/expertStepFooterButton/ExpertStepFooterButton';
 import ExpertCategoryList from '@/components/organisms/expertRegister/expertMajorCategoryList/ExpertMajorCategoryList';
-import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+import { ExpertCategory } from '@/types/expert';
 import ExpertServices from '@/components/organisms/expertRegister/expertSubCategoryList/ExpertSubCategoryList';
 import ExpertDetailForm, {
   ExpertDetailFormData,

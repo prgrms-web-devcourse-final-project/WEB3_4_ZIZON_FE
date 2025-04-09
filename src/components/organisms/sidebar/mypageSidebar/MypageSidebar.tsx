@@ -10,12 +10,12 @@ interface MypageSidebarProps {
 }
 
 function MypageSidebar({ profileInfo }: MypageSidebarProps) {
-  const { currentRole, setCurrentRole } = useUserStore();
-  const { expertInfo, isLoading, error } = useUserData();
+  const { currentRole, setCurrentRole, expert: storeExpert } = useUserStore();
+  const { isLoading, error } = useUserData();
 
   // 역할 전환 함수
   const toggleRole = () => {
-    if (currentRole === 'client' && !expertInfo) {
+    if (currentRole === 'client' && !storeExpert) {
       alert('전문가 등록이 되지 않은 사용자입니다.');
       return;
     }
@@ -47,8 +47,8 @@ function MypageSidebar({ profileInfo }: MypageSidebarProps) {
   const enhancedProfileInfo = {
     ...profileInfo,
     ...(currentRole === 'expert' &&
-      expertInfo && {
-        certificationBadgeText: expertInfo.categoryName || '00',
+      storeExpert && {
+        certificationBadgeText: storeExpert?.categoryName || '00',
       }),
   };
 

@@ -2,8 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { ExpertCategory } from '@/types/expert';
 
-export type ExpertCategory = 'move' | 'fix' | 'tutor' | 'hobby';
 export type ProductCategory = 'digital' | 'living';
 export type ButtonState = 'default' | 'active';
 

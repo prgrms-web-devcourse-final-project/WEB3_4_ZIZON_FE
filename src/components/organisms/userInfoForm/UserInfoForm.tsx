@@ -3,14 +3,10 @@ import EditableField from '@/components/molecules/editableField/EditableField';
 import { useUserStore } from '@/store/userStore';
 import { updateUser } from '@/apis/user/updateUser';
 import { toast } from 'sonner';
+import { Member } from '@/types/user';
 
 interface UserInfoFormProps {
-  initialData: {
-    name: string;
-    email: string;
-    password: string;
-    phone: string;
-  };
+  initialData: Member;
 }
 
 export default function UserInfoForm({ initialData }: UserInfoFormProps) {
