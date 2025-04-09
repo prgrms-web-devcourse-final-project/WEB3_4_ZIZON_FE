@@ -37,12 +37,17 @@ export default function LessonFourPage() {
   }
   const onSelectGenderHandler = (key: string, title: string) => {
     setSelectedGender(key);
-    setSelectedOptionListNewItem([{"학생 성별": title}])
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{'학생 성별': title}];
+      const updated = [...prev];
+      updated[0]['학생 성별'] = title;
+      return updated;
+    });
   }
   const onSelectGenderItemHandler = (key: string, title: string) => {
     setSelectedPreferGender(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return prev;
+      if (prev.length === 0) return [{'희망 성별': title}];
       const updated = [...prev];
       updated[0]['희망 성별'] = title;
       return updated;

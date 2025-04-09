@@ -38,7 +38,7 @@ export default function MoveFivePage() {
     setSelectedOptionListNewItem(prev => {
       if (prev.length === 0) return prev;
       const updated = [...prev];
-      updated[0]['엘리베이터'] = selectedStartPoint === 'yes' ? '있음' : '없음';
+      updated[0]['a.엘리베이터'] = selectedStartPoint === 'yes' ? '없음' : '있음';
       return updated;
     });
   }
@@ -47,7 +47,7 @@ export default function MoveFivePage() {
     setSelectedOptionListNewItem(prev => {
       if (prev.length === 0) return [{"도착 지역": value}];
       const updated = [...prev];
-      updated[0]['출발 지역'] = value;
+      updated[0]['도착 지역'] = value;
       return updated;
     });
   }
@@ -56,7 +56,7 @@ export default function MoveFivePage() {
     setSelectedOptionListNewItem(prev => {
       if (prev.length === 0) return [{"도착 지역": value}];
       const updated = [...prev];
-      updated[0]['출발 층수'] = value;
+      updated[0]['도착 층수'] = value;
       return updated;
     });
   }
@@ -65,7 +65,7 @@ export default function MoveFivePage() {
     setSelectedOptionListNewItem(prev => {
       if (prev.length === 0) return [{"도착지 지역": value}];
       const updated = [...prev];
-      updated[0]['출발지 정보'] = value;
+      updated[0]['도착지 정보'] = value;
       return updated;
     });
   }

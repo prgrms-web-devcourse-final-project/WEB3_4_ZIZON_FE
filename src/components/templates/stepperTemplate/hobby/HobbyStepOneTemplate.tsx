@@ -28,7 +28,7 @@ export default function HobbyStepOneTemplate({selectedOptionListProps, id, place
             <TextInputWithTitle title={'수강하고자 하는 항목/장르/종목을 알려주세요'} id={id} placeholder={placeholder} type={type} value={value} onChange={onChange}/>
           </div>
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

@@ -13,7 +13,7 @@ const checkSelectedBoxItems: {label: string; key: string;}[] = [
 export default function HobbyFivePage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
   const [selectedOptionListNewItem, setSelectedOptionListNewItem] = useState<selectedOptionIndexObject[]>([]);
-  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(undefined);
+  const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(new Date());
   const [address, setAddress] = React.useState<string>('');
   const [checkSelected, setCheckSelected] = useState<string | null>(null);
   const router = useRouter();
@@ -23,13 +23,14 @@ export default function HobbyFivePage() {
     if (storedData) setSelectedOptionList(JSON.parse(storedData));
   }, []);
   useEffect(() => {
+    if (checkSelected === null) return;
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0 || typeof selectedDay === undefined) return prev;
       const updated = [...prev];
       const date = new Date(`${selectedDay}`);
 
       const month = date.getMonth() + 1;
       const day = date.getDate();
+      if (prev.length === 0 || typeof selectedDay === undefined) return [{'희망 날짜': `${month}월 ${day}일`}];
 
       updated[0]['희망 날짜'] = `${month}월 ${day}일`;
       return updated;
@@ -48,7 +49,21 @@ export default function HobbyFivePage() {
   }
   const onCheckSelectedHandler = (key: string, label: string) => {
     setCheckSelected(key);
-    setSelectedOptionListNewItem([{"희망 날짜": label}])
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{"희망 날짜": label}];
+      const updated = [...prev];
+      updated[0]['희망 날짜'] = label;
+      return updated;
+    });
+  }
+  const addressChangeHandler = (value: string) => {
+    setAddress(value);
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{"지역": value}];
+      const updated = [...prev];
+      updated[0]['지역'] = value;
+      return updated;
+    });
   }
   return (
     <HobbyStepFiveTemplate
@@ -65,7 +80,7 @@ export default function HobbyFivePage() {
       value={address}
       title={''}
       checkSelected={checkSelected}
-      onChange={setAddress}
+      onChange={addressChangeHandler}
       onClickNext={onClickNextHandler}
       onClickBefore={onClickBeforeHandler}
       selectedOptionListProps={[...selectedOptionList, ...selectedOptionListNewItem]}

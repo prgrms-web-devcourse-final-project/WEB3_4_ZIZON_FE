@@ -11,6 +11,7 @@ export default function SettingFixTwoPage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
   const [selectedOptionListNewItem, setSelectedOptionListNewItem] = React.useState<selectedOptionIndexObject[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [address, setAddress] = React.useState<string>('');
   const router = useRouter();
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function SettingFixTwoPage() {
 
   const onNextHandler = () => {
     if (selectedIndex === null && selectedDay) return;
-    localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList]));
+    localStorage.setItem('selectedIndex', JSON.stringify([...selectedOptionList, ...selectedOptionListNewItem]));
     router.push('/commission/common/end');
   };
 
@@ -59,7 +60,15 @@ export default function SettingFixTwoPage() {
     localStorage.setItem('selectedIndex', JSON.stringify(selectedOptionList));
     router.push('/commission/settingFix/step1');
   };
-
+  const addressChangeHandler = (value: string) => {
+    setAddress(value);
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{"도착 지역": value}];
+      const updated = [...prev];
+      updated[0]['도착 지역'] = value;
+      return updated;
+    });
+  }
   return (
     <SettingFixStepTwoTemplate
       checkSelectBoxProps={options.map((label, idx) => ({
@@ -68,6 +77,9 @@ export default function SettingFixTwoPage() {
         checked: selectedIndex === idx,
         onChange: () => handleSelection(idx)
       }))}
+      id={'address'}
+      value={address}
+      onChange={addressChangeHandler}
       selectedIndex={selectedIndex}
       selectedOptionListProps={[...selectedOptionList, ...selectedOptionListNewItem]}
       onNextAction={onNextHandler}

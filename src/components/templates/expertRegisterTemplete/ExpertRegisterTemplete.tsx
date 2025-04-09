@@ -10,6 +10,10 @@ import ExpertDetailForm, {
   ExpertDetailFormData,
 } from '@/components/organisms/expertRegister/expertDetailForm/ExpertDetailForm';
 import type { Service } from '@/types/expert';
+import { registerExpert } from '@/apis/expert/registerExpert';
+import { SERVICES } from '@/types/expert';
+import { useUserStore } from '@/store/userStore';
+import { getExpertById } from '@/apis/expert/getExpertById';
 
 function ExpertRegisterTemplete() {
   const router = useRouter();
@@ -25,6 +29,9 @@ function ExpertRegisterTemplete() {
     bankName: '',
     accountNumber: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { setExpert } = useUserStore();
 
   const isStepValid = () => {
     switch (step) {
@@ -51,18 +58,64 @@ function ExpertRegisterTemplete() {
     }
   }, [searchParams]);
 
-  const handleNext = () => {
+  const handleRegister = async () => {
     if (!isStepValid()) return;
 
+    try {
+      setIsSubmitting(true);
+      setErrorMessage(null);
+
+      // 선택된 서비스의 라벨 가져오기
+      const subCategoryNames = selectedServices
+        .map(service => {
+          const serviceObj = SERVICES[selectedValue!].find(s => s.value === service);
+          return serviceObj ? serviceObj.label : '';
+        })
+        .filter(Boolean);
+
+      // 카테고리 이름 변환
+      const categoryNameMap: Record<ExpertCategory, string> = {
+        move: '이사/청소',
+        fix: '설치/수리',
+        tutor: '과외',
+        hobby: '취미생활',
+      };
+
+      // 전문가 등록 API 호출
+      const response = await registerExpert({
+        categoryName: categoryNameMap[selectedValue!] || '',
+        subCategoryNames,
+        careerYears: Number(expertDetail.careerYears),
+        introduction: expertDetail.introduction,
+        certificateNames: expertDetail.certifications,
+        gender: expertDetail.gender,
+        bankName: expertDetail.bankName,
+        accountNumber: expertDetail.accountNumber,
+        sellerInfo: '등록된 한국 사업자입니다.', // 기본값 설정
+      });
+
+      if (response) {
+        alert('전문가 등록이 완료되었습니다.');
+
+        const expertData = await getExpertById({ expertId: response.expertId });
+        setExpert(expertData); // store에 전문가 정보 저장
+
+        router.push('/mypage/expertInfo');
+      } else {
+        setErrorMessage('전문가 등록에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('전문가 등록 오류:', error);
+      setErrorMessage('전문가 등록 중 오류가 발생했습니다.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleNext = () => {
+    if (!isStepValid()) return;
     if (step < 3) {
       setStep(step + 1);
-    } else if (step === 3) {
-      // TODO: 전문가 등록 API 호출
-      console.log('전문가 등록 데이터:', {
-        category: selectedValue,
-        services: selectedServices,
-        detail: expertDetail,
-      });
     }
   };
 
@@ -101,11 +154,13 @@ function ExpertRegisterTemplete() {
           />
         )}
         {step === 3 && <ExpertDetailForm onSubmit={handleDetailSubmit} />}
+        {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
         <ExpertStepFooterButton
           onClickBefore={handleBefore}
           onClickNext={handleNext}
+          onClickRegister={handleRegister}
           state={step === 3 ? 'register' : 'next'}
-          disabled={!isStepValid()}
+          disabled={!isStepValid() || isSubmitting}
         />
       </div>
     </section>

@@ -3,6 +3,7 @@ import './globals.css';
 import ReactQueryClientProvider from '@/config/ReactQueryClientProvider';
 import localFont from 'next/font/local';
 import DesktopNavigation from '@/components/organisms/desktopNavigation/DesktopNavigation';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: '💫DopDang',
@@ -28,6 +29,7 @@ export default function RootLayout({
         <ReactQueryClientProvider>
           <DesktopNavigation />
           <main className="w-full">{children}</main>
+          <Toaster />
         </ReactQueryClientProvider>
       </body>
     </html>

@@ -45,12 +45,17 @@ export default function HobbyFourPage() {
   }
   const onSelectedDayHandler = (key: string, label: string) => {
     setSelectedDay(key);
-    setSelectedOptionListNewItem([{"희망 요일": label}]);
+    setSelectedOptionListNewItem(prev => {
+      if (prev.length === 0) return [{'희망 요일': label}];
+      const updated = [...prev];
+      updated[0]['희망 요일'] = label;
+      return updated;
+    });
   }
   const onSelectedTimeHandler = (key: string, label: string) => {
     setSelectedTime(key);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return prev;
+      if (prev.length === 0) return [{'희망 시간': label}];
       const updated = [...prev];
       updated[0]['희망 시간'] = label;
       return updated;

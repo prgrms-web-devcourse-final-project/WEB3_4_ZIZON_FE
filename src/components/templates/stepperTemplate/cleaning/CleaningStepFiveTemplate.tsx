@@ -36,7 +36,7 @@ export default function CleaningStepFiveTemplate({selectedOptionListProps, check
           <TextInputWithTitle title={'서비스 지역을 선택해주세요'} id={id1} placeholder={'예)서울특별시 강남구'} type={'text'} value={value1} onChange={onChange1}/>
           <TextInputWithTitle title={'청소 관련 문의사항을 작성해주세요'} id={id2} placeholder={'궁금한 점이 있다면 작성해주세요'} type={'text'} value={value2} onChange={onChange2}/>
           <div className="float-end mr-40 mt-32">
-            <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
+            <StandardButton text={'다음'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
         </div>
         <div className="w-3/4">

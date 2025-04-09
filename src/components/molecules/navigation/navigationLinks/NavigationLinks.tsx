@@ -6,11 +6,10 @@ interface NavigationItem {
 }
 
 const NAV_ITEMS: NavigationItem[] = [
-  { href: '/', label: '견적요청' },
+  { href: '/commission/common/start', label: '견적요청' },
   { href: '/expert', label: '전문가찾기' },
   { href: '/commission', label: '프로젝트찾기' },
   { href: '/store', label: '스토어' },
-  { href: '/community', label: '커뮤니티' },
 ];
 
 export default function NavigationLinks() {

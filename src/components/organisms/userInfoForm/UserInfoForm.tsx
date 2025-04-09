@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import EditableField from '@/components/molecules/editableField/EditableField';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
+import { useUserStore } from '@/store/userStore';
+import { updateUserField } from '@/utils/userUtils';
 
 interface UserInfoFormProps {
   initialData: {
@@ -12,48 +14,55 @@ interface UserInfoFormProps {
 }
 
 export default function UserInfoForm({ initialData }: UserInfoFormProps) {
+  const { member, setMember } = useUserStore();
   const [name, setName] = useState(initialData.name);
-  const [email, setEmail] = useState(initialData.email);
-  const [password, setPassword] = useState(initialData.password);
   const [phone, setPhone] = useState(initialData.phone);
   const [authCode, setAuthCode] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isNameEditable, setIsNameEditable] = useState(false);
-  const [isEmailEditable, setIsEmailEditable] = useState(false);
-  const [isPasswordEditable, setIsPasswordEditable] = useState(false);
   const [isPhoneEditable, setIsPhoneEditable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleNameEditClick = () => {
+  const handleNameEditClick = async () => {
     if (isNameEditable) {
-      // 수정 완료 로직 추가 (예: API 호출)
-      setIsNameEditable(false);
+      if (!member?.id) return;
+
+      setIsLoading(true);
+      const success = await updateUserField({
+        userId: member.id,
+        field: 'name',
+        value: name,
+        setMember,
+        currentName: name,
+      });
+
+      if (success) {
+        setIsNameEditable(false);
+      }
+      setIsLoading(false);
     } else {
       setIsNameEditable(true);
     }
   };
 
-  const handleEmailEditClick = () => {
-    if (isEmailEditable) {
-      // 수정 완료 로직 추가 (예: API 호출)
-      setIsEmailEditable(false);
-    } else {
-      setIsEmailEditable(true);
-    }
-  };
-
-  const handlePasswordEditClick = () => {
-    if (isPasswordEditable) {
-      // 수정 완료 로직 추가 (예: API 호출)
-      setIsPasswordEditable(false);
-    } else {
-      setIsPasswordEditable(true);
-    }
-  };
-
-  const handlePhoneEditClick = () => {
+  const handlePhoneEditClick = async () => {
     if (isPhoneEditable) {
-      // 수정 완료 로직 추가 (예: API 호출)
-      setIsPhoneEditable(false);
+      if (!member?.id) return;
+
+      setIsLoading(true);
+      const success = await updateUserField({
+        userId: member.id,
+        field: 'phone',
+        value: phone,
+        setMember,
+        currentName: member.name,
+      });
+
+      if (success) {
+        setIsPhoneEditable(false);
+        setIsVerifying(false);
+      }
+      setIsLoading(false);
     } else {
       setIsPhoneEditable(true);
     }
@@ -73,28 +82,29 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         onChange={setName}
         isEditable={isNameEditable}
         onEditClick={handleNameEditClick}
+        disabled={isLoading}
       />
 
       <EditableField
         id="email"
         label="이메일"
         type="email"
-        value={email}
-        placeholder={email}
-        onChange={setEmail}
-        isEditable={isEmailEditable}
-        onEditClick={handleEmailEditClick}
+        value={initialData.email}
+        placeholder={initialData.email}
+        onChange={() => {}}
+        isEditable={false}
+        disabled={true}
       />
 
       <EditableField
         id="password"
         label="비밀번호"
         type="password"
-        value={password}
-        placeholder={password}
-        onChange={setPassword}
-        isEditable={isPasswordEditable}
-        onEditClick={handlePasswordEditClick}
+        value="********"
+        placeholder="********"
+        onChange={() => {}}
+        isEditable={false}
+        disabled={true}
       />
 
       <EditableField
@@ -106,12 +116,13 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         onChange={setPhone}
         isEditable={isPhoneEditable}
         onEditClick={handlePhoneEditClick}
+        disabled={isLoading}
         ButtonComponent={
           <StandardButton
             onClick={handleVerifyClick}
             state="dark"
             text="재인증"
-            disabled={!isPhoneEditable || isVerifying}
+            disabled={!isPhoneEditable || isVerifying || isLoading}
           />
         }
       />
@@ -124,6 +135,7 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
           onChange={setAuthCode}
           isEditable={true}
           placeholder="인증번호를 입력해주세요"
+          disabled={isLoading}
         />
       )}
     </div>

@@ -5,14 +5,10 @@ import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
 import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
 import { useUserStore } from '@/store/userStore';
-import { UserRole } from '@/types/user';
 
-interface DesktopNavigationProps {
-  userRole?: UserRole;
-}
-
-function DesktopNavigation({ userRole = 'client' }: DesktopNavigationProps) {
+function DesktopNavigation() {
   const router = useRouter();
+  const { currentRole } = useUserStore();
   const member = useUserStore(state => state.member);
 
   return (
@@ -26,7 +22,7 @@ function DesktopNavigation({ userRole = 'client' }: DesktopNavigationProps) {
           isLoggedIn={!!member}
           onLoginClick={() => router.push('/login')}
           member={member}
-          userRole={userRole}
+          userRole={currentRole}
         />
       </div>
     </header>
