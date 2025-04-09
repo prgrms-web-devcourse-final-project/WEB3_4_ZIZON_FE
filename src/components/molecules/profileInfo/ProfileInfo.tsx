@@ -86,7 +86,7 @@ export default function ProfileInfo({
   return (
     <div className="flex flex-col items-center gap-20">
       <div className="relative">
-        <div className=" w-150 h-150 overflow-hidden rounded-full shadow-style1">
+        <div className=" w-150 h-150 overflow-hidden rounded-full shadow-style1 border border-black3">
           <Image
             src={previewUrl || profileImage || '/images/DefaultImage.png'}
             alt={name ?? '장난스러운짱구02'}
@@ -108,7 +108,7 @@ export default function ProfileInfo({
             <label htmlFor="profile-image">
               <button
                 onClick={handleEditClick}
-                className="bg-primary4 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
+                className="bg-secondary3 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
               >
                 <Image src="/icons/Upload.svg" alt="edit" width={20} height={20} />
               </button>
