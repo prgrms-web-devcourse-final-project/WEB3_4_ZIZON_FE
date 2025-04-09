@@ -19,6 +19,8 @@ export default function ExpertInfoPage() {
     mainCategoryId: storeExpert?.mainCategoryId ?? 0,
     subCategoryIds: storeExpert?.subCategoryIds ?? [],
     certificateNames: storeExpert?.certificateNames ?? [],
+    bankName: storeExpert?.bankName ?? '',
+    accountNumber: storeExpert?.accountNumber ?? '',
   };
 
   return (

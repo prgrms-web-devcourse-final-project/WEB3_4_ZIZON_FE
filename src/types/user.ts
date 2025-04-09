@@ -26,6 +26,8 @@ export interface Expert {
   gender: boolean;
   profileImage: string;
   mainCategoryId: number;
+  bankName: string;
+  accountNumber: string;
   subCategoryIds: number[];
   certificateNames: string[];
 }
