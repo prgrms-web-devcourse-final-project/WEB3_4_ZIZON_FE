@@ -1,21 +1,40 @@
 'use client';
 
-import OfferForm from '@/components/organisms/offerForm/OfferForm';
-import ProjectSummary, {
-  ProjectSummaryProps,
-} from '@/components/organisms/projectSummary/ProjectSummary';
+import { postOffer, PostOfferRequestType } from '@/apis/offer/postOffer';
+import { ProjectResponseType } from '@/apis/project/getProject';
+import OfferForm, { OfferFormType } from '@/components/organisms/offerForm/OfferForm';
+import ProjectSummary from '@/components/organisms/projectSummary/ProjectSummary';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 interface MakeOfferTemplateProps {
-  projectSummary: ProjectSummaryProps;
+  projectSummary: ProjectResponseType;
 }
 
 export default function MakeOfferTemplate({ projectSummary }: MakeOfferTemplateProps) {
-  const handleOfferSubmit = () => {};
-  // TODO : 견적 보내는 요청
+  const router = useRouter();
+  const projectId = projectSummary.id;
+
+  const offerMutation = useMutation({
+    mutationFn: (request: PostOfferRequestType) => postOffer(request),
+    onSuccess: data => {
+      router.push('/expert/chat');
+    },
+    onError: error => {
+      console.error('견적서 전송 실패', error);
+    },
+  });
+
+  const handleOfferSubmit = (offerForm: OfferFormType) => {
+    offerMutation.mutate({
+      offer: offerForm,
+      projectId: projectId,
+    });
+  };
 
   return (
     <div className="w-876 flex gap-64">
-      <ProjectSummary {...projectSummary} />
+      <ProjectSummary projectData={projectSummary} />
       <OfferForm onSubmit={handleOfferSubmit} />
     </div>
   );

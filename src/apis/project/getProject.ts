@@ -1,6 +1,7 @@
 import { APIBuilder } from '@/utils/APIBuilder';
+import { cookies } from 'next/headers';
 
-interface ProjectRequestType {
+export interface ProjectRequestType {
   projectId: string;
 }
 
@@ -16,14 +17,25 @@ export interface ProjectResponseType {
   clientName: string; // 클라이언트 이름
   clientProfileImageUrl: string; // 클라이언트 프로필 이미지 URL
   imageUrls: string[]; // 프로젝트 이미지 URL 배열
+  emails: string;
 }
 
 export default async function getProject({
   projectId,
 }: ProjectRequestType): Promise<ProjectResponseType> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('accessToken')?.value;
+  if (!token) {
+    console.error('Access token not found in cookies');
+  }
+
   const response = await APIBuilder.get(`/projects/${projectId}`)
-    .timeout(10000)
+    .headers({
+      Cookie: `accessToken=${token}`,
+      'Content-Type': 'application/json',
+    })
     .withCredentials(true)
+    .timeout(10000)
     .build()
     .call<ProjectResponseType>();
 
