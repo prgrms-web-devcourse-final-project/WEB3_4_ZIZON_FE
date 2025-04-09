@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import EditableField from '@/components/molecules/editableField/EditableField';
 import { useUserStore } from '@/store/userStore';
-import { updateUserField } from '@/utils/userUtils';
+import { updateUser } from '@/apis/user/updateUser';
+import { toast } from 'sonner';
 
 interface UserInfoFormProps {
   initialData: {
@@ -24,17 +25,26 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
       if (!member?.id) return;
 
       setIsLoading(true);
-      const success = await updateUserField({
+      const updateUserData = await updateUser({
         userId: member.id,
-        field: 'name',
-        value: name,
-        setMember,
-        currentName: name,
+        data: {
+          name: name,
+          profileImage: member.profileImage,
+        },
       });
 
-      if (success) {
-        setIsNameEditable(false);
+      if (!updateUserData) {
+        toast.error('이름 수정에 실패했습니다.');
+        setIsLoading(false);
+        return;
       }
+
+      setMember({
+        ...member,
+        ...updateUserData,
+      });
+
+      setIsNameEditable(false);
       setIsLoading(false);
     } else {
       setIsNameEditable(true);

@@ -12,12 +12,21 @@ function DesktopNavigation() {
   const { currentRole, member, initializeStore } = useUserStore();
 
   useEffect(() => {
-    const checkAuth = () => {
-      const cookieStore = document.cookie;
-      const hasAccessToken = cookieStore.includes('accessToken=');
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER_URL}/users/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
 
-      if (!hasAccessToken) {
-        initializeStore();
+        if (response.status !== 200) {
+          initializeStore();
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
 
