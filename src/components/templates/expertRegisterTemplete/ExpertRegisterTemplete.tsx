@@ -14,6 +14,9 @@ import { registerExpert } from '@/apis/expert/registerExpert';
 import { SERVICES } from '@/types/expert';
 import { useUserStore } from '@/store/userStore';
 import { getExpertById } from '@/apis/expert/getExpertById';
+import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
+import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
+import { toast } from 'sonner';
 
 function ExpertRegisterTemplete() {
   const router = useRouter();
@@ -28,9 +31,11 @@ function ExpertRegisterTemplete() {
     introduction: '',
     bankName: '',
     accountNumber: '',
+    portfolioTitle: '',
+    portfolioImage: '',
   });
+  const [portfolioImageFile, setPortfolioImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const { setExpert } = useUserStore();
 
   const isStepValid = () => {
@@ -58,12 +63,35 @@ function ExpertRegisterTemplete() {
     }
   }, [searchParams]);
 
+  // 이미지 업로드 함수
+  const uploadPortfolioImage = async (file: File): Promise<string> => {
+    try {
+      // 파일 이름 생성 (타임스탬프 + 원본 파일명)
+      const timestamp = new Date().getTime();
+      const fileName = `${timestamp}_${file.name}`;
+
+      // S3 업로드 URL 요청
+      const response = await postImageUpload({
+        folder: 'portfolios',
+        fileName,
+        contentType: 'image/webp',
+      });
+
+      // S3에 파일 업로드
+      await putS3Upload(response.presignedUrl, file);
+
+      return response.accessUrl;
+    } catch (error) {
+      console.error('포트폴리오 이미지 업로드 오류:', error);
+      throw new Error('이미지 업로드에 실패했습니다.');
+    }
+  };
+
   const handleRegister = async () => {
     if (!isStepValid()) return;
 
     try {
       setIsSubmitting(true);
-      setErrorMessage(null);
 
       // 선택된 서비스의 라벨 가져오기
       const subCategoryNames = selectedServices
@@ -81,6 +109,19 @@ function ExpertRegisterTemplete() {
         hobby: '취미생활',
       };
 
+      // 포트폴리오 이미지 업로드 (파일이 있는 경우)
+      let portfolioImageUrl = '';
+      if (portfolioImageFile) {
+        try {
+          portfolioImageUrl = await uploadPortfolioImage(portfolioImageFile);
+        } catch (uploadError) {
+          console.error('포트폴리오 이미지 업로드 오류:', uploadError);
+          toast.error('포트폴리오 이미지 업로드에 실패했습니다.');
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       // 전문가 등록 API 호출
       const response = await registerExpert({
         categoryName: categoryNameMap[selectedValue!] || '',
@@ -91,22 +132,23 @@ function ExpertRegisterTemplete() {
         gender: expertDetail.gender,
         bankName: expertDetail.bankName,
         accountNumber: expertDetail.accountNumber,
-        sellerInfo: '등록된 한국 사업자입니다.', // 기본값 설정
+        portfolioTitle: expertDetail.portfolioTitle || '포트폴리오 이름',
+        portfolioImage: portfolioImageUrl || '',
       });
 
       if (response) {
-        alert('전문가 등록이 완료되었습니다.');
+        toast.success('전문가 등록이 완료되었습니다.');
 
         const expertData = await getExpertById({ expertId: response.expertId });
         setExpert(expertData); // store에 전문가 정보 저장
 
         router.push('/mypage/expertInfo');
       } else {
-        setErrorMessage('전문가 등록에 실패했습니다.');
+        toast.error('전문가 등록에 실패했습니다.');
       }
     } catch (error) {
       console.error('전문가 등록 오류:', error);
-      setErrorMessage('전문가 등록 중 오류가 발생했습니다.');
+      toast.error('전문가 등록 중 오류가 발생했습니다.');
     } finally {
       setIsSubmitting(false);
     }
@@ -153,8 +195,12 @@ function ExpertRegisterTemplete() {
             setSelectedServices={setSelectedServices}
           />
         )}
-        {step === 3 && <ExpertDetailForm onSubmit={handleDetailSubmit} />}
-        {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+        {step === 3 && (
+          <ExpertDetailForm
+            onSubmit={handleDetailSubmit}
+            setPortfolioImageFile={setPortfolioImageFile}
+          />
+        )}
         <ExpertStepFooterButton
           onClickBefore={handleBefore}
           onClickNext={handleNext}

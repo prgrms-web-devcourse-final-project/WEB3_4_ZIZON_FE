@@ -4,8 +4,8 @@ import Image from 'next/image';
 import { useState, useRef } from 'react';
 import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
 import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
-import { postImageUpload } from '@/apis/imageUpload/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/putS3Upload';
+import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
+import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
 import { compressImage } from '@/utils/compressImage';
 import { updateUser } from '@/apis/user/updateUser';
 import { useUserStore } from '@/store/userStore';
@@ -65,21 +65,18 @@ export default function ProfileInfo({
 
       // 프로필 이미지 업데이트
       if (member?.id) {
-        await updateUser({
+        const updateResponse = await updateUser({
           userId: member.id,
           data: {
-            profileImage: accessUrl,
             name: member.name,
+            profileImage: accessUrl,
           },
         });
 
-        // 사용자 정보 업데이트
-        if (member) {
-          setMember({
-            ...member,
-            profileImage: accessUrl,
-          });
-        }
+        setMember({
+          ...member,
+          ...updateResponse,
+        });
       }
 
       setSelectedImage(null);

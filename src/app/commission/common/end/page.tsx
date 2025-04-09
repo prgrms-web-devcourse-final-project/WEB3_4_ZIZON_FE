@@ -24,7 +24,9 @@ export default function CommonEndPage() {
     localStorage.setItem('selectedIndex', JSON.stringify(copyList));
   }
   const onClickNextHandler = () => {
-    commissionQuestion([...selectedOptionList])
+    if (title === '' || subtitle === '' || price === '') return;
+    const { description, region } = commissionQuestion([...selectedOptionList]);
+    
   }
   const titleChangeHandler = (value: string) => {
     setTile(value);
@@ -54,20 +56,18 @@ export default function CommonEndPage() {
     });
   }
   return (
-    <div>
-      <CommonEndStepTemplate
-        id1={'address'}
-        id2={'th'}
-        id3={'men-number'}
-        value1={title}
-        value2={subtitle}
-        value3={price}
-        onChange1={titleChangeHandler}
-        onChange2={subtitleChangeHandler}
-        onChange3={priceChangeHandler}
-        onClickBefore={onClickBeforeHandler}
-        onClickNext={onClickNextHandler}
-        selectedOptionListProps={[...selectedOptionList, ...selectedOptionListNewItem]}/>
-    </div>
+    <CommonEndStepTemplate
+      id1={'address'}
+      id2={'th'}
+      id3={'men-number'}
+      value1={title}
+      value2={subtitle}
+      value3={price}
+      onChange1={titleChangeHandler}
+      onChange2={subtitleChangeHandler}
+      onChange3={priceChangeHandler}
+      onClickBefore={onClickBeforeHandler}
+      onClickNext={onClickNextHandler}
+      selectedOptionListProps={[...selectedOptionList, ...selectedOptionListNewItem]}/>
   );
 }

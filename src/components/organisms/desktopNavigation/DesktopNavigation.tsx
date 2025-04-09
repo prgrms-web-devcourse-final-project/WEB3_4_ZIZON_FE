@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
 import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
@@ -8,8 +9,29 @@ import { useUserStore } from '@/store/userStore';
 
 function DesktopNavigation() {
   const router = useRouter();
-  const { currentRole } = useUserStore();
-  const member = useUserStore(state => state.member);
+  const { currentRole, member, initializeStore } = useUserStore();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER_URL}/users/me`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+
+        if (response.status !== 200) {
+          initializeStore();
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkAuth();
+  }, [initializeStore]);
 
   return (
     <header className="w-full py-20 flex justify-center items-center border-b border-black4">

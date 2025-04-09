@@ -12,8 +12,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Suspense, useState } from 'react';
 
 export default function ExpertChattingTemplate({
-  chatRoomList,
-}: {
+                                                 chatRoomList,
+                                               }: {
   chatRoomList: GetRoomsResponse;
 }) {
   console.log('채팅방 목록', chatRoomList);

@@ -11,12 +11,13 @@ import { Suspense, useState } from 'react';
 
 export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRoomsResponse }) {
   const [room, setRoom] = useState<string | null>(null);
-  const [projectId, setProjectId] = useState<number | null>(null); // 현제 선택된 프로젝트 Id
-  const [expertId, setExpertId] = useState<number | null>(null); // 현제 선택된 전문가 Id
+  const [projectId, setProjectId] = useState<number | null>(53); // 현제 선택된 프로젝트 Id
+  const [expertId, setExpertId] = useState<number | null>(11); // 현제 선택된 전문가 Id
 
   const { data: expertData, isLoading: isLoadingExpert } = useQuery({
     queryKey: ['expert', expertId],
     queryFn: () => getExpert({ expertId: String(expertId) }),
+    //queryFn: () => getExpert({ expertId: String(11) }),
     enabled: !!expertId,
   });
 
