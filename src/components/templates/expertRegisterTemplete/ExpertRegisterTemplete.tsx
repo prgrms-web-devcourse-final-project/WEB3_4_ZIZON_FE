@@ -14,8 +14,8 @@ import { registerExpert } from '@/apis/expert/registerExpert';
 import { SERVICES } from '@/types/expert';
 import { useUserStore } from '@/store/userStore';
 import { getExpertById } from '@/apis/expert/getExpertById';
-import { postImageUpload } from '@/apis/imageUpload/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/putS3Upload';
+import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
+import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
 import { toast } from 'sonner';
 
 function ExpertRegisterTemplete() {

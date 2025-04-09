@@ -1,4 +1,6 @@
+'use client'
 import StoreProductDetailTemplate from '@/components/templates/store/storeProductDetail/StoreProductDetailTemplate';
+import { Suspense } from 'react';
 
 export interface DigitalContentType {
   id: number;
@@ -54,8 +56,10 @@ export default async function ProductIdPage({
 }) {
   // 상품 상세정보 조회 api 호출
   return (
-    <div className="flex justify-center mt-72">
-      <StoreProductDetailTemplate product={DUMMY_PRODUCT} />
-    </div>
+    <Suspense>
+      <div className="flex justify-center mt-72">
+        <StoreProductDetailTemplate product={DUMMY_PRODUCT} />
+      </div>
+    </Suspense>
   );
 }

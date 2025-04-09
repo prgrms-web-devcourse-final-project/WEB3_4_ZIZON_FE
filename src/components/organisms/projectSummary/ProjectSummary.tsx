@@ -15,16 +15,16 @@ export default function ProjectSummary({ projectData }: ProjectSummaryProps) {
       {/* 유저 프로필 이미지과 정보영역 */}
       <div className="flex gap-20">
         <Image
-          src={projectData.clientProfileImageUrl}
+          src={projectData?.clientProfileImageUrl}
           width={100}
           height={100}
           className="rounded-[8px]"
           alt="profile-image"
         />
         <div className="flex flex-col gap-12 w-full">
-          <h2 className="font-semibold text-20 text-black10">{projectData.clientName}</h2>
-          <span className="font-medium text-black6 text-16">{projectData.title}</span>
-          <span className="font-medium text-black6 text-16">{projectData.region}</span>
+          <h2 className="font-semibold text-20 text-black10">{projectData?.clientName}</h2>
+          <span className="font-medium text-black6 text-16">{projectData?.title}</span>
+          <span className="font-medium text-black6 text-16">{projectData?.region}</span>
         </div>
       </div>
 

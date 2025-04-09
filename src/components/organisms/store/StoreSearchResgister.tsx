@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
@@ -21,6 +21,7 @@ export default function StoreSearchRegister() {
 
   return (
     <div className="w-full flex justify-between max-w-1280">
+
       <SearchBar
         placeholder="검색어를 입력해주세요"
         type="default"

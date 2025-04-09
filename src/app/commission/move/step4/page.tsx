@@ -80,7 +80,6 @@ export default function MoveFourPage() {
     localStorage.setItem('selectedIndex', JSON.stringify(updatedList));
     router.push('/commission/move/step5'); // 다음 페이지로
   };
-
   return (
     <div>
       <MoveStepFourTemplate
@@ -98,7 +97,7 @@ export default function MoveFourPage() {
         }))}
         onClickBefore={onClickBeforeHandler}
         onClickNext={onClickNextHandler}
-        onImageUpload={() => alert('')}
+        tableUnionType={'projects'}
         selectedOptionListProps={[
           ...selectedOptionList,
           {
