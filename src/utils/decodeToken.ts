@@ -1,4 +1,16 @@
-export function decodeToken(token: string): Record<string, any> | null {
+import { AccountStatus } from '@/types/user';
+
+interface TokenPayload {
+  subject: string;
+  id: number;
+  username: string;
+  role: 'CLIENT' | 'EXPERT';
+  status: AccountStatus;
+  iat: number;
+  exp: number;
+}
+
+export function decodeToken(token: string): TokenPayload | null {
   try {
     // 토큰은 "header.payload.signature" 형식으로 구성됨
     const payload = token.split('.')[1]; // payload 부분 추출
