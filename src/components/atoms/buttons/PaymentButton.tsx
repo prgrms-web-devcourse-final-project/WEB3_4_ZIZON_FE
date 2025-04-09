@@ -6,7 +6,7 @@ import { PaymentResponseType } from '@/apis/payment/postPayment';
 import { useEffect, useState } from 'react';
 
 export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentResponseType }) {
-  console.log('paymentInfo', paymentInfo);
+  //console.log('paymentInfo', paymentInfo);
   const [payment, setPayment] = useState<TossPaymentsPayment | null>(null);
 
   const clientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
@@ -49,8 +49,7 @@ export default function PaymentButton({ paymentInfo }: { paymentInfo: PaymentRes
       orderId: paymentInfo.orderId, // 주문번호
       amount: {
         currency: 'KRW',
-        //value: paymentInfo.price,
-        value: 20,
+        value: paymentInfo.price,
       },
       orderName: paymentInfo.expertName, // 구매상품
       successUrl: `${window.location.origin}/payments/success`, // 결제 성공 시  URL -> ✅ SUCCESS 결제창 열림
