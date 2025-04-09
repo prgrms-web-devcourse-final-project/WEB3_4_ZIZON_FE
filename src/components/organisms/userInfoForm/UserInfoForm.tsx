@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import EditableField from '@/components/molecules/editableField/EditableField';
-import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import { useUserStore } from '@/store/userStore';
 import { updateUserField } from '@/utils/userUtils';
 
@@ -17,10 +16,7 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
   const { member, setMember } = useUserStore();
   const [name, setName] = useState(initialData.name);
   const [phone, setPhone] = useState(initialData.phone);
-  const [authCode, setAuthCode] = useState('');
-  const [isVerifying, setIsVerifying] = useState(false);
   const [isNameEditable, setIsNameEditable] = useState(false);
-  const [isPhoneEditable, setIsPhoneEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleNameEditClick = async () => {
@@ -43,33 +39,6 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
     } else {
       setIsNameEditable(true);
     }
-  };
-
-  const handlePhoneEditClick = async () => {
-    if (isPhoneEditable) {
-      if (!member?.id) return;
-
-      setIsLoading(true);
-      const success = await updateUserField({
-        userId: member.id,
-        field: 'phone',
-        value: phone,
-        setMember,
-        currentName: member.name,
-      });
-
-      if (success) {
-        setIsPhoneEditable(false);
-        setIsVerifying(false);
-      }
-      setIsLoading(false);
-    } else {
-      setIsPhoneEditable(true);
-    }
-  };
-
-  const handleVerifyClick = () => {
-    setIsVerifying(true);
   };
 
   return (
@@ -114,30 +83,9 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
         value={phone}
         placeholder={phone}
         onChange={setPhone}
-        isEditable={isPhoneEditable}
-        onEditClick={handlePhoneEditClick}
-        disabled={isLoading}
-        ButtonComponent={
-          <StandardButton
-            onClick={handleVerifyClick}
-            state="dark"
-            text="재인증"
-            disabled={!isPhoneEditable || isVerifying || isLoading}
-          />
-        }
+        isEditable={false}
+        disabled={true}
       />
-
-      {isVerifying && (
-        <EditableField
-          id="authCode"
-          label="인증번호"
-          value={authCode}
-          onChange={setAuthCode}
-          isEditable={true}
-          placeholder="인증번호를 입력해주세요"
-          disabled={isLoading}
-        />
-      )}
     </div>
   );
 }
