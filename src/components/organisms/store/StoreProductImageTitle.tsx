@@ -20,10 +20,8 @@ export default function StoreProductImageTitle({ product }: StoreProductImageTit
   const router = useRouter();
 
   const handleBuyClick = () => {
-    // TODO : 상품 구매 요청 보내기
-
     // 결제 페이지로 이동
-    router.push(`/payments?id=${product.id}&type=${paymentType}&`);
+    router.push(`/payments?id=${product.id}&type=${paymentType}&quantity=${amount}`);
   };
   return (
     <div className="w-full flex gap-43">
