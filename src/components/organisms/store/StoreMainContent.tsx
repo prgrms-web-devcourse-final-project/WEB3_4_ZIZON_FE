@@ -10,7 +10,7 @@ export default function StoreMainContent({ productList = [] }: { productList: Pr
       <div className="w-954 grid 2xl:grid-cols-3 grid-cols-2 gap-24">
         {productList &&
           productList.map((product, index) => (
-            <Link href={`/store/products/${product.id}`} key={product.id}>
+            <Link href={`/store/products/${product.id}`} key={product.id + `${index}`}>
               <ProductListItem product={product} size="large" />
             </Link>
           ))}
