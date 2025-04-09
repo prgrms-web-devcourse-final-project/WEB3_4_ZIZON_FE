@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { UserState, UserRole } from '@/types/user';
 import { APIBuilder } from '@/utils/APIBuilder';
+
 export const useUserStore = create<UserState>()(
   persist(
     set => ({
@@ -11,6 +12,7 @@ export const useUserStore = create<UserState>()(
       setMember: member => set(() => ({ member })),
       setExpert: expert => set(() => ({ expert })),
       setCurrentRole: (role: UserRole) => set(() => ({ currentRole: role })),
+      initializeStore: () => set(() => ({ member: null, expert: null, currentRole: 'client' })),
       logout: async () => {
         try {
           await APIBuilder.post('/users/logout', {}).build().call();

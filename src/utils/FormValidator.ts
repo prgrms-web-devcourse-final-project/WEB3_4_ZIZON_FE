@@ -78,10 +78,10 @@ export class FormValidator {
   }
 
   static validateName(name: string): ValidationResult {
-    if (name.length < 2 || name.length > 50) {
+    if (name.length < 2 || name.length > 11) {
       return {
         isValid: false,
-        errorMessage: '올바른 이름을 입력해주세요.(2 - 50자)',
+        errorMessage: '올바른 이름을 입력해주세요.(2 - 10자)',
       };
     }
     return {

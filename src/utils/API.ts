@@ -15,7 +15,7 @@ interface ExtendedRequestInit extends RequestInit {
 }
 
 // 기본 API URL 설정
-const BASE_URL = process.env.LOCAL_SERVER_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_LOCAL_SERVER_URL;
 
 // API 클래스 정의
 export class API {

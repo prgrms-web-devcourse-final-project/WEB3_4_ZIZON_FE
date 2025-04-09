@@ -14,9 +14,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
+import ImageUploadField from '@/components/molecules/imageUploadField/ImageUploadField';
 
 interface ExpertDetailFormProps {
   onSubmit: (data: ExpertDetailFormData) => void;
+  setPortfolioImageFile: (file: File) => void;
 }
 
 export interface ExpertDetailFormData {
@@ -26,6 +28,8 @@ export interface ExpertDetailFormData {
   introduction: string;
   bankName: string;
   accountNumber: string;
+  portfolioTitle: string;
+  portfolioImage: string;
 }
 
 // 은행 목록 객체
@@ -45,7 +49,7 @@ const BANK_LIST = [
   { id: 'jeju', name: '제주은행' },
 ];
 
-function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
+function ExpertDetailForm({ onSubmit, setPortfolioImageFile }: ExpertDetailFormProps) {
   const [formData, setFormData] = useState<ExpertDetailFormData>({
     gender: false,
     careerYears: '',
@@ -53,6 +57,8 @@ function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
     introduction: '',
     bankName: '',
     accountNumber: '',
+    portfolioTitle: '',
+    portfolioImage: '',
   });
 
   const [newCertification, setNewCertification] = useState('');
@@ -92,6 +98,15 @@ function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
     setIsBankDropdownOpen(false);
   };
 
+  const handlePortfolioTitleChange = (value: string) => {
+    setFormData(prev => ({ ...prev, portfolioTitle: value }));
+  };
+
+  const handlePortfolioImageUpload = (file: File) => {
+    // 상위 컴포넌트의 상태 업데이트 함수 직접 호출
+    setPortfolioImageFile(file);
+  };
+
   return (
     <article className="w-636 flex flex-col items-center gap-64 px-54 py-64 bg-black1 rounded-xl">
       <ProgressBar step={ProgressStep.STEP5} />
@@ -102,12 +117,20 @@ function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
         <div className="flex flex-col gap-12">
           <InputLabel size="16" label="성별" />
           <div className="flex gap-16">
-            <div className="flex-1" onClick={() => handleGenderChange(false)}>
-              <SelectedCard type="center" title="남성" category="men" isOn={!formData.gender} />
-            </div>
-            <div className="flex-1" onClick={() => handleGenderChange(true)}>
-              <SelectedCard type="center" title="여성" category="women" isOn={formData.gender} />
-            </div>
+            <SelectedCard
+              type="center"
+              title="남성"
+              category="men"
+              isOn={!formData.gender}
+              onClick={() => handleGenderChange(false)}
+            />
+            <SelectedCard
+              type="center"
+              title="여성"
+              category="women"
+              isOn={formData.gender}
+              onClick={() => handleGenderChange(true)}
+            />
           </div>
         </div>
 
@@ -201,6 +224,26 @@ function ExpertDetailForm({ onSubmit }: ExpertDetailFormProps) {
               />
             </div>
           </div>
+        </div>
+
+        <hr />
+
+        <div className="w-full flex flex-col gap-20">
+          {/* 포트폴리오 제목 */}
+          <h3 className="text-16 font-semibold text-black12">포트폴리오</h3>
+          <div className="flex flex-col gap-12">
+            <InputLabel size="16" label="포트폴리오 제목" />
+            <TextInput
+              id="portfolioTitle"
+              type="text"
+              placeholder="예) 한국관광공사 프로젝트"
+              value={formData.portfolioTitle}
+              onChange={handlePortfolioTitleChange}
+            />
+          </div>
+
+          {/* 포트폴리오 이미지 업로드 */}
+          <ImageUploadField label="포트폴리오 이미지" onImageUpload={handlePortfolioImageUpload} />
         </div>
       </div>
     </article>

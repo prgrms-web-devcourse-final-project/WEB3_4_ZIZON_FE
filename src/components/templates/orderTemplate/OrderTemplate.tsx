@@ -4,6 +4,7 @@ import PaymentButton from '@/components/atoms/buttons/PaymentButton';
 import OrderInfoList from '@/components/organisms/order/orderInfoList/OrderInfoList';
 import ChargeInfo from '@/components/molecules/order/chargeInfo/ChargeInfo';
 import { PaymentResponseType } from '@/apis/payment/postPayment';
+import { getDotSeparatedDate } from '@/utils/dateFormat';
 
 interface OrderTemplateProps {
   paymentType: string;
@@ -39,12 +40,12 @@ export default function OrderTemplate({ paymentType, data }: OrderTemplateProps)
             title="견적상세"
             infoList={[
               {
-                attribute: '이사 날짜',
-                value: data.startDate,
+                attribute: '작업 시작일',
+                value: getDotSeparatedDate(new Date(data.startDate)),
               },
               {
-                attribute: '이사 시간',
-                value: data.endDate,
+                attribute: '작업 종료일',
+                value: getDotSeparatedDate(new Date(data.endDate)),
               },
             ]}
           />
