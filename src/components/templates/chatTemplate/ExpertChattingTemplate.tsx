@@ -6,16 +6,22 @@ import getProject from '@/apis/project/getProject';
 import ExpertChattingInfo from '@/components/organisms/chatting/chattingInfo/expert/ExpertChattingInfo';
 import ChattingList from '@/components/organisms/chatting/chattingLIst/ChattingList';
 import ChattingRoom from '@/components/organisms/chatting/chattingRoom/ChattingRoom';
+import { useUserData } from '@/hooks/useUserData';
+import { useUserStore } from '@/store/userStore';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 export default function ExpertChattingTemplate({
   chatRoomList,
 }: {
   chatRoomList: GetRoomsResponse;
 }) {
+  console.log('채팅방 목록', chatRoomList);
   const [room, setRoom] = useState<string | null>(null);
-  const [projectId, setProjectId] = useState<number | null>(null); // 현제 선택된 프로젝트 Id
+  const [projectId, setProjectId] = useState<number | null>(53); // 현제 선택된 프로젝트 Id
+  const { expertInfo } = useUserData();
+  console.log('expertInfo', expertInfo);
+  const expertId = expertInfo?.id;
 
   const { data: projectData, isLoading: isLoadingProject } = useQuery({
     queryKey: ['project', projectId],
@@ -25,7 +31,7 @@ export default function ExpertChattingTemplate({
 
   const { data: offerData, isLoading: isLoadingOffer } = useQuery({
     queryKey: ['offer', projectId],
-    queryFn: () => getOfferList({ projectId: projectId! }),
+    queryFn: () => getOfferList({ projectId: projectId!, expertId: expertId! }),
     enabled: !!projectId,
     initialData: {
       id: 401,
@@ -50,7 +56,9 @@ export default function ExpertChattingTemplate({
 
   return (
     <div className="flex gap-24 mt-46 items-start jusitfy-center w-1670">
-      <ChattingList chatRoomList={chatRoomList} handleRoomChange={handleRoomChange} room={room} />
+      <Suspense>
+        <ChattingList chatRoomList={chatRoomList} handleRoomChange={handleRoomChange} room={room} />
+      </Suspense>
       <ChattingRoom />
       <ExpertChattingInfo projectData={projectData} offerData={offerData} />
     </div>
