@@ -21,6 +21,8 @@ export default function ExpertInfoPage() {
     certificateNames: storeExpert?.certificateNames ?? [],
     bankName: storeExpert?.bankName ?? '',
     accountNumber: storeExpert?.accountNumber ?? '',
+    portfolioTitle: storeExpert?.portfolioTitle ?? '',
+    portfolioImage: storeExpert?.portfolioImage ?? '',
   };
 
   return (

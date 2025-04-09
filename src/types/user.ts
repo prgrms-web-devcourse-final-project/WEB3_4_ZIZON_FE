@@ -19,17 +19,19 @@ export interface Member {
 export interface Expert {
   id: number;
   name: string;
+  gender: boolean;
   categoryName: string;
   subCategoryNames: string[];
+  mainCategoryId: number;
+  subCategoryIds: number[];
   introduction: string;
   careerYears: number;
-  gender: boolean;
   profileImage: string;
-  mainCategoryId: number;
+  certificateNames: string[];
   bankName: string;
   accountNumber: string;
-  subCategoryIds: number[];
-  certificateNames: string[];
+  portfolioTitle: string;
+  portfolioImage: string;
 }
 
 // 전역 상태 관리를 위한 타입

@@ -1,5 +1,7 @@
 export type ExpertCategory = 'move' | 'fix' | 'tutor' | 'hobby';
 
+export type ExpertCategoryName = '이사/청소' | '설치/수리' | '과외' | '취미생활';
+
 export type Service = {
   move:
     | 'packing-moving'
