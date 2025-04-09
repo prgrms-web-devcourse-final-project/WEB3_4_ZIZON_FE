@@ -22,14 +22,6 @@ export default function OrderList({
   onAskButtonClick,
   isExpertView = false,
 }: OrderListProps) {
-  if (orders.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-40">
-        <p className="text-16 text-black6">주문 내역이 없습니다.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-16">
       {orders.map((order, index) => (
