@@ -2,15 +2,19 @@ import React from 'react';
 import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
 import VerticalTabItem from '@/components/atoms/tabs/verticalTabItem/VerticalTabItem';
 import ResetButton from '@/components/atoms/buttons/ResetButton/ResetButton';
-import CommissionListItem from '@/components/molecules/commissionListItem/ComissionListItem';
+import CommissionListItem, {
+  CommissionListItemProps,
+} from '@/components/molecules/commissionListItem/ComissionListItem';
 
 interface CommissionTemplateProps {
   value: string;
   onChange: (value: string) => void;
   onReset: () => void;
+  ScrollHookRef: React.ReactNode;
+  commissionList: CommissionListItemProps[];
 }
 
-function CommissionTemplate({value, onChange, onReset}: CommissionTemplateProps) {
+function CommissionTemplate({ScrollHookRef, value, onChange, onReset, commissionList}: CommissionTemplateProps) {
   return (
     <div className="mt-72">
       <h3 className="text-32 font-semibold">등록된 요청</h3>
@@ -27,8 +31,14 @@ function CommissionTemplate({value, onChange, onReset}: CommissionTemplateProps)
           <VerticalTabItem name={'hobby'} isFocused={false} text={'취미생활'} onClick={() => {}} size={'small'}/>
         </div>
         <div className="grid grid-cols-1 gap-32">
-          <CommissionListItem location={'서울시 마포구'} title={'수능 대비 한국사'} description={'2025 수능 대비 한국사 과외를 진행해주실 선생님을 구합니다. 연락주세요!'} budget={150000} deadline={new Date()} created_at={new Date()}/>
-          <CommissionListItem location={'서울시 마포구'} title={'수능 대비 한국사'} description={'2025 수능 대비 한국사 과외를 진행해주실 선생님을 구합니다. 연락주세요!'} budget={150000} deadline={new Date()} created_at={new Date()}/>
+          <div className="grid grid-cols-1 gap-32">
+            {commissionList.map((item) => {
+              return (
+                <CommissionListItem key={item.id} id={item.id} region={item.region} title={item.title} summary={item.summary} budget={item.budget} deadline={item.deadline}/>
+              )
+            })}
+          </div>
+          {ScrollHookRef}
         </div>
       </div>
     </div>
