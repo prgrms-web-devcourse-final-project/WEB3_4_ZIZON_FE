@@ -1,5 +1,4 @@
-import { DUMMY_PRODUCT_LIST } from '@/app/store/page';
-import { ProductDetailType } from '@/app/store/products/[product_id]/page';
+import { ProductResponseType } from '@/apis/store/getProduct';
 import HorizontalTab from '@/components/molecules/horizontalTab/HorizontalTab';
 import ProductListItem from '@/components/molecules/productListItem/ProductListItem';
 import Link from 'next/link';
@@ -12,8 +11,71 @@ const TAB_ARRAY = [
 ];
 
 interface StoreDetailInfoProps {
-  product: ProductDetailType;
+  product: ProductResponseType;
 }
+
+const DUMMY_PRODUCT_LIST = [
+  {
+    id: 7,
+    name: '디지털 물품 등록 테스트',
+    description: '설명',
+    price: 50000.0,
+    productType: 'DIGITAL',
+    thumbnailUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReH1nivRV_9yG4wz04xIz1EEh-J69U_2JRaA&s',
+    expertName: '전문가',
+    categoryName: '이사/청소',
+    createdAt: '2025-04-07T23:00:03',
+  },
+  {
+    id: 6,
+    name: '물품 등록 테스트',
+    description: '설명',
+    price: 50000.0,
+    productType: 'PHYSICAL',
+    thumbnailUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReH1nivRV_9yG4wz04xIz1EEh-J69U_2JRaA&s',
+    expertName: '전문가',
+    categoryName: '이사/청소',
+    createdAt: '2025-04-07T23:00:03',
+  },
+  {
+    id: 5,
+    name: '물품 등록 테스트',
+    description: '설명',
+    price: 50000.0,
+    productType: 'PHYSICAL',
+    thumbnailUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReH1nivRV_9yG4wz04xIz1EEh-J69U_2JRaA&s',
+    expertName: '전문가',
+    categoryName: '이사/청소',
+    createdAt: '2025-04-07T23:00:03',
+  },
+  {
+    id: 4,
+    name: '물품 등록 테스트',
+    description: '설명',
+    price: 50000.0,
+    productType: 'PHYSICAL',
+    thumbnailUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReH1nivRV_9yG4wz04xIz1EEh-J69U_2JRaA&s',
+    expertName: '전문가',
+    categoryName: '이사/청소',
+    createdAt: '2025-04-07T23:00:03',
+  },
+  {
+    id: 3,
+    name: '물품 등록 테스트',
+    description: '설명',
+    price: 50000.0,
+    productType: 'PHYSICAL',
+    thumbnailUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReH1nivRV_9yG4wz04xIz1EEh-J69U_2JRaA&s',
+    expertName: '전문가',
+    categoryName: '이사/청소',
+    createdAt: '2025-04-07T23:00:03',
+  },
+];
 
 const Divider = () => {
   return <div className="w-full h-[1px] bg-black4" />;
@@ -38,8 +100,8 @@ export default function StoreDetailInfo({ product }: StoreDetailInfoProps) {
         <h3 className="text-20 text-black10 font-bold mb-24">추천</h3>
         <div className="w-full grid grid-cols-4 gap-24">
           {DUMMY_PRODUCT_LIST.map((product, index) => (
-            <Link href={`/store/products/${index}`} key={product.title}>
-              <ProductListItem {...product} size="small" />
+            <Link href={`/store/products/${product.id}`} key={product.name}>
+              <ProductListItem product={product} size="small" />
             </Link>
           ))}
         </div>

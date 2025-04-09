@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       `${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com`,
       'lh3.googleusercontent.com',
       'k.kakaocdn.net',
+      'encrypted-tbn0.gstatic.com',
     ],
     formats: ['image/avif', 'image/webp'],
   },
