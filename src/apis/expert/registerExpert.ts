@@ -9,7 +9,8 @@ export interface RegisterExpertRequestType {
   gender: boolean;
   bankName: string;
   accountNumber: string;
-  sellerInfo: string;
+  portfolioTitle: string;
+  portfolioImage: string;
 }
 
 export interface RegisterExpertResponseType {
