@@ -4,9 +4,7 @@ import { useUserStore } from '@/store/userStore';
 import { updateExpert } from '@/apis/expert/updateExpert';
 import { toast } from 'sonner';
 import { useExpertForm } from '@/hooks/useExpertForm';
-import { postImageUpload } from '@/apis/imageUpload/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/putS3Upload';
-import { compressImage } from '@/utils/compressImage';
+import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
 import CategorySection from './sections/CategorySection';
 import CareerSection from './sections/CareerSection';
 import CertificatesSection from './sections/CertificatesSection';
@@ -14,6 +12,7 @@ import IntroductionSection from './sections/IntroductionSection';
 import BankInfoSection from './sections/BankInfoSection';
 import PortfolioSection from './sections/PortfolioSection';
 import { ExpertCategoryName } from '@/types/expert';
+
 interface ExpertInfoFormProps {
   initialData: Expert;
 }
@@ -266,29 +265,23 @@ export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
         onTitleChange={value => setFormData({ ...formData, portfolioTitle: value })}
         onImageUpload={async file => {
           try {
-            // 파일 이름 생성 (타임스탬프 + 원본 파일명)
-            const timestamp = new Date().getTime();
-            const fileName = `${timestamp}_${file.name}`;
-
-            // S3 업로드 URL 요청
-            const response = await postImageUpload({
-              folder: 'portfolios',
-              fileName,
-              contentType: 'image/webp',
+            setIsLoading(true);
+            const accessUrl = await putImageUpload({
+              tableUnionType: 'portfolios',
+              file,
             });
 
-            // 이미지 압축
-            const compressedImage = await compressImage(file);
-
-            // S3에 파일 업로드
-            await putS3Upload(response.presignedUrl, compressedImage);
-
-            // 포트폴리오 이미지 URL 업데이트
-            setFormData({ ...formData, portfolioImage: response.accessUrl });
-            toast.success('포트폴리오 이미지가 업로드되었습니다.');
+            if (accessUrl) {
+              setFormData({ ...formData, portfolioImage: accessUrl });
+              toast.success('포트폴리오 이미지가 업로드되었습니다.');
+            } else {
+              throw new Error('이미지 업로드 실패');
+            }
           } catch (error) {
             console.error('포트폴리오 이미지 업로드 오류:', error);
-            toast.error('이미지 업로드에 실패했습니다.');
+            toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+          } finally {
+            setIsLoading(false);
           }
         }}
         onSave={handlePortfolioUpdate}
