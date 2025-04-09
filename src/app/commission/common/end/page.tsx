@@ -4,6 +4,8 @@ import CommonEndStepTemplate from '@/components/templates/stepperTemplate/common
 import { selectedOptionIndexObject } from '@/components/molecules/selectedOptionList/SelectedOptionList';
 import { useRouter } from 'next/navigation';
 import { commissionQuestion } from '@/utils/commissionQuestion';
+import { postProject } from '@/apis/project/postProject';
+import { getCommissionCategory } from '@/utils/getCommissionCategory';
 
 export default function CommonEndPage() {
   const [selectedOptionList, setSelectedOptionList] = useState<selectedOptionIndexObject[]>([]);
@@ -23,10 +25,21 @@ export default function CommonEndPage() {
     copyList.pop();
     localStorage.setItem('selectedIndex', JSON.stringify(copyList));
   }
-  const onClickNextHandler = () => {
+  const onClickNextHandler = async () => {
     if (title === '' || subtitle === '' || price === '') return;
+    const categoryId = getCommissionCategory(selectedOptionList[0]['요청 형식']);
+    if (categoryId === 0) return;
     const { description, region } = commissionQuestion([...selectedOptionList]);
-    
+
+    const response= await postProject({
+      categoryId,
+      title,
+      summary: subtitle,
+      region,
+      description: JSON.stringify(description),
+      budget: Number(price),
+    });
+    router.push(`/commission/${response.projectId}`);
   }
   const titleChangeHandler = (value: string) => {
     setTile(value);
