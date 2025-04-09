@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Member, Expert } from '@/types/user';
+import { Member } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 import { getCurrentUser } from '@/apis/user/getCurrentUser';
 import { getUserById } from '@/apis/user/getUserById';
@@ -13,9 +13,15 @@ interface UserDataError {
 }
 
 export function useUserData() {
-  const { currentRole, setCurrentRole, member: storeMember, setExpert, logout } = useUserStore();
+  const {
+    currentRole,
+    setCurrentRole,
+    member: storeMember,
+    expert: storeExpert,
+    setExpert,
+    logout,
+  } = useUserStore();
   const [memberInfo, setMemberInfo] = useState<Member | null>(null);
-  const [expertInfo, setExpertInfo] = useState<Expert | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<UserDataError | null>(null);
 
@@ -78,7 +84,6 @@ export function useUserData() {
 
     try {
       const expertData = await getExpertById({ expertId: storeMember.expertId });
-      setExpertInfo(expertData);
       setExpert(expertData); // store에 전문가 정보 저장
     } catch (err) {
       handleError(err, 'expert');
@@ -103,7 +108,7 @@ export function useUserData() {
 
   return {
     memberInfo,
-    expertInfo,
+    expertInfo: storeExpert,
     isLoading,
     error,
     role: currentRole,
