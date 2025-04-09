@@ -21,12 +21,11 @@ function ImageUploadButton({ onImageUpload }: ImageUploadButtonProps) {
     if (!file) return;
     try {
       const compressedFile = await compressImage(file);
+      onImageUpload(compressedFile);
     } catch (err) {
       console.error('압축 중 오류 발생:', err);
     }
-
   };
-
 
   return (
     <div
