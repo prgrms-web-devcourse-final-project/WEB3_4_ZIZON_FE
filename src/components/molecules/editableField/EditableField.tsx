@@ -45,7 +45,7 @@ export default function EditableField({
             onChange={onChange}
             placeholder={placeholder}
             disabled={disabled || !isEditable}
-            isEditable={id !== 'email' && id !== 'password' && id !== 'phone'}
+            isEditable={id !== 'email' && id !== 'phone'}
             rows={rows}
           />
         ) : (
@@ -56,7 +56,7 @@ export default function EditableField({
             onChange={onChange}
             placeholder={placeholder}
             disabled={disabled || !isEditable}
-            isEditable={id !== 'email' && id !== 'password' && id !== 'phone'}
+            isEditable={id !== 'email' && id !== 'phone'}
           />
         )
       }
