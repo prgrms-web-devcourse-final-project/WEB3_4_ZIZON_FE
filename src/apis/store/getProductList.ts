@@ -1,5 +1,4 @@
 import { APIBuilder } from '@/utils/APIBuilder';
-import { cookies } from 'next/headers';
 
 export interface ProductListRequestType {
   categoryId?: number;
@@ -29,21 +28,11 @@ export default async function getProductList({
   categoryId,
   page,
 }: ProductListRequestType): Promise<ProductListResponseType> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  if (!accessToken) {
-    throw new Error('Access token not found');
-  }
-
   const response = await APIBuilder.get(`/products?page=${page}&size=12`)
-    .headers({
-      'Content-Type': 'application/json',
-      Cookie: `accessToken=${accessToken}`,
-    })
     .timeout(10000)
     .withCredentials(true)
     .build()
     .call<ProductListResponseType>();
-  console.log('상품목록', response.data);
+  //console.log('상품목록', response.data);
   return response.data;
 }

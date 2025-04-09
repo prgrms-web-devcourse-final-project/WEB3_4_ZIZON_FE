@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import { Product } from '@/apis/store/getProductList';
+import { useState } from 'react';
 
 interface ProductListItemProps {
   size: 'small' | 'large';
@@ -23,12 +26,14 @@ const SIZE_CONFIG = {
 
 function ProductListItem({ size, product }: ProductListItemProps) {
   const sizeStyle = SIZE_CONFIG[size];
-
+  // TODO : 백엔드 데이터에 포함된 오류 이미지 제거용. 이후 삭제 예정
+  const imgPath =
+    product.thumbnailUrl === 'image.png' ? '/images/DefaultImage.png' : product.thumbnailUrl;
   return (
     <div className={`${sizeStyle.container} flex flex-col gap-16 group`}>
       <div className={`${sizeStyle.imageStlye} rounded-2xl overflow-hidden`}>
         <Image
-          src={product.thumbnailUrl || '/images/DefaultImage.png'}
+          src={imgPath}
           alt={product.name}
           width={sizeStyle.imageSize}
           height={sizeStyle.imageSize}
