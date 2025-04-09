@@ -33,12 +33,14 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
           <Link href="/myPage/myInfo">내 정보</Link>
           <Link href="/myPage/myProject">내가 구매한 프로젝트</Link>
           <Link href="/myPage/boughtProduct">구매한 상품</Link>
+          <Link href="/myPage/myReview">내가 쓴 리뷰</Link>
         </div>
       ) : (
         <div className="px-28 py-32 flex flex-col gap-24 font-regular">
           <Link href="/myPage/expertInfo">전문가 정보</Link>
           <Link href="/myPage/serviceStatus">서비스 현황</Link>
           <Link href="/myPage/saleProduct">판매중인 상품</Link>
+          <Link href="/myPage/receivedReview">내가 받은 리뷰</Link>
         </div>
       )}
       <button

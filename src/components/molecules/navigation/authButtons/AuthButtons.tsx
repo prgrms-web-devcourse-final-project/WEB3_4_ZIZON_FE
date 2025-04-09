@@ -4,7 +4,6 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 import { Member, UserRole } from '@/types/user';
 import ProfileDropdown from '@/components/molecules/navigation/profileDropdown/ProfileDropdown';
 import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface AuthButtonsProps {
   isLoggedIn: boolean;
@@ -19,13 +18,27 @@ export default function AuthButtons({
   member,
   userRole = 'client',
 }: AuthButtonsProps) {
-  const router = useRouter();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setIsReady(true); // 상태 복원 완료 플래그 설정
+  }, []);
+
+  // 외부 클릭 시 드롭다운 닫기 (모바일 환경용)
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   if (!isReady) {
@@ -42,12 +55,16 @@ export default function AuthButtons({
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsDropdownVisible(false);
-    }, 100);
+    }, 300);
+  };
+
+  const handleClick = () => {
+    setIsDropdownVisible(!isDropdownVisible);
   };
 
   if (isLoggedIn && member) {
     return (
-      <div className="flex items-center gap-32">
+      <div className="relative flex items-center gap-32">
         <Link href="/" className="block">
           <Image src="/icons/ChatBubbleLeftEllipsisLine.svg" alt="chat" width={26} height={22} />
         </Link>
@@ -55,16 +72,16 @@ export default function AuthButtons({
           <Image src="/icons/HeroiconsOutline.svg" alt="bell" width={20} height={20} />
         </Link>
         <div
+          ref={dropdownRef}
           className="relative"
-          onClick={() => {
-            router.push('/myPage/myInfo');
-          }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <Link
-            href="/profile"
+          <button
+            onClick={handleClick}
             className="w-40 h-40 block rounded-full bg-black1 overflow-hidden border border-black4"
+            aria-expanded={isDropdownVisible}
+            aria-haspopup="true"
           >
             <Image
               src={member.profileImage || '/images/DefaultImage.png'}
@@ -73,7 +90,7 @@ export default function AuthButtons({
               height={40}
               className="size-full object-cover"
             />
-          </Link>
+          </button>
           {isDropdownVisible && <ProfileDropdown member={member} userRole={userRole} />}
         </div>
       </div>
