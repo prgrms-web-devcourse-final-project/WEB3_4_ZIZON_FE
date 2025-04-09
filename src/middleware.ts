@@ -54,13 +54,13 @@ export async function middleware(request: NextRequest) {
     } else if (role === 'EXPERT' && underClientOnlyRoutes) {
       // 전문가 상태에서 의뢰인 페이지 접근시도
       const url = request.nextUrl.clone();
-      url.pathname = '/mypage/myproject';
+      url.pathname = '/myPage/myProject';
 
       return NextResponse.redirect(url);
     } else if (role === 'CLIENT' && underExpertOnlyRoutes) {
       // 의뢰인 상태에서 전문가 페이지 접근시도
       const url = request.nextUrl.clone();
-      url.pathname = '/mypage/myproject';
+      url.pathname = '/myPage/myProject';
 
       return NextResponse.redirect(url);
     }

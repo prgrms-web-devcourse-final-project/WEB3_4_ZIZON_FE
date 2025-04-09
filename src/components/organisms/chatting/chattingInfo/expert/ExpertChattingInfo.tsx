@@ -8,9 +8,16 @@ import ProjectSummary from '@/components/organisms/projectSummary/ProjectSummary
 interface ExpertChattingInfoProps {
   offerData: OfferResponseType | undefined;
   projectData: ProjectResponseType | undefined;
+  service: string;
+  expertId: number;
 }
 
-export default function ExpertChattingInfo({ offerData, projectData }: ExpertChattingInfoProps) {
+export default function ExpertChattingInfo({
+  offerData,
+  projectData,
+  service,
+  expertId,
+}: ExpertChattingInfoProps) {
   if (!offerData || !projectData) {
     return <div>로딩중</div>;
   }
@@ -25,7 +32,7 @@ export default function ExpertChattingInfo({ offerData, projectData }: ExpertCha
       />
 
       {/* 보낸 견적서 */}
-      <OfferInfo offerInfo={offerData} type="expert" />
+      <OfferInfo offerInfo={offerData} type="expert" service={service} expertId={expertId} />
 
       <ProjectSummary projectData={projectData} />
     </div>
