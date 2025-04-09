@@ -1,6 +1,6 @@
 'use client';
 
-import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+import { ExpertCategory } from '@/types/expert';
 import SemiBoldText from '@/components/atoms/texts/semiBoldText/SemiBoldText';
 import LabelWithIconButton from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
 import ProgressBar, { ProgressStep } from '@/components/atoms/bars/progressBar/ProgressBar';

@@ -1,4 +1,4 @@
-import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+export type ExpertCategory = 'move' | 'fix' | 'tutor' | 'hobby';
 
 export type Service = {
   move:
