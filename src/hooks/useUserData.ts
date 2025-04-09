@@ -1,116 +1,83 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { Member } from '@/types/user';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userStore';
 import { getCurrentUser } from '@/apis/user/getCurrentUser';
 import { getUserById } from '@/apis/user/getUserById';
 import { getExpertById } from '@/apis/expert/getExpertById';
+import { Expert } from '@/types/user';
 
-interface UserDataError {
-  message: string;
-  source: 'member' | 'expert';
+interface UserData {
+  id: number;
+  email: string;
+  name: string;
+  profileImage: string;
+  phone: string;
+  accountStatus: string;
 }
 
-export function useUserData() {
-  const {
-    currentRole,
-    setCurrentRole,
-    member: storeMember,
-    expert: storeExpert,
-    setExpert,
-    logout,
-  } = useUserStore();
-  const [memberInfo, setMemberInfo] = useState<Member | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<UserDataError | null>(null);
+interface ExpertData extends Expert {
+  expertId: number;
+}
 
-  // 공통 로딩 및 에러 처리 함수
-  const handleLoading = useCallback((isLoadingState: boolean) => {
-    setIsLoading(isLoadingState);
-  }, []);
+interface UseUserDataResult {
+  memberInfo: UserData | null;
+  expertInfo: ExpertData | null;
+  isLoading: boolean;
+  error: Error | null;
+}
 
-  const handleError = useCallback((err: unknown, source: 'member' | 'expert') => {
-    console.error(`${source === 'member' ? '사용자' : '전문가'} 정보 조회 실패:`, err);
-    setError({
-      message:
-        err instanceof Error
-          ? err.message
-          : `${source === 'member' ? '사용자' : '전문가'} 정보 조회 실패`,
-      source,
-    });
-  }, []);
+export function useUserData(): UseUserDataResult {
+  const router = useRouter();
+  const { member: storeMember } = useUserStore();
+  const [memberInfo, setMemberInfo] = useState<UserData | null>(null);
+  const [expertInfo, setExpertInfo] = useState<ExpertData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-  // 사용자 기본 정보 가져오기 (MEMBER 테이블 데이터)
-  const fetchMemberInfo = useCallback(async () => {
-    handleLoading(true);
-    setError(null);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        let memberId: number;
 
-    try {
-      let memberId;
-
-      if (storeMember?.id) {
-        memberId = storeMember.id;
-      } else {
-        const userInfo = await getCurrentUser();
-
-        if (!userInfo) {
-          await logout();
-          return;
+        if (storeMember?.id) {
+          memberId = storeMember.id;
+        } else {
+          const userInfo = await getCurrentUser();
+          if (!userInfo) {
+            router.push('/');
+            return;
+          }
+          memberId = userInfo.id;
         }
 
-        memberId = userInfo.id;
+        // 사용자 기본 정보 조회
+        const userData = await getUserById({ userId: memberId });
+        setMemberInfo(userData);
+
+        // 전문가 정보가 있는 경우 조회
+        if (storeMember?.expertId) {
+          const expertData = await getExpertById({ expertId: storeMember.expertId });
+          setExpertInfo({
+            ...expertData,
+            expertId: expertData.id,
+          });
+        }
+      } catch (err) {
+        console.error('사용자 정보 조회 실패:', err);
+        setError(err instanceof Error ? err : new Error('알 수 없는 오류가 발생했습니다'));
+
+        if (err instanceof Error && err.message.includes('401')) {
+          router.push('/');
+        }
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      // 사용자 정보 가져오기
-      const response = await getUserById({ userId: memberId });
-      setMemberInfo(response);
-    } catch (err) {
-      handleError(err, 'member');
-    } finally {
-      handleLoading(false);
-    }
-  }, [storeMember, logout, handleLoading, handleError]);
+    fetchUserInfo();
+  }, [router, storeMember]);
 
-  // 전문가 정보 가져오기 (EXPERT 테이블 데이터)
-  const fetchExpertInfo = useCallback(async () => {
-    // storeMember가 없거나 expertId가 없는 경우 종료
-    if (!storeMember?.expertId) {
-      return;
-    }
-
-    handleLoading(true);
-    setError(null);
-
-    try {
-      const expertData = await getExpertById({ expertId: storeMember.expertId });
-      setExpert(expertData); // store에 전문가 정보 저장
-    } catch (err) {
-      handleError(err, 'expert');
-      // 전문가 정보 조회 실패 시 클라이언트 역할로 변경
-      setCurrentRole('client');
-    } finally {
-      handleLoading(false);
-    }
-  }, [storeMember, setExpert, setCurrentRole, handleLoading, handleError]);
-
-  // 사용자 정보 초기 로드
-  useEffect(() => {
-    fetchMemberInfo();
-  }, [fetchMemberInfo]);
-
-  // 전문가 정보 로드 (storeMember가 변경될 때만)
-  useEffect(() => {
-    if (storeMember?.expertId) {
-      fetchExpertInfo();
-    }
-  }, [storeMember?.expertId, fetchExpertInfo]);
-
-  return {
-    memberInfo,
-    expertInfo: storeExpert,
-    isLoading,
-    error,
-    role: currentRole,
-  };
+  return { memberInfo, expertInfo, isLoading, error };
 }

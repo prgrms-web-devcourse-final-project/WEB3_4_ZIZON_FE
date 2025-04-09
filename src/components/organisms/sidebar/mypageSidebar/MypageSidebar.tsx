@@ -4,6 +4,8 @@ import ProfileInfo, { ProfileInfoProps } from '@/components/molecules/profileInf
 import UserStateTabContainer from '@/components/molecules/userStateTabContainer/UserStateTabContainer';
 import { useUserData } from '@/hooks/useUserData';
 import { useUserStore } from '@/store/userStore';
+import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
+import ErrorState from '@/components/molecules/errorState/ErrorState';
 
 interface MypageSidebarProps {
   profileInfo: Omit<ProfileInfoProps, 'onChangeState' | 'isState'>;
@@ -23,22 +25,26 @@ function MypageSidebar({ profileInfo }: MypageSidebarProps) {
     setCurrentRole(currentRole === 'client' ? 'expert' : 'client');
   };
 
+  // 로딩 상태 처리
   if (isLoading) {
     return (
-      <aside className="col-start-3 col-end-5 flex flex-col gap-24">
-        <div className="animate-pulse bg-gray-200 h-32 rounded-md"></div>
-        <div className="animate-pulse bg-gray-200 h-64 rounded-md"></div>
+      <aside className="flex flex-col gap-24">
+        <div className="flex justify-center items-center p-24">
+          <LoadingSpinner />
+        </div>
       </aside>
     );
   }
 
+  // 에러 상태 처리
   if (error) {
     return (
-      <aside className="col-start-3 col-end-5 flex flex-col gap-24">
-        <div className="p-4 bg-red-100 text-red-700 rounded-md">
-          <p>데이터를 불러오는 중 오류가 발생했습니다.</p>
-          <p className="text-sm">{error.message}</p>
-        </div>
+      <aside className="flex flex-col gap-24">
+        <ErrorState
+          title="데이터를 불러오는 중 오류가 발생했습니다"
+          message={error.message}
+          onRetry={() => window.location.reload()}
+        />
       </aside>
     );
   }
