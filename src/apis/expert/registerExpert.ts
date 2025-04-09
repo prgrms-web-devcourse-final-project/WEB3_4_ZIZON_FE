@@ -13,8 +13,7 @@ export interface RegisterExpertRequestType {
 }
 
 export interface RegisterExpertResponseType {
-  id: number;
-  success: boolean;
+  expertId: number;
   message: string;
 }
 

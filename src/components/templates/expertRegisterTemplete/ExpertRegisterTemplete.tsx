@@ -12,6 +12,8 @@ import ExpertDetailForm, {
 import type { Service } from '@/types/expert';
 import { registerExpert } from '@/apis/expert/registerExpert';
 import { SERVICES } from '@/types/expert';
+import { useUserStore } from '@/store/userStore';
+import { getExpertById } from '@/apis/expert/getExpertById';
 
 function ExpertRegisterTemplete() {
   const router = useRouter();
@@ -29,6 +31,7 @@ function ExpertRegisterTemplete() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { setExpert } = useUserStore();
 
   const isStepValid = () => {
     switch (step) {
@@ -91,11 +94,15 @@ function ExpertRegisterTemplete() {
         sellerInfo: '등록된 한국 사업자입니다.', // 기본값 설정
       });
 
-      if (response.success) {
+      if (response) {
         alert('전문가 등록이 완료되었습니다.');
+
+        const expertData = await getExpertById({ expertId: response.expertId });
+        setExpert(expertData); // store에 전문가 정보 저장
+
         router.push('/mypage/expertInfo');
       } else {
-        setErrorMessage(response.message || '전문가 등록에 실패했습니다.');
+        setErrorMessage('전문가 등록에 실패했습니다.');
       }
     } catch (error) {
       console.error('전문가 등록 오류:', error);
