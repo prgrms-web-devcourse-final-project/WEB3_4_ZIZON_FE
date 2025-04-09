@@ -22,7 +22,8 @@ export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRo
 
   const { data: offerData, isLoading: isLoadingOffer } = useQuery({
     queryKey: ['offer', projectId, expertId],
-    queryFn: () => getOfferList({ projectId: projectId!, expertId: expertId! }),
+    queryFn: () => getOfferList({ projectId: 53, expertId: expertId! }),
+    enabled: !!projectId && !!expertId,
   });
 
   const handleRoomChange = (roomId: string, projectId: number, userId: number) => {
@@ -30,10 +31,6 @@ export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRo
     setProjectId(projectId);
     setExpertId(userId);
   };
-
-  // if (isLoadingExpert || isLoadingOffer) {
-  //   return <div>로딩중</div>;
-  // }
 
   return (
     <div className="flex gap-24 mt-46 items-start jusitfy-center w-1670">

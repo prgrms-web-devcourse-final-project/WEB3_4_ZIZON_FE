@@ -2,7 +2,7 @@
 
 import { GetRoomsResponse } from '@/apis/chat/getRooms';
 import getOfferList from '@/apis/offer/getOffer';
-import getProject from '@/apis/project/getProject';
+import getProjectInClient from '@/apis/project/getProjectInClient';
 import ExpertChattingInfo from '@/components/organisms/chatting/chattingInfo/expert/ExpertChattingInfo';
 import ChattingList from '@/components/organisms/chatting/chattingLIst/ChattingList';
 import ChattingRoom from '@/components/organisms/chatting/chattingRoom/ChattingRoom';
@@ -24,7 +24,7 @@ export default function ExpertChattingTemplate({
 
   const { data: projectData, isLoading: isLoadingProject } = useQuery({
     queryKey: ['project', projectId],
-    queryFn: () => getProject({ projectId: String(projectId) }),
+    queryFn: () => getProjectInClient({ projectId: String(projectId) }),
     enabled: !!projectId,
     initialData: {
       id: 0,
