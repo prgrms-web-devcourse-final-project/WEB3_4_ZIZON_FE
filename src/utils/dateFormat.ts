@@ -32,3 +32,9 @@ export const getContractedDotSeparatedDate = (date: Date) => {
   const day = String(date.getDate()).padStart(2, '0');
   return `${year}.${month}.${day}`;
 };
+export const getTimeStampTo = (date: string) => {
+  if(typeof date !== 'string') return;
+  let yymmdd = date.split('T');
+  yymmdd = yymmdd[0].split('-');
+  return `${yymmdd[0]}.${yymmdd[1]}.${yymmdd[2]}`
+};
