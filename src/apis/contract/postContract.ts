@@ -22,7 +22,6 @@ export const postContract = async (
     startDate,
     endDate,
   })
-    .baseURL(`${process.env.SERVER_URL}`)
     .headers({
       'Content-Type': 'application/json',
     })
