@@ -21,19 +21,19 @@ interface ButtonStyle {
 }
 
 const buttonStyle: Record<SellState, ButtonStyle> = {
-  inProgress: {
+  OPEN: {
     text: '문의하기',
     state: 'default',
   },
-  waiting: {
-    text: '완료하기',
-    state: 'green',
+  IN_PROGRESS: {
+    text: '문의하기',
+    state: 'default',
   },
-  completed: {
+  COMPLETED: {
     text: '리뷰작성',
     state: 'dark',
   },
-  cancelled: {
+  CANCELLED: {
     text: '취소하기',
     state: 'red',
   },
@@ -57,7 +57,7 @@ export default function OrderListItem({
       <div className="flex items-center gap-16">
         <div className="w-85 h-85 rounded-lg overflow-hidden">
           <Image
-            className={`size-full object-cover ${sellState === 'completed' && 'saturate-0'}`}
+            className={`size-full object-cover ${sellState === 'COMPLETED' && 'saturate-0'}`}
             src={imageUrl}
             alt={category}
             width={85}

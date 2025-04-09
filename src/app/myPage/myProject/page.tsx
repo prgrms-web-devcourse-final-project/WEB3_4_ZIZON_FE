@@ -5,27 +5,11 @@ import SellStateTabContainer from '@/components/molecules/sellStateTabContainer/
 import OrderList from '@/components/organisms/orderList/OrderList';
 import { SellState } from '@/types/sellState';
 import getMyProjects from '@/apis/project/getMyProjects';
-import { Project, ProjectStatus } from '@/types/project';
+import { Project } from '@/types/project';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
 import EmptyState from '@/components/molecules/emptyState/EmptyState';
-
-// ProjectStatus를 SellState로 변환하는 함수
-const mapProjectStatusToSellState = (status: ProjectStatus): SellState => {
-  switch (status) {
-    case 'OPEN':
-      return 'inProgress';
-    case 'IN_PROGRESS':
-      return 'inProgress';
-    case 'COMPLETED':
-      return 'completed';
-    case 'CANCELLED':
-      return 'cancelled';
-    default:
-      return 'inProgress';
-  }
-};
 
 // Project를 Order 형식으로 변환하는 함수
 const convertProjectToOrder = (project: Project) => {
@@ -33,7 +17,7 @@ const convertProjectToOrder = (project: Project) => {
     id: project.id,
     imageUrl: project.thumbnailImageUrl || '/images/defaultImage.png',
     price: project.budget,
-    sellState: mapProjectStatusToSellState(project.status),
+    sellState: project.status,
     category: project.title,
   };
 };
@@ -68,9 +52,7 @@ export default function MyProjectPage() {
   // 필터링된 프로젝트
   const filteredProjects = useMemo(() => {
     if (!selectedState) return allProjects;
-    return allProjects.filter(
-      project => mapProjectStatusToSellState(project.status) === selectedState,
-    );
+    return allProjects.filter(project => project.status === selectedState);
   }, [allProjects, selectedState]);
 
   // 상태별 프로젝트 수 계산
@@ -138,46 +120,47 @@ export default function MyProjectPage() {
         onStateSelect={handleStateSelect}
       />
       <div className="mt-24">
-        <OrderList orders={orders} onAskButtonClick={handleAskButtonClick} />
-
-        {/* 더 보기 버튼 */}
-        {hasNextPage && (
-          <div className="flex justify-center py-8">
-            <button
-              onClick={handleLoadMore}
-              disabled={isFetchingNextPage}
-              className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 flex items-center gap-2"
-            >
-              {isFetchingNextPage ? (
-                <>
-                  <LoadingSpinner />
-                  <span>로딩 중...</span>
-                </>
-              ) : (
-                '더 보기'
-              )}
-            </button>
-          </div>
-        )}
-
-        {/* 더 이상 데이터가 없을 때 표시 */}
-        {!hasNextPage && allProjects.length > 0 && (
-          <div className="flex justify-center py-8">
-            <EmptyState
-              title="더 이상 프로젝트가 없습니다"
-              description="새로운 프로젝트가 추가되면 여기서 확인할 수 있습니다"
-            />
-          </div>
-        )}
-
-        {/* 데이터가 없는 경우 표시 */}
-        {allProjects.length === 0 && (
+        {allProjects.length === 0 ? (
           <div className="flex justify-center py-8">
             <EmptyState
               title="아직 구매한 프로젝트가 없습니다"
               description="프로젝트를 구매하면 여기서 확인할 수 있습니다"
             />
           </div>
+        ) : (
+          <>
+            <OrderList orders={orders} onAskButtonClick={handleAskButtonClick} />
+
+            {/* 더 보기 버튼 */}
+            {hasNextPage && (
+              <div className="flex justify-center py-8">
+                <button
+                  onClick={handleLoadMore}
+                  disabled={isFetchingNextPage}
+                  className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 flex items-center gap-2"
+                >
+                  {isFetchingNextPage ? (
+                    <>
+                      <LoadingSpinner />
+                      <span>로딩 중...</span>
+                    </>
+                  ) : (
+                    '더 보기'
+                  )}
+                </button>
+              </div>
+            )}
+
+            {/* 더 이상 데이터가 없을 때 표시 */}
+            {!hasNextPage && allProjects.length > 0 && (
+              <div className="flex justify-center py-24">
+                <EmptyState
+                  title="더 이상 프로젝트가 없습니다"
+                  description="새로운 프로젝트가 추가되면 여기서 확인할 수 있습니다"
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

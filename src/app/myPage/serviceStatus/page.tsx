@@ -20,19 +20,19 @@ export default function ServiceStatusPage() {
     {
       imageUrl: '/images/defaultImage.png',
       price: 150000,
-      sellState: 'inProgress',
+      sellState: 'IN_PROGRESS',
       category: '이사',
     },
     {
       imageUrl: '/images/defaultImage.png',
       price: 200000,
-      sellState: 'cancelled',
+      sellState: 'CANCELLED',
       category: '청소',
     },
     {
       imageUrl: '/images/defaultImage.png',
       price: 200000,
-      sellState: 'completed',
+      sellState: 'COMPLETED',
       category: '청소',
     },
   ];
@@ -44,15 +44,15 @@ export default function ServiceStatusPage() {
 
   const counts = useMemo(() => {
     return {
-      inProgress: orders.filter(order => order.sellState === 'inProgress').length,
-      cancelled: orders.filter(order => order.sellState === 'cancelled').length,
-      completed: orders.filter(order => order.sellState === 'completed').length,
+      inProgress: orders.filter(order => order.sellState === 'IN_PROGRESS').length,
+      cancelled: orders.filter(order => order.sellState === 'CANCELLED').length,
+      completed: orders.filter(order => order.sellState === 'COMPLETED').length,
     };
   }, [orders]);
 
   const totalRevenue = useMemo(() => {
     return orders
-      .filter(order => order.sellState === 'completed')
+      .filter(order => order.sellState === 'COMPLETED')
       .reduce((sum, order) => sum + order.price, 0);
   }, [orders]);
 
