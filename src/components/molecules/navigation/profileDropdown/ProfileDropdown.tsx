@@ -30,15 +30,15 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
       </div>
       {userRole === 'client' ? (
         <div className="px-28 py-32 flex flex-col gap-24 font-regular">
-          <Link href="/mypage/myInfo">내 정보</Link>
-          <Link href="/mypage/myProject">내가 구매한 프로젝트</Link>
-          <Link href="/mypage/boughtProduct">구매한 상품</Link>
+          <Link href="/myPage/myInfo">내 정보</Link>
+          <Link href="/myPage/myProject">내가 구매한 프로젝트</Link>
+          <Link href="/myPage/boughtProduct">구매한 상품</Link>
         </div>
       ) : (
         <div className="px-28 py-32 flex flex-col gap-24 font-regular">
-          <Link href="/mypage/expertInfo">전문가 정보</Link>
-          <Link href="/mypage/serviceStatus">서비스 현황</Link>
-          <Link href="/mypage/saleProduct">판매중인 상품</Link>
+          <Link href="/myPage/expertInfo">전문가 정보</Link>
+          <Link href="/myPage/serviceStatus">서비스 현황</Link>
+          <Link href="/myPage/saleProduct">판매중인 상품</Link>
         </div>
       )}
       <button

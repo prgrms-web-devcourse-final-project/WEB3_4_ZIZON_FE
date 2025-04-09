@@ -57,7 +57,7 @@ export default function AuthButtons({
         <div
           className="relative"
           onClick={() => {
-            router.push('/mypage/myInfo');
+            router.push('/myPage/myInfo');
           }}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
