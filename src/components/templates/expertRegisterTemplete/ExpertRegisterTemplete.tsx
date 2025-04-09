@@ -92,6 +92,7 @@ function ExpertRegisterTemplete() {
 
     try {
       setIsSubmitting(true);
+      setErrorMessage(null);
 
       // 선택된 서비스의 라벨 가져오기
       const subCategoryNames = selectedServices

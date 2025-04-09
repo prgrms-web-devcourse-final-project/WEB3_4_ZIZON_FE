@@ -5,14 +5,12 @@ interface S3Response {
   accessUrl: string;
 }
 
-type TableUnionType = 'projects' | 'members' | 'products' | 'portfolios' | 'chating';
-
+export type TableUnionType = 'projects' | 'members' | 'products' | 'portfolios' | 'chating';
 export interface ImageUploadRequest {
   folder: TableUnionType;
   fileName: string;
-  contentType: string;
+  contentType: 'image/webp';
 }
-
 export const postImageUpload = async (request: ImageUploadRequest): Promise<S3Response> => {
   const response = await APIBuilder.post('/api/s3/upload-url', request).build().call<S3Response>();
 

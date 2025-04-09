@@ -35,13 +35,12 @@ export default function SettingFixTwoPage() {
     setSelectedIndex(index);
     if(index === 3) {
       setSelectedOptionListNewItem(prev => {
-        if (prev.length === 0 || typeof selectedDay === undefined) return prev;
         const updated = [...prev];
         const date = new Date(`${selectedDay}`);
 
         const month = date.getMonth() + 1;
         const day = date.getDate();
-
+        if (prev.length === 0 || typeof selectedDay === undefined) return [{'요청 날짜': `${month}월 ${day}일`}];
         updated[0]['요청 날짜'] = `${month}월 ${day}일`;
         return updated;
       });
@@ -63,9 +62,9 @@ export default function SettingFixTwoPage() {
   const addressChangeHandler = (value: string) => {
     setAddress(value);
     setSelectedOptionListNewItem(prev => {
-      if (prev.length === 0) return [{"도착 지역": value}];
+      if (prev.length === 0) return [{"서비스 지역": value}];
       const updated = [...prev];
-      updated[0]['도착 지역'] = value;
+      updated[0]['서비스 지역'] = value;
       return updated;
     });
   }
