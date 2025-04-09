@@ -1,4 +1,5 @@
 import StoreMainTemplate from '@/components/templates/store/storeMain/StoreMainTemplate';
+import { Suspense } from 'react';
 
 export interface ProductType {
   category: '디지털 컨텐츠' | '리빙';
@@ -55,7 +56,9 @@ export const DUMMY_PRODUCT_LIST: ProductType[] = [
 export default function StorePage() {
   return (
     <div className="mt-72 flex justify-center">
-      <StoreMainTemplate productList={DUMMY_PRODUCT_LIST} />
+      <Suspense>
+        <StoreMainTemplate productList={DUMMY_PRODUCT_LIST} />
+      </Suspense>
     </div>
   );
 }

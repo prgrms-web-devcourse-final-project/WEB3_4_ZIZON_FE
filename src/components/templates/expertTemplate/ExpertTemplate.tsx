@@ -12,7 +12,9 @@ export default function ExpertTemplate({ expertList }: { expertList: ExpertListR
       <Banner />
       {/* 사이드바 영역 */}
       <div className=" flex gap-24 mt-40 ">
-        <ExpertSidebar />
+        <Suspense>
+          <ExpertSidebar />
+        </Suspense>
         {/* 컨텐츠 영역 */}
         <div className="w-full flex flex-col gap-16">
           <SortButtons />

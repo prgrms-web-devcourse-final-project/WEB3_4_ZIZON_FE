@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import MoveStepFourTemplate from '@/components/templates/stepperTemplate/move/MoveStepFourTemplate';
 import { selectedOptionIndexObject } from '@/components/molecules/selectedOptionList/SelectedOptionList';
 import { useRouter } from 'next/navigation';
-import { PutImageUpload, putImageUpload } from '@/apis/imageUpload/putImageUpload';
 
 const appliancesSelectedItems: { key: number; label: string }[] = [
   { key: 0, label: '없음' },

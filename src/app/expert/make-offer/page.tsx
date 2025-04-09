@@ -5,7 +5,7 @@ export default function MakeOfferPage() {
   // TODO : 요청서 써머리 데이터 요청
 
   const PROJECT_SUMMARY = {
-    clientProfile: '/images/DefaultImage.png',
+    clientProfileImageUrl: '/images/DefaultImage.png',
     clientName: '홍길동',
     location: '서울특별시 강남구 역삼동',
     projectName: '과외',
