@@ -65,21 +65,18 @@ export default function ProfileInfo({
 
       // 프로필 이미지 업데이트
       if (member?.id) {
-        await updateUser({
+        const updateResponse = await updateUser({
           userId: member.id,
           data: {
-            profileImage: accessUrl,
             name: member.name,
+            profileImage: accessUrl,
           },
         });
 
-        // 사용자 정보 업데이트
-        if (member) {
-          setMember({
-            ...member,
-            profileImage: accessUrl,
-          });
-        }
+        setMember({
+          ...member,
+          ...updateResponse,
+        });
       }
 
       setSelectedImage(null);
