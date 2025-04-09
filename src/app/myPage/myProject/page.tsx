@@ -4,59 +4,130 @@ import React, { useState, useMemo } from 'react';
 import SellStateTabContainer from '@/components/molecules/sellStateTabContainer/SellStateTabContainer';
 import OrderList from '@/components/organisms/orderList/OrderList';
 import { SellState } from '@/types/sellState';
+import getMyProjects from '@/apis/project/getMyProjects';
+import { Project, ProjectStatus } from '@/types/project';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
+import ErrorState from '@/components/molecules/errorState/ErrorState';
+import EmptyState from '@/components/molecules/emptyState/EmptyState';
 
-interface Order {
-  imageUrl: string;
-  price: number;
-  sellState: SellState;
-  category: string;
-}
+// ProjectStatus를 SellState로 변환하는 함수
+const mapProjectStatusToSellState = (status: ProjectStatus): SellState => {
+  switch (status) {
+    case 'OPEN':
+      return 'inProgress';
+    case 'IN_PROGRESS':
+      return 'inProgress';
+    case 'COMPLETED':
+      return 'completed';
+    case 'CANCELLED':
+      return 'cancelled';
+    default:
+      return 'inProgress';
+  }
+};
+
+// Project를 Order 형식으로 변환하는 함수
+const convertProjectToOrder = (project: Project) => {
+  return {
+    id: project.id,
+    imageUrl: project.thumbnailImageUrl || '/images/defaultImage.png',
+    price: project.budget,
+    sellState: mapProjectStatusToSellState(project.status),
+    category: project.title,
+  };
+};
 
 export default function MyProjectPage() {
   const [selectedState, setSelectedState] = useState<SellState | null>(null);
 
-  const orders: Order[] = [
-    {
-      imageUrl: '/images/defaultImage.png',
-      price: 150000,
-      sellState: 'inProgress',
-      category: '이사',
-    },
-    {
-      imageUrl: '/images/defaultImage.png',
-      price: 200000,
-      sellState: 'cancelled',
-      category: '청소',
-    },
-    {
-      imageUrl: '/images/defaultImage.png',
-      price: 200000,
-      sellState: 'completed',
-      category: '청소',
-    },
-  ];
+  // useInfiniteQuery를 사용하여 프로젝트 데이터 가져오기
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
+    useInfiniteQuery({
+      queryKey: ['myProjects'],
+      queryFn: async ({ pageParam }) => {
+        return getMyProjects({
+          lastProjectId: pageParam,
+          limit: 10,
+        });
+      },
+      getNextPageParam: lastPage => {
+        if (!lastPage.hasNext) return undefined;
+        if (lastPage.projects.length === 0) return undefined;
+        return lastPage.projects[lastPage.projects.length - 1].id;
+      },
+      initialPageParam: undefined,
+    });
 
-  const filteredOrders = useMemo(() => {
-    if (!selectedState) return orders;
-    return orders.filter(order => order.sellState === selectedState);
-  }, [orders, selectedState]);
+  // 모든 프로젝트 데이터 추출
+  const allProjects = useMemo(() => {
+    if (!data) return [];
+    return data.pages.flatMap(page => page.projects);
+  }, [data]);
 
+  // 필터링된 프로젝트
+  const filteredProjects = useMemo(() => {
+    if (!selectedState) return allProjects;
+    return allProjects.filter(
+      project => mapProjectStatusToSellState(project.status) === selectedState,
+    );
+  }, [allProjects, selectedState]);
+
+  // 상태별 프로젝트 수 계산
   const counts = useMemo(() => {
     return {
-      inProgress: orders.filter(order => order.sellState === 'inProgress').length,
-      cancelled: orders.filter(order => order.sellState === 'cancelled').length,
-      completed: orders.filter(order => order.sellState === 'completed').length,
+      inProgress: allProjects.filter(
+        project => project.status === 'OPEN' || project.status === 'IN_PROGRESS',
+      ).length,
+      cancelled: allProjects.filter(project => project.status === 'CANCELLED').length,
+      completed: allProjects.filter(project => project.status === 'COMPLETED').length,
     };
-  }, [orders]);
+  }, [allProjects]);
 
+  // 문의하기 버튼 클릭 핸들러
   const handleAskButtonClick = (orderId: string) => {
     console.log('문의하기 클릭:', orderId);
     // 문의하기 기능 구현
   };
 
+  // 상태 선택 핸들러
   const handleStateSelect = (state: SellState) => {
     setSelectedState(prev => (prev === state ? null : state));
   };
+
+  // 더 보기 버튼 클릭 핸들러
+  const handleLoadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  // Order 형식으로 변환된 프로젝트 목록
+  const orders = useMemo(() => {
+    return filteredProjects.map(convertProjectToOrder);
+  }, [filteredProjects]);
+
+  // 로딩 중 표시
+  if (isLoading) {
+    return (
+      <div className="w-full flex justify-center items-center py-40">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  // 에러 표시
+  if (isError) {
+    return (
+      <div className="w-full flex justify-center items-center py-40">
+        <ErrorState
+          title="데이터를 불러오는 중 오류가 발생했습니다"
+          message="프로젝트 목록을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요."
+          onRetry={() => window.location.reload()}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
@@ -67,7 +138,47 @@ export default function MyProjectPage() {
         onStateSelect={handleStateSelect}
       />
       <div className="mt-24">
-        <OrderList orders={filteredOrders} onAskButtonClick={handleAskButtonClick} />
+        <OrderList orders={orders} onAskButtonClick={handleAskButtonClick} />
+
+        {/* 더 보기 버튼 */}
+        {hasNextPage && (
+          <div className="flex justify-center py-8">
+            <button
+              onClick={handleLoadMore}
+              disabled={isFetchingNextPage}
+              className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 flex items-center gap-2"
+            >
+              {isFetchingNextPage ? (
+                <>
+                  <LoadingSpinner />
+                  <span>로딩 중...</span>
+                </>
+              ) : (
+                '더 보기'
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* 더 이상 데이터가 없을 때 표시 */}
+        {!hasNextPage && allProjects.length > 0 && (
+          <div className="flex justify-center py-8">
+            <EmptyState
+              title="더 이상 프로젝트가 없습니다"
+              description="새로운 프로젝트가 추가되면 여기서 확인할 수 있습니다"
+            />
+          </div>
+        )}
+
+        {/* 데이터가 없는 경우 표시 */}
+        {allProjects.length === 0 && (
+          <div className="flex justify-center py-8">
+            <EmptyState
+              title="아직 구매한 프로젝트가 없습니다"
+              description="프로젝트를 구매하면 여기서 확인할 수 있습니다"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
