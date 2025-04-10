@@ -46,7 +46,7 @@ export async function middleware(request: NextRequest) {
     const role = decodedToken?.role; // CLIENT, EXPERT
 
     //재 로그인 접근 시도 -> 메인 페이지로 이동
-    if (protectedRoutes.includes(currentPathname)) {
+    if (publicRoutes.includes(currentPathname)) {
       const url = request.nextUrl.clone();
       url.pathname = '/';
 

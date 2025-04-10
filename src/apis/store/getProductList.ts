@@ -1,45 +1,39 @@
+import { clsx } from 'clsx';
 import { APIBuilder } from '@/utils/APIBuilder';
-import { cookies } from 'next/headers';
 
 export interface ProductListRequestType {
-  categoryId: number;
-  pageable: {
-    page: number;
-    size: number;
-    sort: string[];
-  };
+  categoryId: string;
+  page: number;
 }
 
 export interface Product {
-  expert_id: number; // expertName
-  category_id: number;
-  title: string;
-  stock: number;
-  product_type: string; // string (상품 유형, 예: digital)
-  thumbnail_image: string;
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  productType: string;
+  thumbnailUrl: string;
+  expertName: string;
+  categoryName: string;
+  createdAt: string;
 }
 
-type ProductListResponseType = Array<Product>;
+type ProductListResponseType = {
+  products: Array<Product>;
+  currentPage: number;
+  pageSize: number;
+  hasNext: boolean;
+};
 
 export default async function getProductList({
   categoryId,
-  pageable,
+  page,
 }: ProductListRequestType): Promise<ProductListResponseType> {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  if (!accessToken) {
-    throw new Error('Access token not found');
-  }
-  const query = encodeURIComponent(JSON.stringify(pageable));
-  const response = await APIBuilder.get(`/products?pageable=${query}&categoryId=${categoryId}`)
-    .headers({
-      Cookie: `access_token=${accessToken}`,
-      'Content-Type': 'application/json',
-    })
+  const response = await APIBuilder.get(`/products?page=${page}&size=12&categoryId=${categoryId}`)
     .timeout(10000)
     .withCredentials(true)
     .build()
     .call<ProductListResponseType>();
-
+  //console.log('상품목록', response.data);
   return response.data;
 }
