@@ -1,6 +1,7 @@
-import SmallTag, { Theme } from '@/components/atoms/tags/smallTag/SmallTag';
+import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import { PROJECT_CATEGORY, ProjectCategoryIdType } from '@/constants/category';
+import { getDotSeparatedDate } from '@/utils/dateFormat';
 import Image from 'next/image';
 import Link from 'next/link';
 import ArrowUpRight from 'public/icons/ArrowUpRight.svg';
@@ -9,20 +10,16 @@ export interface ProjectItemCardProps {
   categoryId: ProjectCategoryIdType;
   title: string;
   budget: number;
-  dueDate: string;
-  comissionId: string;
+  deadline: string;
+  projectId: string;
 }
-
-type TagColorType = {
-  [key in ProjectCategoryIdType]: Theme;
-};
 
 export default function ProjectItemCard({
   categoryId,
   title,
   budget,
-  dueDate,
-  comissionId,
+  deadline,
+  projectId,
 }: ProjectItemCardProps) {
   const tagColorVariation: Record<
     ProjectCategoryIdType,
@@ -45,10 +42,12 @@ export default function ProjectItemCard({
             <NumberReadability value={budget} />원
           </span>
         </p>
-        <span className="text-16 font-regular text-black7">마감 : {dueDate}</span>
+        <span className="text-16 font-regular text-black7">
+          마감 : {getDotSeparatedDate(new Date(deadline))}
+        </span>
       </div>
       <Link
-        href={`/comission/${comissionId}`}
+        href={`/commission/${projectId}`}
         className="w-32 h-32 flex justify-center items-center bg-black2 rounded-[4px] cursor-pointer"
       >
         <Image src={ArrowUpRight} width={15} height={15} alt="arrow-up-right-icon" />
