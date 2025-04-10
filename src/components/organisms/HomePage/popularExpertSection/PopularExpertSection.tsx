@@ -28,9 +28,11 @@ function PopularExpertSection({expertsByCategory}: PopularExpertSectionProps) {
         />
       </div>
       <div className="grid grid-cols-4 gap-24">
-        {expertsByCategory[selectedCategory].map((item, index) => (
-          index < 4 ?< PopularExpertItem key={item.expertId} {...item} />: null
-        ))}
+        {expertsByCategory[selectedCategory] && expertsByCategory[selectedCategory].length > 0 && (
+          expertsByCategory[selectedCategory].slice(0, 4).map((item) => (
+            <PopularExpertItem key={item.name} {...item} />
+          ))
+        )}
       </div>
     </section>
   );

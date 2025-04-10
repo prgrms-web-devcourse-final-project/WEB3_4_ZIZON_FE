@@ -1,9 +1,7 @@
-import StarTag from '@/components/atoms/tags/starTag/StarTag';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import LikeTag from '@/components/atoms/tags/likeTag/LikeTag';
-import { ProjectCategoryType } from '@/types/category';
+
 
 export interface PopularExpertItemProps {
   name: string;
@@ -32,7 +30,7 @@ export default function PopularExpertItem({
       className="flex flex-col items-center gap-20 px-24 py-24 bg-black1 border border-black3 rounded-[20px]  hover:shadow-style1 hover:border-transparent transition-all duration-300"
     >
       <Image
-        src={imagePath}
+        src={imagePath === "" ? "/images/DefaultImage.png" : imagePath}
         width={254}
         height={181}
         className="rounded-[12px] object-fill h-181 w-254"
