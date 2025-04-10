@@ -16,19 +16,20 @@ export default function ClientChattingInfo({
   offerData,
   expertId,
 }: ClientChattingInfoProps) {
-  if (!offerData || !expertData || !expertId) {
-    return null;
-  }
   return (
     <div className="w-full max-w-402 flex flex-col gap-16">
-      <ChattingButtonGroup offerInfo={offerData} expertInfo={expertData} />
-      <OfferInfo
-        offerInfo={offerData}
-        type="client"
-        service={expertData.categoryName}
-        expertId={expertId}
-      />
-      <ChattingExpertInfo expertData={expertData} />
+      {offerData && expertData && (
+        <ChattingButtonGroup offerInfo={offerData} expertInfo={expertData} />
+      )}
+      {offerData && expertData && (
+        <OfferInfo
+          offerInfo={offerData}
+          type="client"
+          service={expertData.categoryName}
+          expertId={expertId}
+        />
+      )}
+      {expertData && <ChattingExpertInfo expertData={expertData} />}
     </div>
   );
 }

@@ -6,7 +6,7 @@ export default async function ExpertChatPage() {
 
   return (
     <div className="w-full flex justify-center">
-      <ExpertChattingTemplate chatRoomList={chatRoomList} />;
+      <ExpertChattingTemplate chatRoomList={chatRoomList} />
     </div>
   );
 }

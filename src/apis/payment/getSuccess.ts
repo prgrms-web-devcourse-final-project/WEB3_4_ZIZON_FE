@@ -40,6 +40,6 @@ export default async function getSuccess(params: GetSuccessRequest): Promise<Suc
     .timeout(50000)
     .build()
     .call<SuccessResponse>();
-  console.log('결제 성공 콜백 응답:', response);
+
   return response.data;
 }
