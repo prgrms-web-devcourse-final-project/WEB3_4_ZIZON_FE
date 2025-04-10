@@ -1,128 +1,288 @@
 import { useState } from 'react';
-import EditableField from '@/components/molecules/editableField/EditableField';
-import TagList from '@/components/molecules/tagList/TagList';
 import { Expert } from '@/types/user';
+import { useUserStore } from '@/store/userStore';
+import { updateExpert } from '@/apis/expert/updateExpert';
+import { toast } from 'sonner';
+import { useExpertForm } from '@/hooks/useExpertForm';
+import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
+import CategorySection from './sections/CategorySection';
+import CareerSection from './sections/CareerSection';
+import CertificatesSection from './sections/CertificatesSection';
+import IntroductionSection from './sections/IntroductionSection';
+import BankInfoSection from './sections/BankInfoSection';
+import PortfolioSection from './sections/PortfolioSection';
+import { ExpertCategoryName } from '@/types/expert';
 
 interface ExpertInfoFormProps {
   initialData: Expert;
 }
 
 export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
-  const [categoryName, setCategoryName] = useState(initialData.categoryName);
-  const [subCategoryNames, setSubCategoryNames] = useState(initialData.subCategoryNames);
-  const [newSubCategory, setNewSubCategory] = useState('');
-  const [careerYears, setCareerYears] = useState(initialData.careerYears.toString());
-  const [certificateNames, setCertificateNames] = useState(initialData.certificateNames);
-  const [newCertificate, setNewCertificate] = useState('');
-  const [introduction, setIntroduction] = useState(initialData.introduction);
-  const [isCategoryEditable, setIsCategoryEditable] = useState(false);
-  const [isSubCategoriesEditable, setIsSubCategoriesEditable] = useState(false);
-  const [isCareerEditable, setIsCareerEditable] = useState(false);
-  const [isCertificatesEditable, setIsCertificatesEditable] = useState(false);
-  const [isIntroductionEditable, setIsIntroductionEditable] = useState(false);
+  const { expert, setExpert } = useUserStore();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleCategoryEditClick = () => {
-    setIsCategoryEditable(!isCategoryEditable);
-  };
+  // 폼 데이터 상태 관리
+  const { formData, setFormData, editableFields, toggleEditable } = useExpertForm(initialData);
 
-  const handleSubCategoriesEditClick = () => {
-    setIsSubCategoriesEditable(!isSubCategoriesEditable);
-    setNewSubCategory('');
-  };
+  // 공통 업데이트 함수
+  const handleUpdate = async (
+    fieldName: string,
+    successMessage: string,
+    errorMessage: string,
+    updateStore: (expert: Expert) => void,
+  ) => {
+    if (!expert?.id) return;
 
-  const handleCareerEditClick = () => {
-    setIsCareerEditable(!isCareerEditable);
-  };
+    setIsLoading(true);
+    try {
+      await updateExpert(expert.id, {
+        categoryName: formData.categoryName,
+        careerYears: parseInt(formData.careerYears),
+        introduction: formData.introduction,
+        certificateNames: formData.certificateNames,
+        gender: expert.gender,
+        bankName: formData.bankName,
+        accountNumber: formData.accountNumber,
+        portfolioTitle: formData.portfolioTitle,
+        portfolioImage: formData.portfolioImage,
+        subCategoryNames: formData.subCategoryNames,
+      });
 
-  const handleCertificatesEditClick = () => {
-    setIsCertificatesEditable(!isCertificatesEditable);
-    setNewCertificate('');
-  };
-
-  const handleIntroductionEditClick = () => {
-    setIsIntroductionEditable(!isIntroductionEditable);
-  };
-
-  const handleAddSubCategory = () => {
-    if (newSubCategory.trim()) {
-      setSubCategoryNames([...subCategoryNames, newSubCategory.trim()]);
-      setNewSubCategory('');
+      updateStore(expert);
+      toast.success(successMessage);
+      return true;
+    } catch (err) {
+      console.error('전문가 정보 수정 중 오류:', err);
+      toast.error(errorMessage);
+      return false;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleAddCertificate = () => {
-    if (newCertificate.trim()) {
-      setCertificateNames([...certificateNames, newCertificate.trim()]);
-      setNewCertificate('');
+  // 각 섹션별 업데이트 핸들러
+  const handleCategoryUpdate = async () => {
+    const success = await handleUpdate(
+      'categoryName',
+      '비즈니스 분야가 수정되었습니다.',
+      '비즈니스 분야 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          categoryName: formData.categoryName,
+          subCategoryNames: formData.subCategoryNames,
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('categoryName');
     }
   };
 
-  const handleRemoveSubCategory = (index: number) => {
-    const newSubCategories = subCategoryNames.filter((_, i) => i !== index);
-    setSubCategoryNames(newSubCategories);
+  const handleCareerUpdate = async () => {
+    const success = await handleUpdate(
+      'careerYears',
+      '경력이 수정되었습니다.',
+      '경력 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          careerYears: parseInt(formData.careerYears),
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('careerYears');
+    }
   };
 
-  const handleRemoveCertificate = (index: number) => {
-    const newCertificates = certificateNames.filter((_, i) => i !== index);
-    setCertificateNames(newCertificates);
+  const handleCertificatesUpdate = async () => {
+    const success = await handleUpdate(
+      'certificateNames',
+      '자격증이 수정되었습니다.',
+      '자격증 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          certificateNames: formData.certificateNames,
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('certificateNames');
+    }
+  };
+
+  const handleIntroductionUpdate = async () => {
+    const success = await handleUpdate(
+      'introduction',
+      '소개가 수정되었습니다.',
+      '소개 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          introduction: formData.introduction,
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('introduction');
+    }
+  };
+
+  const handleBankInfoUpdate = async () => {
+    const success = await handleUpdate(
+      'bankInfo',
+      '계좌 정보가 수정되었습니다.',
+      '계좌 정보 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          bankName: formData.bankName,
+          accountNumber: formData.accountNumber,
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('bankInfo');
+    }
+  };
+
+  const handlePortfolioUpdate = async () => {
+    const success = await handleUpdate(
+      'portfolio',
+      '포트폴리오가 수정되었습니다.',
+      '포트폴리오 수정에 실패했습니다.',
+      expert => {
+        setExpert({
+          ...expert,
+          portfolioTitle: formData.portfolioTitle,
+          portfolioImage: formData.portfolioImage,
+        });
+      },
+    );
+
+    if (success) {
+      toggleEditable('portfolio');
+    }
   };
 
   return (
     <div className="flex flex-col gap-32">
-      <EditableField
-        id="categoryName"
-        label="비즈니스 분야"
-        value={categoryName}
-        placeholder="이사/청소"
-        onChange={setCategoryName}
-        isEditable={isCategoryEditable}
-        onEditClick={handleCategoryEditClick}
+      <CategorySection
+        category={formData.categoryName as ExpertCategoryName}
+        subCategories={formData.subCategoryNames}
+        isEditable={editableFields.categoryName}
+        onEditClick={() => toggleEditable('categoryName')}
+        onSave={handleCategoryUpdate}
+        onCategoryChange={value => setFormData({ ...formData, categoryName: value })}
+        onAddSubCategory={tag => {
+          setFormData({
+            ...formData,
+            subCategoryNames: [...formData.subCategoryNames, tag],
+            newSubCategory: '',
+          });
+        }}
+        onRemoveSubCategory={index => {
+          const newTags = formData.subCategoryNames.filter((_, i) => i !== index);
+          setFormData({ ...formData, subCategoryNames: newTags });
+        }}
+        onResetSubCategories={() => {
+          setFormData({ ...formData, subCategoryNames: [] });
+        }}
+        disabled={isLoading}
       />
 
-      <TagList
-        label="제공 서비스"
-        tags={subCategoryNames}
-        isEditable={isSubCategoriesEditable}
-        newTagValue={newSubCategory}
-        placeholder="제공하는 서비스를 입력하세요"
-        onEditClick={handleSubCategoriesEditClick}
-        onAddTag={handleAddSubCategory}
-        onRemoveTag={handleRemoveSubCategory}
-        onNewTagChange={setNewSubCategory}
+      <hr />
+
+      <CareerSection
+        value={formData.careerYears}
+        onChange={value => setFormData({ ...formData, careerYears: value })}
+        isEditable={editableFields.careerYears}
+        onEditClick={() => toggleEditable('careerYears')}
+        onSave={handleCareerUpdate}
+        disabled={isLoading}
       />
 
-      <EditableField
-        id="careerYears"
-        label="경력"
-        value={careerYears}
-        placeholder="5"
-        onChange={setCareerYears}
-        isEditable={isCareerEditable}
-        onEditClick={handleCareerEditClick}
+      <hr />
+
+      <CertificatesSection
+        tags={formData.certificateNames}
+        isEditable={editableFields.certificateNames}
+        onEditClick={() => toggleEditable('certificateNames')}
+        onAddTag={tag => {
+          setFormData({
+            ...formData,
+            certificateNames: [...formData.certificateNames, tag],
+          });
+        }}
+        onRemoveTag={index => {
+          const newTags = formData.certificateNames.filter((_, i) => i !== index);
+          setFormData({ ...formData, certificateNames: newTags });
+        }}
+        onSave={handleCertificatesUpdate}
       />
 
-      <TagList
-        label="자격증"
-        tags={certificateNames}
-        isEditable={isCertificatesEditable}
-        newTagValue={newCertificate}
-        placeholder="보유한 자격증을 입력하세요"
-        onEditClick={handleCertificatesEditClick}
-        onAddTag={handleAddCertificate}
-        onRemoveTag={handleRemoveCertificate}
-        onNewTagChange={setNewCertificate}
+      <hr />
+
+      <IntroductionSection
+        value={formData.introduction}
+        onChange={value => setFormData({ ...formData, introduction: value })}
+        isEditable={editableFields.introduction}
+        onEditClick={() => toggleEditable('introduction')}
+        onSave={handleIntroductionUpdate}
+        disabled={isLoading}
       />
 
-      <EditableField
-        id="introduction"
-        label="전문가 소개"
-        value={introduction}
-        placeholder="안녕하세요, 5년 경력의 웹 개발 전문가입니다..."
-        onChange={setIntroduction}
-        isEditable={isIntroductionEditable}
-        onEditClick={handleIntroductionEditClick}
-        useTextarea={true}
-        rows={6}
+      <hr />
+
+      <BankInfoSection
+        bankName={formData.bankName}
+        accountNumber={formData.accountNumber}
+        isEditable={editableFields.bankInfo}
+        onEditClick={() => toggleEditable('bankInfo')}
+        onBankNameChange={value => setFormData({ ...formData, bankName: value })}
+        onAccountNumberChange={value => setFormData({ ...formData, accountNumber: value })}
+        onSave={handleBankInfoUpdate}
+        disabled={isLoading}
+      />
+
+      <hr />
+
+      <PortfolioSection
+        title={formData.portfolioTitle}
+        image={formData.portfolioImage}
+        isEditable={editableFields.portfolio}
+        onEditClick={() => toggleEditable('portfolio')}
+        onTitleChange={value => setFormData({ ...formData, portfolioTitle: value })}
+        onImageUpload={async file => {
+          try {
+            setIsLoading(true);
+            const accessUrl = await putImageUpload({
+              tableUnionType: 'portfolios',
+              file,
+            });
+
+            if (accessUrl) {
+              setFormData({ ...formData, portfolioImage: accessUrl });
+              toast.success('포트폴리오 이미지가 업로드되었습니다.');
+            } else {
+              throw new Error('이미지 업로드 실패');
+            }
+          } catch (error) {
+            console.error('포트폴리오 이미지 업로드 오류:', error);
+            toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+          } finally {
+            setIsLoading(false);
+          }
+        }}
+        onSave={handlePortfolioUpdate}
+        disabled={isLoading}
       />
     </div>
   );

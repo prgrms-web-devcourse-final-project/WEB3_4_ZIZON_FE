@@ -4,12 +4,14 @@ import React from 'react';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import Image from 'next/image';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
-import { SellState, sellStateConfig } from '@/types/sellState';
+import { sellStateConfig } from '@/types/sellState';
+import { ContractStatus } from '@/types/contract';
+import { ProjectStatus } from '@/types/project';
 
 export interface OrderListItemProps {
   imageUrl: string;
   price: number;
-  sellState: SellState;
+  sellState: ProjectStatus | ContractStatus;
   onClickAskButton: () => void;
   category: string;
   isExpertView?: boolean;
@@ -20,20 +22,28 @@ interface ButtonStyle {
   state: 'default' | 'dark' | 'red' | 'green';
 }
 
-const buttonStyle: Record<SellState, ButtonStyle> = {
-  inProgress: {
+const buttonStyle: Record<ProjectStatus | ContractStatus, ButtonStyle> = {
+  PENDING: {
     text: '문의하기',
     state: 'default',
   },
-  waiting: {
-    text: '완료하기',
-    state: 'green',
+  DISPUTED: {
+    text: '문의하기',
+    state: 'default',
   },
-  completed: {
+  OPEN: {
+    text: '문의하기',
+    state: 'default',
+  },
+  IN_PROGRESS: {
+    text: '문의하기',
+    state: 'default',
+  },
+  COMPLETED: {
     text: '리뷰작성',
     state: 'dark',
   },
-  cancelled: {
+  CANCELLED: {
     text: '취소하기',
     state: 'red',
   },
@@ -57,7 +67,7 @@ export default function OrderListItem({
       <div className="flex items-center gap-16">
         <div className="w-85 h-85 rounded-lg overflow-hidden">
           <Image
-            className={`size-full object-cover ${sellState === 'completed' && 'saturate-0'}`}
+            className={`size-full object-cover ${sellState === 'COMPLETED' && 'saturate-0'}`}
             src={imageUrl}
             alt={category}
             width={85}

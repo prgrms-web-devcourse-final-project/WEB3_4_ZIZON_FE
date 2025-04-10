@@ -93,7 +93,7 @@ export default function ProductBasicInfoForm({
       />
       <ImageUploadField
         label="상품 썸네일"
-        onImageUpload={file => onBasicInfoChange('thumbnailImage', file)}
+        onImageChange={file => onBasicInfoChange('thumbnailImage', file)}
       />
       {productType === 'digital' && (
         <>
