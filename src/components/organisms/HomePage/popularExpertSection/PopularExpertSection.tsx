@@ -7,55 +7,12 @@ import PopularExpertItem, {
 import { ExpertCategory } from '@/constants/expert';
 import SectionTitle from '@/components/atoms/texts/sectionTitle/SectionTitle';
 import ExpertCategoryButtons from '@/components/molecules/HomePage/ExpertCategoryButtons';
+import { SortedExperts } from '@/apis/main/getPopularExpert';
 
-export const POPULAR_EXPERT_ITEMS: PopularExpertItemProps[] = [
-  {
-    imageSrc: '/images/DefaultImage.png',
-    name: '이상훈',
-    category: '이사/청소',
-    expertId: '123',
-    rating: 4.5,
-    reviewCount: 100,
-    likeCount: 100,
-    isLike: false,
-    onLikeClick: () => {},
-  },
-  {
-    imageSrc: '/images/DefaultImage.png',
-    name: '조현우',
-    category: '설치/수리',
-    expertId: '124',
-    rating: 4.5,
-    reviewCount: 100,
-    likeCount: 100,
-    isLike: false,
-    onLikeClick: () => {},
-  },
-  {
-    imageSrc: '/images/DefaultImage.png',
-    name: '이수정',
-    category: '과외',
-    expertId: '125',
-    rating: 4.5,
-    reviewCount: 100,
-    likeCount: 100,
-    isLike: false,
-    onLikeClick: () => {},
-  },
-  {
-    imageSrc: '/images/DefaultImage.png',
-    name: '최윤희',
-    category: '취미/자기계발',
-    expertId: '126',
-    rating: 4.5,
-    reviewCount: 100,
-    likeCount: 100,
-    isLike: false,
-    onLikeClick: () => {},
-  },
-];
-
-function PopularExpertSection() {
+interface PopularExpertSectionProps{
+  expertsByCategory: SortedExperts;
+}
+function PopularExpertSection({expertsByCategory}: PopularExpertSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<ExpertCategory>(ExpertCategory.ALL);
 
   return (
@@ -71,9 +28,11 @@ function PopularExpertSection() {
         />
       </div>
       <div className="grid grid-cols-4 gap-24">
-        {POPULAR_EXPERT_ITEMS.map(item => (
-          <PopularExpertItem key={item.expertId} {...item} />
-        ))}
+        {expertsByCategory[selectedCategory] && expertsByCategory[selectedCategory].length > 0 && (
+          expertsByCategory[selectedCategory].slice(0, 4).map((item) => (
+            <PopularExpertItem key={item.name} {...item} />
+          ))
+        )}
       </div>
     </section>
   );
