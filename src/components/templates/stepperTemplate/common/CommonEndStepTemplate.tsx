@@ -5,6 +5,7 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 import SelectedOptionList, {
   selectedOptionIndexObject,
 } from '@/components/molecules/selectedOptionList/SelectedOptionList';
+import DatePickerWithTitle from '@/components/molecules/datePickerWithTitle/DatePickerWithTitle';
 
 interface CommonEndStepTemplateProps {
   onClickBefore: () => void;
@@ -19,8 +20,10 @@ interface CommonEndStepTemplateProps {
   onChange2: ((value: string) => void);
   onChange3: ((value: string) => void);
   selectedOptionListProps: selectedOptionIndexObject[];
+  selectedDay: Date | undefined;
+  setSelectedDay: React.Dispatch<React.SetStateAction<Date>>
 }
-export default function CommonEndStepTemplate({selectedOptionListProps, id1, id2, id3, value1, value2, value3, onChange1, onChange2, onChange3, onClickNext, onClickBefore}: CommonEndStepTemplateProps) {
+export default function CommonEndStepTemplate({selectedDay, setSelectedDay,selectedOptionListProps, id1, id2, id3, value1, value2, value3, onChange1, onChange2, onChange3, onClickNext, onClickBefore}: CommonEndStepTemplateProps) {
   return (
     <div className='w-1062 bg-black2'>
       <h1 className="text-24 font-semibold pt-78 mb-28">견적 요청서를 작성하는 중이에요</h1>
@@ -33,6 +36,7 @@ export default function CommonEndStepTemplate({selectedOptionListProps, id1, id2
                               onChange={onChange2} />
           <TextInputWithTitle title={'예산을 입력해주세요.'} id={id3} placeholder={'예)150000'} type={'number'} value={value3}
                               onChange={onChange3} />
+          <DatePickerWithTitle title={'마감일을 설정해주세요.'} selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
           <div className="float-end mr-40 mt-32">
             <StandardButton text={'완료'} disabled={false} onClick={onClickNext} state={'dark'} size={'fit'} />
           </div>
