@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { commissionQuestion } from '@/utils/commissionQuestion';
 import { postProject } from '@/apis/project/postProject';
 import { getCommissionCategory } from '@/utils/getCommissionCategory';
+import { postChatRooms } from '@/apis/chat/postChatRooms';
 
 export default function CommonEndPage() {
   const [selectedDay, setSelectedDay] = React.useState<Date | undefined>(new Date());
@@ -70,9 +71,17 @@ export default function CommonEndPage() {
     if (targetExpertId) {
       requestBody.target_expert_id = targetExpertId;
     }
-
     const response = await postProject(requestBody);
-    router.push(`/commission/${response.projectId}`);
+
+    if(targetExpertId) {
+      const newChatRooms = await postChatRooms({project_id: `${response.projectId}`});
+      console.log(newChatRooms);
+      if(newChatRooms.message === "채팅방이 생성되었습니다.") {
+        router.push(`/client/chat`);
+      }
+    } else {
+      router.push(`/commission/${response.projectId}`);
+    }
   }
   const titleChangeHandler = (value: string) => {
     setTile(value);
