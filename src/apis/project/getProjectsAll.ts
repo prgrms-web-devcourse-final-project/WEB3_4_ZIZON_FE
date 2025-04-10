@@ -25,8 +25,8 @@ export interface ProjectResponseType {
   hasNext: boolean;
 }
 export default async function getProjectsAll({
-                                           page,
-                                         }: ProjectRequestType): Promise<ProjectResponseType> {
+  page,
+}: ProjectRequestType): Promise<ProjectResponseType> {
   const response = await APIBuilder.get(`/projects/all`)
     .timeout(10000)
     .withCredentials(true)
