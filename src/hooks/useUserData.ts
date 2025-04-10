@@ -1,10 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Member } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
-import { getCurrentUser } from '@/apis/user/getCurrentUser';
-import { getUserById } from '@/apis/user/getUserById';
 import { getExpertById } from '@/apis/expert/getExpertById';
 
 interface UserDataError {
@@ -19,9 +16,8 @@ export function useUserData() {
     member: storeMember,
     expert: storeExpert,
     setExpert,
-    logout,
+    initializeStore,
   } = useUserStore();
-  const [memberInfo, setMemberInfo] = useState<Member | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<UserDataError | null>(null);
 
@@ -41,36 +37,37 @@ export function useUserData() {
     });
   }, []);
 
+  const checkAuth = useCallback(async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+
+      if (response.status !== 200) {
+        initializeStore();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [initializeStore]);
+
   // 사용자 기본 정보 가져오기 (MEMBER 테이블 데이터)
   const fetchMemberInfo = useCallback(async () => {
     handleLoading(true);
     setError(null);
 
     try {
-      let memberId: number;
-
-      if (storeMember?.id) {
-        memberId = storeMember.id;
-      } else {
-        const userInfo = await getCurrentUser();
-
-        if (!userInfo) {
-          await logout();
-          return;
-        }
-
-        memberId = userInfo.id;
-      }
-
-      // 사용자 정보 가져오기
-      const response = await getUserById({ userId: memberId });
-      setMemberInfo(response);
+      await checkAuth();
     } catch (err) {
       handleError(err, 'member');
     } finally {
       handleLoading(false);
     }
-  }, [storeMember, logout, handleLoading, handleError]);
+  }, [checkAuth, handleLoading, handleError]);
 
   // 전문가 정보 가져오기 (EXPERT 테이블 데이터)
   const fetchExpertInfo = useCallback(async () => {
@@ -107,7 +104,6 @@ export function useUserData() {
   }, [storeMember?.expertId, fetchExpertInfo]);
 
   return {
-    memberInfo,
     expertInfo: storeExpert,
     isLoading,
     error,
