@@ -213,21 +213,18 @@ export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
 
       <CertificatesSection
         tags={formData.certificateNames}
-        newTagValue={formData.newCertificate}
         isEditable={editableFields.certificateNames}
         onEditClick={() => toggleEditable('certificateNames')}
         onAddTag={tag => {
           setFormData({
             ...formData,
             certificateNames: [...formData.certificateNames, tag],
-            newCertificate: '',
           });
         }}
         onRemoveTag={index => {
           const newTags = formData.certificateNames.filter((_, i) => i !== index);
           setFormData({ ...formData, certificateNames: newTags });
         }}
-        onNewTagChange={value => setFormData({ ...formData, newCertificate: value })}
         onSave={handleCertificatesUpdate}
       />
 
