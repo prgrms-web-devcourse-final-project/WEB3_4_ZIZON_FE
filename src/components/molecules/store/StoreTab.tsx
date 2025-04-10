@@ -7,38 +7,41 @@ import { useSearchParams } from 'next/navigation';
 
 const DIGITAL_CATEGORY_LIST = [
   {
-    name: 'digital-itdesign',
+    name: '5001',
     text: 'IT/Digital',
   },
   {
-    name: 'ditigal-etc',
+    name: '5002',
     text: '기타',
   },
 ];
 
 const LIVING_CATEGORY_LIST = [
   {
-    name: 'living-hobby',
+    name: '6001',
     text: '취미',
   },
   {
-    name: 'living-program',
+    name: '6002',
     text: '전문 프로그램',
   },
   {
-    name: 'living-outsourcing',
+    name: '6003',
     text: '외주',
   },
   {
-    name: 'living-etc',
+    name: '6004',
     text: '기타',
   },
 ];
 
-export default function StoreTab() {
-  const searchParams = useSearchParams();
-  const selectedCategory = searchParams.get('category');
-  const setSearchParams = useSetSearchParams();
+export default function StoreTab({
+  selectedCategory,
+  onTabClick,
+}: {
+  selectedCategory: string;
+  onTabClick: (category: string) => void;
+}) {
   return (
     <div className="flex flex-col">
       <VerticalTabTitle size="large" text="디지털 컨텐츠" />
@@ -49,7 +52,7 @@ export default function StoreTab() {
           name={category.name}
           size="large"
           isFocused={selectedCategory === category.name}
-          onClick={name => setSearchParams('category', name, '/store')}
+          onClick={name => onTabClick(name)}
         />
       ))}
       <VerticalTabTitle size="large" text="리빙" />
@@ -60,7 +63,7 @@ export default function StoreTab() {
           name={category.name}
           size="large"
           isFocused={selectedCategory === category.name}
-          onClick={name => setSearchParams('category', name, '/store')}
+          onClick={name => onTabClick(name)}
         />
       ))}
     </div>
