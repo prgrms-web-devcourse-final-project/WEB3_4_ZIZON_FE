@@ -2,13 +2,16 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
 import { useUserStore } from '@/store/userStore';
 import { getMyReviews } from '@/apis/review/getMyReviews';
+import { getProjectById } from '@/apis/project/getProjectById';
 import ReviewItem from '@/components/molecules/reviewItem/ReviewItem';
 import EmptyState from '@/components/molecules/emptyState/EmptyState';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
+import { Project } from '@/types/project';
 
 const PAGE_SIZE = 10;
 
@@ -45,9 +48,12 @@ export default function MyReviewPage() {
           throw err;
         }
       },
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length;
-        return nextPage;
+      getNextPageParam: lastPage => {
+        // hasNext가 true이면 다음 페이지가 있음
+        if (lastPage.hasNext) {
+          return lastPage.currentPage + 1;
+        }
+        return undefined;
       },
       enabled: !!member,
       initialPageParam: 0,
@@ -73,6 +79,27 @@ export default function MyReviewPage() {
     router.refresh();
   };
 
+  // 리뷰 데이터 추출
+  const reviews = data?.pages.flatMap(page => page.reviews) || [];
+  const isEmpty = !isLoading && reviews.length === 0;
+
+  // 프로젝트 정보 가져오기
+  const projectQueries = useQueries({
+    queries: reviews.map(review => ({
+      queryKey: ['project', review.projectId],
+      queryFn: () => getProjectById(review.projectId),
+      enabled: !!review.projectId,
+    })),
+  });
+
+  // 프로젝트 정보 매핑
+  const projectMap = new Map<number, Project>();
+  projectQueries.forEach((query, index) => {
+    if (query.data && reviews[index]) {
+      projectMap.set(reviews[index].projectId, query.data);
+    }
+  });
+
   // 에러 처리
   if (isError) {
     return (
@@ -86,10 +113,6 @@ export default function MyReviewPage() {
       </div>
     );
   }
-
-  // 리뷰 데이터 추출
-  const reviews = data?.pages.flatMap(page => page) || [];
-  const isEmpty = !isLoading && reviews.length === 0;
 
   return (
     <div className="w-full max-w-1200 mx-auto px-20 py-40">
@@ -106,36 +129,37 @@ export default function MyReviewPage() {
         />
       ) : (
         <div className="flex flex-col gap-32">
-          {reviews.map(review => (
-            <ReviewItem
-              key={review.projectId}
-              profile_image="/images/DefaultImage.png" // TODO: 프로필 이미지 추가 필요
-              name="내 리뷰" // TODO: 사용자 이름 추가 필요
-              content={review.content}
-              review_type={`프로젝트 ${review.projectId}`} // TODO: 프로젝트 제목 추가 필요
-              created_at={new Date()} // TODO: 생성일 추가 필요
-              rating={review.score}
-            />
-          ))}
+          {reviews.map((review, index) => {
+            const project = projectMap.get(review.projectId);
+            return (
+              <ReviewItem
+                key={`review-${review.projectId}-${index}`}
+                profile_image={member?.profileImage}
+                name={member?.name}
+                content={review.content}
+                review_type={project ? project.title : `프로젝트 ${review.projectId}`}
+                created_at={new Date()} // TODO: 생성일 추가 필요
+                rating={review.score}
+              />
+            );
+          })}
 
           {/* 더 보기 버튼 */}
           {hasNextPage && (
             <div className="flex justify-center py-8">
-              <button
+              <StandardButton
+                text={isFetchingNextPage ? '로딩 중...' : '더 보기'}
                 onClick={handleLoadMore}
                 disabled={isFetchingNextPage}
-                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50"
-              >
-                {isFetchingNextPage ? '로딩 중...' : '더 보기'}
-              </button>
+                state="default"
+                size="fit"
+              />
             </div>
           )}
 
           {/* 더 이상 데이터가 없을 때 표시 */}
           {!hasNextPage && reviews.length > 0 && (
-            <div className="flex justify-center py-8">
-              <p className="text-14 text-black6">더 이상 리뷰가 없습니다.</p>
-            </div>
+            <EmptyState title="더 이상 리뷰가 없습니다" description="모든 리뷰를 확인하셨습니다" />
           )}
         </div>
       )}
