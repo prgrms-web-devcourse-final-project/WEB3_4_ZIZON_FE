@@ -12,9 +12,11 @@ interface CommissionTemplateProps {
   onReset: () => void;
   ScrollHookRef: React.ReactNode;
   commissionList: CommissionListItemProps[];
+  onCategoryClick: (value: number) => void;
+  category: number;
 }
 
-function CommissionTemplate({ScrollHookRef, value, onChange, onReset, commissionList}: CommissionTemplateProps) {
+function CommissionTemplate({category, onCategoryClick, ScrollHookRef, value, onChange, onReset, commissionList}: CommissionTemplateProps) {
   return (
     <div className="mt-72">
       <h3 className="text-32 font-semibold">등록된 요청</h3>
@@ -25,16 +27,19 @@ function CommissionTemplate({ScrollHookRef, value, onChange, onReset, commission
             <p className="text-24 font-semibold mr-28">요청 항목</p>
             <ResetButton onReset={onReset}/>
           </div>
-          <VerticalTabItem name={'move'} isFocused={false} text={'이사 및 청소'} onClick={() => {}} size={'small'}/>
-          <VerticalTabItem name={'setting'} isFocused={false} text={'설치 및 수리'} onClick={() => {}} size={'small'}/>
-          <VerticalTabItem name={'lesson'} isFocused={false} text={'과외'} onClick={() => {}} size={'small'}/>
-          <VerticalTabItem name={'hobby'} isFocused={false} text={'취미생활'} onClick={() => {}} size={'small'}/>
+          <VerticalTabItem name={'move'} isFocused={false} text={'이사 및 청소'} onClick={() => onCategoryClick(1000)} size={'small'}/>
+          <VerticalTabItem name={'setting'} isFocused={false} text={'설치 및 수리'} onClick={() => onCategoryClick(2000)} size={'small'}/>
+          <VerticalTabItem name={'lesson'} isFocused={false} text={'과외'} onClick={() => onCategoryClick(3000)} size={'small'}/>
+          <VerticalTabItem name={'hobby'} isFocused={false} text={'취미생활'} onClick={() => onCategoryClick(4000)} size={'small'}/>
         </div>
         <div className="grid grid-cols-1 gap-32">
           <div className="grid grid-cols-1 gap-32">
             {commissionList.map((item) => {
+              if (category === 0) return (
+                <CommissionListItem key={item.id} categoryId={item.categoryId} id={item.id} region={item.region} title={item.title} summary={item.summary} budget={item.budget} deadline={item.deadline}/>
+              )
               return (
-                <CommissionListItem key={item.id} id={item.id} region={item.region} title={item.title} summary={item.summary} budget={item.budget} deadline={item.deadline}/>
+                item.categoryId === category ? <CommissionListItem key={item.id} categoryId={item.categoryId} id={item.id} region={item.region} title={item.title} summary={item.summary} budget={item.budget} deadline={item.deadline}/> : null
               )
             })}
           </div>
