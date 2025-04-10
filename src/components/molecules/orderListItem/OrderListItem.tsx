@@ -4,12 +4,14 @@ import React from 'react';
 import NumberReadability from '@/components/atoms/texts/numberReadability/NumberReadability';
 import Image from 'next/image';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
-import { SellState, sellStateConfig } from '@/types/sellState';
+import { sellStateConfig } from '@/types/sellState';
+import { ContractStatus } from '@/types/contract';
+import { ProjectStatus } from '@/types/project';
 
 export interface OrderListItemProps {
   imageUrl: string;
   price: number;
-  sellState: SellState;
+  sellState: ProjectStatus | ContractStatus;
   onClickAskButton: () => void;
   category: string;
   isExpertView?: boolean;
@@ -20,7 +22,15 @@ interface ButtonStyle {
   state: 'default' | 'dark' | 'red' | 'green';
 }
 
-const buttonStyle: Record<SellState, ButtonStyle> = {
+const buttonStyle: Record<ProjectStatus | ContractStatus, ButtonStyle> = {
+  PENDING: {
+    text: '문의하기',
+    state: 'default',
+  },
+  DISPUTED: {
+    text: '문의하기',
+    state: 'default',
+  },
   OPEN: {
     text: '문의하기',
     state: 'default',
