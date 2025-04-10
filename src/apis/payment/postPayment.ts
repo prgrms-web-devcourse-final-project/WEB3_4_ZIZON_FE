@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 export interface PaymentRequestType {
   referenceId: number;
   paymentType: string;
+  quantity?: number; // 주문 수량, 선택 사항
 }
 
 export interface PaymentResponseType {
@@ -64,10 +65,18 @@ export const postPayment = async (request: PaymentRequestType) => {
   const { referenceId, paymentType } = request;
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;
-  const response = await APIBuilder.post('/payments/orderId', {
-    referenceId: referenceId,
-    paymentType: paymentType,
-  })
+
+  const requestBody = request.quantity
+    ? {
+        referenceId: referenceId,
+        paymentType: paymentType,
+        quantity: request.quantity,
+      }
+    : {
+        referenceId: referenceId,
+        paymentType: paymentType,
+      };
+  const response = await APIBuilder.post('/payments/orderId', requestBody)
     .headers({
       'Content-Type': 'application/json',
       Cookie: `accessToken=${token}`,

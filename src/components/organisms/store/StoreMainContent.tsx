@@ -1,18 +1,27 @@
-import { ProductType } from '@/app/store/page';
+import { Product } from '@/apis/store/getProductList';
 import ProductListItem from '@/components/molecules/productListItem/ProductListItem';
 import StoreTab from '@/components/molecules/store/StoreTab';
 import Link from 'next/link';
 
-export default function StoreMainContent({ productList }: { productList: ProductType[] }) {
+export default function StoreMainContent({
+  productList = [],
+  category,
+  onTabClick,
+}: {
+  productList: Product[];
+  category: string;
+  onTabClick: (category: string) => void;
+}) {
   return (
     <div className="w-full flex justify-between">
-      <StoreTab />
+      <StoreTab selectedCategory={category} onTabClick={onTabClick} />
       <div className="w-954 grid 2xl:grid-cols-3 grid-cols-2 gap-24">
-        {productList.map((product, index) => (
-          <Link href={`/store/products/${index}`} key={product.title}>
-            <ProductListItem {...product} size="large" />
-          </Link>
-        ))}
+        {productList &&
+          productList.map((product, index) => (
+            <Link href={`/store/products/${product.id}`} key={product.id + `${index}`}>
+              <ProductListItem product={product} size="large" />
+            </Link>
+          ))}
       </div>
     </div>
   );
