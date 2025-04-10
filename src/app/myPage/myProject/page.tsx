@@ -3,9 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import SellStateTabContainer from '@/components/molecules/sellStateTabContainer/SellStateTabContainer';
 import OrderList from '@/components/organisms/orderList/OrderList';
-import { SellState } from '@/types/sellState';
 import getMyProjects from '@/apis/project/getMyProjects';
-import { Project } from '@/types/project';
+import { Project, ProjectStatus } from '@/types/project';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
@@ -23,7 +22,7 @@ const convertProjectToOrder = (project: Project) => {
 };
 
 export default function MyProjectPage() {
-  const [selectedState, setSelectedState] = useState<SellState | null>(null);
+  const [selectedState, setSelectedState] = useState<ProjectStatus | null>(null);
 
   // useInfiniteQuery를 사용하여 프로젝트 데이터 가져오기
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
@@ -73,7 +72,7 @@ export default function MyProjectPage() {
   };
 
   // 상태 선택 핸들러
-  const handleStateSelect = (state: SellState) => {
+  const handleStateSelect = (state: ProjectStatus) => {
     setSelectedState(prev => (prev === state ? null : state));
   };
 
