@@ -118,7 +118,7 @@ export default function UserInfoForm({ initialData }: UserInfoFormProps) {
 
           switch (passwordError.code) {
             case 400:
-              toast.error('요청 데이터의 형식이 올바르지 않습니다.');
+              toast.error('현재 사용중인 비밀번호와 일치합니다.');
               break;
             case 401:
               toast.error('현재 비밀번호가 올바르지 않습니다.');

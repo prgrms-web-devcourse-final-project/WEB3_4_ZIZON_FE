@@ -21,8 +21,7 @@ export type Service = {
     | 'research'
     | 'essay'
     | 'physical'
-    | 'art'
-    | 'music';
+    | 'coding';
   hobby: 'cooking' | 'dance' | 'sports' | 'music' | 'art';
 };
 
@@ -52,8 +51,7 @@ export const SERVICES: Record<ExpertCategory, { value: Service[ExpertCategory]; 
       { value: 'research', label: '탐구' },
       { value: 'essay', label: '논술' },
       { value: 'physical', label: '체육' },
-      { value: 'art', label: '미술' },
-      { value: 'music', label: '음악' },
+      { value: 'coding', label: '코딩' },
     ],
     hobby: [
       { value: 'cooking', label: '요리' },

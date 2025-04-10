@@ -41,6 +41,14 @@ function UserStateTabContainer({ isState }: UserStateTabContainerProps) {
         onClick={handleTabClick}
         size="small"
       />
+      <VerticalTabItem
+        name="myReview"
+        isFocused={pathname === '/myPage/myReview'}
+        text="내가 쓴 리뷰"
+        onClick={handleTabClick}
+        size="small"
+      />
+
       {isState === 'expert' && (
         <>
           <VerticalTabTitle text="전문가 정보" size="small" />
@@ -62,6 +70,13 @@ function UserStateTabContainer({ isState }: UserStateTabContainerProps) {
             name="saleProduct"
             isFocused={pathname === '/myPage/saleProduct'}
             text="판매중인 상품"
+            onClick={handleTabClick}
+            size="small"
+          />
+          <VerticalTabItem
+            name="receivedReview"
+            isFocused={pathname === '/myPage/receivedReview'}
+            text="내가 받은 리뷰"
             onClick={handleTabClick}
             size="small"
           />
