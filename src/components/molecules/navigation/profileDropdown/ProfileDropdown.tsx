@@ -23,8 +23,8 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
   const userRoleText = userRole === 'client' ? '의뢰인' : '전문가';
 
   return (
-    <div className="absolute right-0 top-full mt-8 w-250 bg-white pt-24 rounded-8 shadow-lg overflow-hidden z-10">
-      <div className="flex items-center gap-24 px-28">
+    <div className="absolute right-0 top-full mt-8 min-w-280 bg-white pt-24 rounded-8 shadow-lg overflow-hidden z-10">
+      <div className="w-full flex items-center justify-between px-28">
         <span className="text-20 font-bold">{member.name}</span>
         <SmallTag text={userRoleText} theme={userRole === 'client' ? 'default' : 'lightBlue'} />
       </div>

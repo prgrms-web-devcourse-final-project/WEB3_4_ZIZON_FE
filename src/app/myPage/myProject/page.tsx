@@ -3,13 +3,13 @@
 import React, { useState, useMemo } from 'react';
 import SellStateTabContainer from '@/components/molecules/sellStateTabContainer/SellStateTabContainer';
 import OrderList from '@/components/organisms/orderList/OrderList';
-import { SellState } from '@/types/sellState';
 import getMyProjects from '@/apis/project/getMyProjects';
-import { Project } from '@/types/project';
+import { Project, ProjectStatus } from '@/types/project';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
 import EmptyState from '@/components/molecules/emptyState/EmptyState';
+import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 
 // Project를 Order 형식으로 변환하는 함수
 const convertProjectToOrder = (project: Project) => {
@@ -23,7 +23,7 @@ const convertProjectToOrder = (project: Project) => {
 };
 
 export default function MyProjectPage() {
-  const [selectedState, setSelectedState] = useState<SellState | null>(null);
+  const [selectedState, setSelectedState] = useState<ProjectStatus | null>(null);
 
   // useInfiniteQuery를 사용하여 프로젝트 데이터 가져오기
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
@@ -73,7 +73,7 @@ export default function MyProjectPage() {
   };
 
   // 상태 선택 핸들러
-  const handleStateSelect = (state: SellState) => {
+  const handleStateSelect = (state: ProjectStatus) => {
     setSelectedState(prev => (prev === state ? null : state));
   };
 
@@ -133,21 +133,13 @@ export default function MyProjectPage() {
 
             {/* 더 보기 버튼 */}
             {hasNextPage && (
-              <div className="flex justify-center py-8">
-                <button
+              <div className="flex justify-center py-24">
+                <StandardButton
+                  text={isFetchingNextPage ? '로딩 중...' : '더 보기'}
                   onClick={handleLoadMore}
                   disabled={isFetchingNextPage}
-                  className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50 flex items-center gap-2"
-                >
-                  {isFetchingNextPage ? (
-                    <>
-                      <LoadingSpinner />
-                      <span>로딩 중...</span>
-                    </>
-                  ) : (
-                    '더 보기'
-                  )}
-                </button>
+                  state="dark"
+                />
               </div>
             )}
 
