@@ -35,7 +35,7 @@ function ExpertRegisterTemplete() {
   });
   const [portfolioImageFile, setPortfolioImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setExpert } = useUserStore();
+  const { member: storeMember, setExpert, setMember } = useUserStore();
 
   const isStepValid = () => {
     switch (step) {
@@ -135,8 +135,12 @@ function ExpertRegisterTemplete() {
 
         const expertData = await getExpertById({ expertId: response.expertId });
         setExpert(expertData); // store에 전문가 정보 저장
+        setMember({
+          ...storeMember,
+          expertId: expertData.id,
+        });
 
-        router.push('/mypage/expertInfo');
+        router.push('/myPage/expertInfo');
       } else {
         toast.error('전문가 등록에 실패했습니다.');
       }

@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ChevronDown } from 'lucide-react';
 import ImageUploadField from '@/components/molecules/imageUploadField/ImageUploadField';
+import CertificateSearch from '@/components/molecules/certificateSearch/CertificateSearch';
+import { Certificate } from '@/apis/certificate/search';
 
 interface ExpertDetailFormProps {
   onSubmit: (data: ExpertDetailFormData) => void;
@@ -76,13 +78,12 @@ function ExpertDetailForm({ onSubmit, setPortfolioImageFile }: ExpertDetailFormP
     setFormData(prev => ({ ...prev, careerYears: value }));
   };
 
-  const handleAddCertification = () => {
-    if (newCertification.trim() && !formData.certifications.includes(newCertification)) {
+  const handleCertificateSelect = (certificate: Certificate) => {
+    if (!formData.certifications.includes(certificate.name)) {
       setFormData(prev => ({
         ...prev,
-        certifications: [...prev.certifications, newCertification.trim()],
+        certifications: [...prev.certifications, certificate.name],
       }));
-      setNewCertification('');
     }
   };
 
@@ -148,21 +149,12 @@ function ExpertDetailForm({ onSubmit, setPortfolioImageFile }: ExpertDetailFormP
         {/* 자격증 정보 */}
         <div className="flex flex-col gap-12">
           <InputLabel size="16" label="자격증 정보" />
-          <div className="flex gap-8">
-            <TextInput
-              id="certification"
-              type="text"
-              placeholder="보유한 자격증이 있다면 입력해주세요!"
-              value={newCertification}
-              onChange={setNewCertification}
-            />
-            <button
-              className="px-16 py-12 bg-primary5 text-black1 rounded-sm whitespace-nowrap"
-              onClick={handleAddCertification}
-            >
-              추가
-            </button>
-          </div>
+          <CertificateSearch
+            value={newCertification}
+            onChange={setNewCertification}
+            onSelect={handleCertificateSelect}
+            placeholder="보유한 자격증을 검색하세요"
+          />
           {formData.certifications.length > 0 && (
             <div className="flex flex-wrap gap-8">
               {formData.certifications.map(cert => (
