@@ -1,5 +1,6 @@
 'use client';
 
+import postCreateRoom from '@/apis/chat/postCreateRoom';
 import { postOffer, PostOfferRequestType } from '@/apis/offer/postOffer';
 import { ProjectResponseType } from '@/apis/project/getProject';
 import OfferForm, { OfferFormType } from '@/components/organisms/offerForm/OfferForm';
@@ -17,19 +18,25 @@ export default function MakeOfferTemplate({ projectSummary }: MakeOfferTemplateP
 
   const offerMutation = useMutation({
     mutationFn: (request: PostOfferRequestType) => postOffer(request),
-    onSuccess: data => {
-      router.push('/expert/chat');
-    },
     onError: error => {
       console.error('견적서 전송 실패', error);
     },
   });
 
-  const handleOfferSubmit = (offerForm: OfferFormType) => {
+  const handleOfferSubmit = async (offerForm: OfferFormType) => {
     offerMutation.mutate({
       offer: offerForm,
       projectId: projectId,
     });
+
+    if (offerMutation.isSuccess) {
+      try {
+        const response = await postCreateRoom(projectId);
+        router.push('/expert/chat');
+      } catch (error) {
+        console.error('채팅방 생성 실패', error);
+      }
+    }
   };
 
   return (
