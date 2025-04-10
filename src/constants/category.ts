@@ -14,3 +14,12 @@ export const CAREER_CATEGORY = {
 };
 export type CareerCategoryIdType = keyof typeof CAREER_CATEGORY;
 export type CareerCategoryValueType = (typeof CAREER_CATEGORY)[CareerCategoryIdType];
+
+export const STORE_CATEGORY = {
+  5001: 'IT/Digital',
+  5002: '기타',
+  6001: '취미/생활',
+  6002: '전문 프로그램',
+  6003: '외주',
+  6004: '기타',
+};

@@ -3,10 +3,18 @@ import ProductListItem from '@/components/molecules/productListItem/ProductListI
 import StoreTab from '@/components/molecules/store/StoreTab';
 import Link from 'next/link';
 
-export default function StoreMainContent({ productList = [] }: { productList: Product[] }) {
+export default function StoreMainContent({
+  productList = [],
+  category,
+  onTabClick,
+}: {
+  productList: Product[];
+  category: string;
+  onTabClick: (category: string) => void;
+}) {
   return (
     <div className="w-full flex justify-between">
-      <StoreTab />
+      <StoreTab selectedCategory={category} onTabClick={onTabClick} />
       <div className="w-954 grid 2xl:grid-cols-3 grid-cols-2 gap-24">
         {productList &&
           productList.map((product, index) => (

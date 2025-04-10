@@ -1,7 +1,8 @@
+import { clsx } from 'clsx';
 import { APIBuilder } from '@/utils/APIBuilder';
 
 export interface ProductListRequestType {
-  categoryId?: number;
+  categoryId: string;
   page: number;
 }
 
@@ -28,7 +29,7 @@ export default async function getProductList({
   categoryId,
   page,
 }: ProductListRequestType): Promise<ProductListResponseType> {
-  const response = await APIBuilder.get(`/products?page=${page}&size=12`)
+  const response = await APIBuilder.get(`/products?page=${page}&size=12&categoryId=${categoryId}`)
     .timeout(10000)
     .withCredentials(true)
     .build()
