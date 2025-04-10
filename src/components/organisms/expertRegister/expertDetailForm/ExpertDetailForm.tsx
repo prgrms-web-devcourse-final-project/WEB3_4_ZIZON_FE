@@ -103,7 +103,6 @@ function ExpertDetailForm({ onSubmit, setPortfolioImageFile }: ExpertDetailFormP
   };
 
   const handlePortfolioImageUpload = (file: File) => {
-    // 상위 컴포넌트의 상태 업데이트 함수 직접 호출
     setPortfolioImageFile(file);
   };
 
@@ -243,7 +242,7 @@ function ExpertDetailForm({ onSubmit, setPortfolioImageFile }: ExpertDetailFormP
           </div>
 
           {/* 포트폴리오 이미지 업로드 */}
-          <ImageUploadField label="포트폴리오 이미지" onImageUpload={handlePortfolioImageUpload} />
+          <ImageUploadField label="포트폴리오 이미지" onImageChange={handlePortfolioImageUpload} />
         </div>
       </div>
     </article>
