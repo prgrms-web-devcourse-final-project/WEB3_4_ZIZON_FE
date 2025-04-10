@@ -13,16 +13,12 @@ import BankInfoSection from './sections/BankInfoSection';
 import PortfolioSection from './sections/PortfolioSection';
 import { ExpertCategoryName } from '@/types/expert';
 
-interface ExpertInfoFormProps {
-  initialData: Expert;
-}
-
-export default function ExpertInfoForm({ initialData }: ExpertInfoFormProps) {
+export default function ExpertInfoForm() {
   const { expert, setExpert } = useUserStore();
   const [isLoading, setIsLoading] = useState(false);
 
   // 폼 데이터 상태 관리
-  const { formData, setFormData, editableFields, toggleEditable } = useExpertForm(initialData);
+  const { formData, setFormData, editableFields, toggleEditable } = useExpertForm(expert);
 
   // 공통 업데이트 함수
   const handleUpdate = async (
