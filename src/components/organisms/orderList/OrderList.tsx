@@ -2,12 +2,12 @@
 
 import React from 'react';
 import OrderListItem from '@/components/molecules/orderListItem/OrderListItem';
-import { SellState } from '@/types/sellState';
-
+import { ProjectStatus } from '@/types/project';
+import { ContractStatus } from '@/types/contract';
 interface Order {
   imageUrl: string;
   price: number;
-  sellState: SellState;
+  sellState: ProjectStatus | ContractStatus;
   category: string;
 }
 
