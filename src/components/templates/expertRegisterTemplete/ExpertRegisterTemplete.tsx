@@ -14,9 +14,8 @@ import { registerExpert } from '@/apis/expert/registerExpert';
 import { SERVICES } from '@/types/expert';
 import { useUserStore } from '@/store/userStore';
 import { getExpertById } from '@/apis/expert/getExpertById';
-import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
 import { toast } from 'sonner';
+import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
 
 function ExpertRegisterTemplete() {
   const router = useRouter();
@@ -66,21 +65,16 @@ function ExpertRegisterTemplete() {
   // 이미지 업로드 함수
   const uploadPortfolioImage = async (file: File): Promise<string> => {
     try {
-      // 파일 이름 생성 (타임스탬프 + 원본 파일명)
-      const timestamp = new Date().getTime();
-      const fileName = `${timestamp}_${file.name}`;
-
-      // S3 업로드 URL 요청
-      const response = await postImageUpload({
-        folder: 'portfolios',
-        fileName,
-        contentType: 'image/webp',
+      const accessUrl = await putImageUpload({
+        tableUnionType: 'portfolios',
+        file,
       });
 
-      // S3에 파일 업로드
-      await putS3Upload(response.presignedUrl, file);
+      if (!accessUrl) {
+        throw new Error('이미지 업로드에 실패했습니다.');
+      }
 
-      return response.accessUrl;
+      return accessUrl;
     } catch (error) {
       console.error('포트폴리오 이미지 업로드 오류:', error);
       throw new Error('이미지 업로드에 실패했습니다.');
@@ -132,7 +126,7 @@ function ExpertRegisterTemplete() {
         gender: expertDetail.gender,
         bankName: expertDetail.bankName,
         accountNumber: expertDetail.accountNumber,
-        portfolioTitle: expertDetail.portfolioTitle || '포트폴리오 이름',
+        portfolioTitle: expertDetail.portfolioTitle || '',
         portfolioImage: portfolioImageUrl || '',
       });
 
