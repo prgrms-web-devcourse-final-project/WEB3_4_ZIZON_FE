@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import SearchBar from '@/components/atoms/inputs/searchBar/SearchBar';
+import ExpertSearch from '@/components/molecules/expertSearch/ExpertSearch';
 import BannerTitle from '@/components/molecules/HomePage/BannerTitle';
 import BannerButtons from '@/components/molecules/HomePage/BannerButtons';
 import BannerCategories from '@/components/molecules/HomePage/BannerCategories';
@@ -22,12 +22,7 @@ function BannerSection() {
       <BannerTitle />
       <div className="flex flex-col items-center gap-48">
         <BannerButtons />
-        <SearchBar
-          onChange={() => {}}
-          placeholder="어떤 서비스가 필요하세요?"
-          type="large"
-          value=""
-        />
+        <ExpertSearch />
         <BannerCategories />
       </div>
     </section>
