@@ -8,7 +8,7 @@ import { APIBuilder } from '@/utils/APIBuilder';
  */
 export const getExpertReviews = async (expertId: string): Promise<Review[]> => {
   try {
-    const response = await APIBuilder.get(`/reviews/${expertId}`).build().call<Review[]>();
+    const response = await APIBuilder.get(`/reviews/experts/${expertId}`).build().call<Review[]>();
 
     return response.data;
   } catch (error) {

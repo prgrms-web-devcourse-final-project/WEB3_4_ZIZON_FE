@@ -14,7 +14,10 @@ interface GetMyReviewsParams extends HTTPParams {
  */
 export const getMyReviews = async (params?: GetMyReviewsParams): Promise<Review[]> => {
   try {
-    const response = await APIBuilder.get('/reviews/my').params(params).build().call<Review[]>();
+    const response = await APIBuilder.get('/reviews/clients/me')
+      .params(params)
+      .build()
+      .call<Review[]>();
 
     return response.data;
   } catch (error) {
