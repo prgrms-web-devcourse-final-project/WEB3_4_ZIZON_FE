@@ -44,7 +44,7 @@ function CommissionListItem({
         </div>
       </div>
       <div className="flex flex-col items-end justify-between">
-        <p className="text-16 text-black6">{getTimeStampTo(deadline)} 등록</p>
+        <p className="text-16 text-black6">마감일 {getTimeStampTo(deadline)}</p>
         <div className="flex flex-col gap-16">
           <SelectedOption
             type="right-impact"

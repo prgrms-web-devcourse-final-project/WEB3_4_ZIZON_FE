@@ -7,7 +7,7 @@ interface PostProjectRequest {
   description: string;
   region: string;
   budget: number;
-  deadline?: string;
+  deadline: string;
   expertId?: number | null;
   imageUrls?: string[] | null;
 }
@@ -32,7 +32,8 @@ export const postProject = async ({
     summary,
     description,
     region,
-    budget
+    budget,
+    deadline
   };
   const response = await APIBuilder.post('/projects', bodyForm)
     .headers({

@@ -17,7 +17,7 @@ export default function CommissionPage() {
       // 데이터 조회할 곳
       const date = await getProjectsAll({page: 1});
       setPage(page + 1);
-      setCommissionList([...commissionList, ...date.projects])
+      setCommissionList([...commissionList, ...date.projects]);
     },
     hasMore: true,
   });
