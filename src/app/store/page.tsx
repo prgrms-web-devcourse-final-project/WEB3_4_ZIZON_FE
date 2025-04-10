@@ -1,4 +1,3 @@
-import getProductList from '@/apis/store/getProductList';
 import StoreMainTemplate from '@/components/templates/store/storeMain/StoreMainTemplate';
 
 export default async function StorePage() {
