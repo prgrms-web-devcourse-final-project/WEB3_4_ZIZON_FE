@@ -47,7 +47,7 @@ export function useUserData() {
     setError(null);
 
     try {
-      let memberId;
+      let memberId: number;
 
       if (storeMember?.id) {
         memberId = storeMember.id;
