@@ -64,7 +64,10 @@ function BannerButtons() {
               openModal(
                 '전문가 등록 완료',
                 '전문가 등록이 되어있는 계정입니다.',
-                () => router.push('/myPage/expertInfo'),
+                () => {
+                  setCurrentRole('expert');
+                  router.push('/myPage/expertInfo');
+                },
                 '전문가 정보 보기',
               );
             }
