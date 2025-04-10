@@ -1,10 +1,11 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useUserData } from '@/hooks/useUserData';
 import MypageSidebar from '@/components/organisms/sidebar/mypageSidebar/MypageSidebar';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
+import { useUserStore } from '@/store/userStore';
+import { useRouter } from 'next/navigation';
 
 interface MyPageClientProps {
   children: React.ReactNode;
@@ -12,7 +13,8 @@ interface MyPageClientProps {
 
 export default function MyPageClient({ children }: MyPageClientProps) {
   const router = useRouter();
-  const { memberInfo, isLoading, error } = useUserData();
+  const { member } = useUserStore();
+  const { isLoading, error } = useUserData();
 
   if (isLoading) {
     return (
@@ -34,14 +36,14 @@ export default function MyPageClient({ children }: MyPageClientProps) {
     );
   }
 
-  if (!memberInfo) {
+  if (!member) {
     router.push('/');
     return null;
   }
 
   const profileInfo = {
-    profileImage: memberInfo.profileImage,
-    name: memberInfo.name,
+    profileImage: member?.profileImage,
+    name: member?.name,
   };
 
   return (
