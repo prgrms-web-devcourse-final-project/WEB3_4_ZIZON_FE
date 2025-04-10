@@ -9,12 +9,15 @@ import ProjectItemCard, {
 import { useRouter } from 'next/navigation';
 import getProjectsAll from '@/apis/project/getProjectsAll';
 import { ProjectCategoryIdType } from '@/constants/category';
+import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
+import ErrorState from '@/components/molecules/errorState/ErrorState';
+import EmptyState from '@/components/molecules/emptyState/EmptyState';
 
 function RecentProjectSection() {
   const router = useRouter();
 
   // TanStack Query를 사용하여 프로젝트 데이터 가져오기
-  const { data, isLoading, error } = useQuery<ProjectItemCardProps[]>({
+  const { data, isLoading, error, refetch } = useQuery<ProjectItemCardProps[]>({
     queryKey: ['recentProjects'],
     queryFn: async () => {
       const response = await getProjectsAll({});
@@ -33,7 +36,7 @@ function RecentProjectSection() {
   });
 
   return (
-    <section className="flex flex-col gap-40">
+    <section className="min-w-1280 flex flex-col gap-40">
       <div className="flex justify-between items-end">
         <SectionTitle
           title="최근 등록된 프로젝트"
@@ -50,15 +53,26 @@ function RecentProjectSection() {
       </div>
       <div className="grid grid-cols-3 gap-24">
         {isLoading ? (
-          <div className="col-span-3 text-center py-10">로딩 중...</div>
+          <div className="col-span-3 py-20">
+            <LoadingSpinner />
+          </div>
         ) : error ? (
-          <div className="col-span-3 text-center py-10 text-red-500">
-            프로젝트 데이터를 불러오는 중 오류가 발생했습니다.
+          <div className="col-span-3">
+            <ErrorState
+              title="프로젝트 로딩 실패"
+              message="최근 등록된 프로젝트를 불러오는 중 오류가 발생했습니다. 다시 시도해주세요."
+              onRetry={() => refetch()}
+            />
           </div>
         ) : data && data.length > 0 ? (
           data.map((project, index) => <ProjectItemCard key={index} {...project} />)
         ) : (
-          <div className="col-span-3 text-center py-10">등록된 프로젝트가 없습니다.</div>
+          <div className="col-span-3">
+            <EmptyState
+              title="등록된 프로젝트가 없습니다"
+              description="현재 등록된 프로젝트가 없습니다. 나중에 다시 확인해주세요."
+            />
+          </div>
         )}
       </div>
     </section>
