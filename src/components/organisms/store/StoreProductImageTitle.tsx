@@ -3,6 +3,7 @@
 import { ProductResponseType } from '@/apis/store/getProduct';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import NumberInput from '@/components/atoms/inputs/numberInput/NumberInput';
+import SmallTag from '@/components/atoms/tags/smallTag/SmallTag';
 import InputLabel from '@/components/atoms/texts/inputLabel/InputLabel';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -38,6 +39,9 @@ export default function StoreProductImageTitle({ product }: StoreProductImageTit
       <div className="w-full relative">
         {/* 텍스트정보 */}
         <div className="flex flex-col gap-20 mb-130">
+          {product.stock === 0 && (
+            <p className="font-medium text-redWarning text-16">해당 상품은 품절되었습니다.</p>
+          )}
           <h3 className="font-regular text-16 text-black7">{product.expert}</h3>
           <h2 className="font-regular text-20 text-black12 ">{product.title}</h2>
           <p className="flex items-center ">
@@ -65,7 +69,7 @@ export default function StoreProductImageTitle({ product }: StoreProductImageTit
             size="full"
             state="blue"
             onClick={handleBuyClick}
-            disabled={amount > product.stock}
+            disabled={amount > product.stock || product.stock === 0}
           />
         </div>
       </div>

@@ -6,7 +6,7 @@ export default async function ProductIdPage({ params }: { params: { product_id: 
   const { product_id } = await params;
   const productData = await getProduct(Number(product_id));
   return (
-    <div className="flex justify-center my-72">
+    <div className="flex justify-center">
       <StoreProductDetailTemplate product={productData} />
     </div>
   );

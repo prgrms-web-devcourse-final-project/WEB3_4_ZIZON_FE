@@ -42,12 +42,12 @@ export default function ExpertChattingTemplate({
       />
 
       {/* // OFFER의 description이 옳지 않은 값으로 온경우 에러가 발생 */}
-      {/* <ExpertChattingInfo
+      <ExpertChattingInfo
         projectData={projectData}
         offerData={offerData}
         service={service}
         expertId={expertId}
-      /> */}
+      />
     </div>
   );
 }
