@@ -44,7 +44,7 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
         </div>
       )}
       <button
-        className="w-full px-20 py-16 bg-black3 hover:bg-black4 font-regular"
+        className="w-full px-20 py-16 bg-black3 hover:bg-black4 font-regular cursor-pointer"
         onClick={handleLogout}
       >
         로그아웃
