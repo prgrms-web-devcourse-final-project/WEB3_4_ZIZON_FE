@@ -59,7 +59,7 @@ export default function ExpertSearch({ className = '' }: ExpertSearchProps) {
   }, []);
 
   const handleSelect = (expert: SearchExpertByNameResponseType) => {
-    router.push(`/experts/${expert.expertId}`);
+    router.push(`/expert/${expert.expertId}`);
     setSearchTerm('');
     setOpen(false);
   };

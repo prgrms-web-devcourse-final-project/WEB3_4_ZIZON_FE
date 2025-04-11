@@ -9,15 +9,22 @@ export const config = {
 };
 
 const protectedRoutes = [
-  '/commission',
+  //'/commission',
+  '/commission/common',
+  '/commission/cleaning',
+  '/commission/hobby',
+  '/commission/lesson',
+  '/commission/move',
+  '/commission/settingFix',
   '/payments',
   '/client',
-  '/expert',
   '/store/products/register',
   '/mypage',
+  '/expert/register',
+  '/expert/chat',
+  '/expert/make-offer',
 ]; // 로그인 정보가 있어야 접근 가능한 페이지
 const publicRoutes = ['/login', '/signup']; // 로그인시 접근 불가능한 페이지
-
 const expertOnlyRoutes = ['/store/products/register', '/expert/chat', '/expert/make-offer'];
 const clientOnlyRoutes = ['/expert/register', '/client/chat'];
 

@@ -2,19 +2,21 @@ import { APIBuilder } from '@/utils/APIBuilder';
 import { MyProjectPageResponse } from '@/types/project';
 
 interface GetMyProjectsRequestType {
-  lastProjectId?: number;
-  limit?: number;
+  page?: number;
+  size?: number;
+  sort?: string[];
 }
 
 export default async function getMyProjects({
-  lastProjectId,
-  limit = 10,
+  page = 0,
+  size = 10,
+  sort = [],
 }: GetMyProjectsRequestType = {}): Promise<MyProjectPageResponse> {
-  const params: Record<string, string | number> = { limit };
-
-  if (lastProjectId) {
-    params.lastProjectId = lastProjectId;
-  }
+  const params: Record<string, string | number> = {
+    page,
+    size,
+    sort: sort.join(','),
+  };
 
   const response = await APIBuilder.get('/projects/my')
     .params(params)

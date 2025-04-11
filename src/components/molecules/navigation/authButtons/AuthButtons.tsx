@@ -65,7 +65,7 @@ export default function AuthButtons({
   if (isLoggedIn && member) {
     return (
       <div className="relative flex items-center gap-32">
-        <Link href="/" className="block">
+        <Link href={userRole === 'client' ? '/client/chat' : '/expert/chat'} className="block">
           <Image src="/icons/ChatBubbleLeftEllipsisLine.svg" alt="chat" width={26} height={22} />
         </Link>
         <Link href="/" className="block">

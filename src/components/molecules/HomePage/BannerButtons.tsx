@@ -4,7 +4,7 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 import { useRouter } from 'next/navigation';
 import { useUserStore } from '@/store/userStore';
 import { useState } from 'react';
-import ModalContainer from '../modal/ModalContainer';
+import ConfirmModal from '@/components/organisms/confirmModal/ConfirmModal';
 
 function BannerButtons() {
   const router = useRouter();
@@ -44,6 +44,20 @@ function BannerButtons() {
     }
   };
 
+  // 역할 변경 함수
+  const handleRoleChange = async (newRole: 'client' | 'expert', redirectPath: string) => {
+    try {
+      // 서버에 상태 변경 알림 및 로컬 상태 업데이트
+      await setCurrentRole(newRole);
+
+      // 페이지 이동
+      router.push(redirectPath);
+    } catch (error) {
+      console.error('역할 변경 중 오류 발생:', error);
+      openModal('역할 변경 실패', '역할 변경 중 오류가 발생했습니다. 다시 시도해주세요.');
+    }
+  };
+
   return (
     <>
       <div className="flex gap-12">
@@ -64,7 +78,9 @@ function BannerButtons() {
               openModal(
                 '전문가 등록 완료',
                 '전문가 등록이 되어있는 계정입니다.',
-                () => router.push('/myPage/expertInfo'),
+                () => {
+                  handleRoleChange('expert', '/myPage/expertInfo');
+                },
                 '전문가 정보 보기',
               );
             }
@@ -87,8 +103,7 @@ function BannerButtons() {
                 '요청서 작성하기',
                 '요청서 작성은 의뢰인으로 전환 후\n 이용할 수 있는 기능입니다. \n\n의뢰인으로 전환하시겠습니까?',
                 () => {
-                  setCurrentRole('client');
-                  router.push('/commission/common/start');
+                  handleRoleChange('client', '/commission/common/start');
                 },
                 '의뢰인으로 전환하기',
               );
@@ -100,31 +115,15 @@ function BannerButtons() {
         />
       </div>
 
-      {/* 알림 모달 */}
-      <ModalContainer open={isModalOpen}>
-        <div className="bg-white px-40 py-36 rounded-2xl shadow-lg w-314">
-          <h3 className="text-24 font-semibold text-center mb-16">{modalTitle}</h3>
-          <p className="text-16 font-regular text-center mb-32 whitespace-pre-line">
-            {modalMessage}
-          </p>
-          <div className="flex flex-col gap-12">
-            <StandardButton
-              text={confirmButtonText}
-              state="blue"
-              size="full"
-              onClick={handleConfirm}
-              disabled={false}
-            />
-            <StandardButton
-              text="취소"
-              state="default"
-              size="full"
-              onClick={closeModal}
-              disabled={false}
-            />
-          </div>
-        </div>
-      </ModalContainer>
+      {/* 모달 컴포넌트 */}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        title={modalTitle}
+        message={modalMessage}
+        confirmText={confirmButtonText}
+        onConfirm={handleConfirm}
+        onCancel={closeModal}
+      />
     </>
   );
 }

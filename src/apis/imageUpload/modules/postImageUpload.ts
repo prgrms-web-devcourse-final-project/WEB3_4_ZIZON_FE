@@ -9,7 +9,7 @@ export type TableUnionType = 'projects' | 'members' | 'products' | 'portfolios' 
 export interface ImageUploadRequest {
   folder: TableUnionType;
   fileName: string;
-  contentType: 'image/webp';
+  contentType: string;
 }
 export const postImageUpload = async (request: ImageUploadRequest): Promise<S3Response> => {
   const response = await APIBuilder.post('/api/s3/upload-url', request).build().call<S3Response>();
