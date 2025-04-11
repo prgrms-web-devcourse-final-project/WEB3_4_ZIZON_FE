@@ -15,7 +15,7 @@ export default async function ExpertIdPage({
   //여기서 전문가 정보 호출
   const { id: expertId } = params;
   const data = await getExpert({ expertId });
-
+  console.log(data);
   return (
     <div className="mt-78 flex justify-center">
       <ExpertDetailTemplate
@@ -50,6 +50,7 @@ export default async function ExpertIdPage({
                 review_type: '이사/청소',
               },
             ]}
+            portfolioImage={data.portfolioImage}
             career_years={data.careerYears}
             certification={data.certificateNames}
             introduction={data.introduction}

@@ -50,7 +50,7 @@ function CommissionDetailTemplate({
           </div>
         </div>
         <div className="p-28 bg-black1 rounded-xl h-fit">
-          <Image className="rounded-xl" width={250} height={160} src={projectIdResponse.clientProfileImageUrl} alt={''} />
+          <Image className="rounded-xl" width={250} height={160} src={projectIdResponse.clientProfileImageUrl === "" ? "/images/DefaultImage.png" : projectIdResponse.clientProfileImageUrl} alt={''} />
           <div className="text-20 font-semibold mt-20">
             <p>{projectIdResponse.clientName}님에게</p>
             <p>연락해보세요!</p>
