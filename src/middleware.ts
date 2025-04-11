@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
 import { decodeToken } from './utils/decodeToken';
 
 // 라우터의 모든 경로에 middleware를 적용
@@ -29,10 +28,14 @@ const expertOnlyRoutes = ['/store/products/register', '/expert/chat', '/expert/m
 const clientOnlyRoutes = ['/expert/register', '/client/chat'];
 
 export async function middleware(request: NextRequest) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
-
+  // const cookieStore = await cookies();
+  // const token = cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
+  // const cookieStore = await cookies();
+  const token = request.cookies.get('accessToken')
+  // cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
+  console.log('All cookies:', request.cookies.getAll());
   const currentPathname = request.nextUrl.pathname;
+
 
   // 현재 경로가 protectedRoutes의 하위경로인지 확인
   const underProtectedRoutes = protectedRoutes.some(route => currentPathname.startsWith(route));
@@ -48,8 +51,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // 로그인 상태
-  if (token) {
-    const decodedToken = decodeToken(token);
+  if (token.value) {
+    const decodedToken = decodeToken(token.value);
     const role = decodedToken?.role; // CLIENT, EXPERT
 
     //재 로그인 접근 시도 -> 메인 페이지로 이동
