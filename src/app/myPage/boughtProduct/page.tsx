@@ -1,15 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { mockOrderPageResponse } from '@/mocks/orderData';
+import OrderCard from '@/components/organisms/orderCard/OrderCard';
+import EmptyOrderList from '@/components/organisms/emptyOrderList/EmptyOrderList';
 
 export default function BoughtProductPage() {
+  const [orders] = useState(mockOrderPageResponse.content);
+
   return (
     <div className="w-full pt-24 pl-64">
       <h1 className="text-24 font-bold mb-40">구매한 상품</h1>
-      <div className="w-full">
-        {/* 구매한 상품 목록이 여기에 들어갈 예정입니다 */}
-        <p className="text-gray-500">아직 구매한 상품이 없습니다.</p>
-      </div>
+
+      {orders.length === 0 ? (
+        <EmptyOrderList />
+      ) : (
+        <div className="w-full flex flex-col gap-20">
+          {orders.map(order => (
+            <OrderCard key={order.id} order={order} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
