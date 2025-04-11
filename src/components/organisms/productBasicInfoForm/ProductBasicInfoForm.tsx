@@ -5,7 +5,7 @@ import ImageUploadField from '@/components/molecules/imageUploadField/ImageUploa
 import DigitalContentUploadField from '@/components/molecules/digitalContentUploadField/DigitalContentUploadField';
 import TextareaInput from '@/components/atoms/inputs/textareaInput/TextareaInput';
 import InputLabel from '@/components/atoms/texts/inputLabel/InputLabel';
-import { Category, categories } from '@/apis/store/createProduct';
+import { Category, categories } from '@/types/product';
 import { ProductTypeValue } from '@/components/molecules/productTypeSelector/ProductTypeSelector';
 
 export interface ProductBasicInfo {

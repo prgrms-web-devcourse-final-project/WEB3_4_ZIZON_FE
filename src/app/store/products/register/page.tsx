@@ -9,10 +9,11 @@ import ProductBasicInfoForm, {
 } from '@/components/organisms/productBasicInfoForm/ProductBasicInfoForm';
 import StandardButton from '@/components/atoms/buttons/standardButton/StandardButton';
 import { useRouter } from 'next/navigation';
-import createProduct, { CreateProductRequest, categories } from '@/apis/store/createProduct';
+import createProduct, { CreateProductRequest } from '@/apis/store/createProduct';
 import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
 import { putFileUpload } from '@/apis/imageUpload/putFileUpload';
 import { toast } from 'sonner';
+import { categories } from '@/types/product';
 
 const initialBasicInfo: FormProductBasicInfo = {
   title: '',
