@@ -1,35 +1,43 @@
 import { APIBuilder } from '@/utils/APIBuilder';
-import { CommissionListItemProps } from '@/components/molecules/commissionListItem/ComissionListItem';
 
 interface ProjectRequestType {
   page?: number;
+  size?: number;
+  sort?: string[];
 }
 
 export interface ProjectType {
   id: number; // 프로젝트 ID
+  categoryId: number; // 카테고리 ID
   title: string; // 프로젝트 제목
   summary: string; // 프로젝트 요약
-  description: string; // 프로젝트 상세 설명
   region: string; // 지역 정보
   budget: number; // 예산
-  deadline: string; // 마감일 (ISO 날짜 문자열)
   status: string; // 프로젝트 상태
+  deadline: string; // 마감일 (ISO 날짜 문자열)
   clientName: string; // 클라이언트 이름
   clientProfileImageUrl: string; // 클라이언트 프로필 이미지 URL
-  imageUrls: string[]; // 프로젝트 이미지 URL 배열
+  thumbnailImageUrl: string; // 썸네일 이미지 URL
 }
 export interface ProjectResponseType {
-  projects: CommissionListItemProps[];
+  projects: ProjectType[];
   currentPage: number;
   pageSize: number;
   hasNext: boolean;
 }
 export default async function getProjectsAll({
-  page,
+  page = 0,
+  size = 10,
+  sort = [],
 }: ProjectRequestType): Promise<ProjectResponseType> {
+  const params: Record<string, string | number> = {
+    page,
+    size,
+    sort: sort.join(','),
+  };
   const response = await APIBuilder.get(`/projects/all`)
+    .params(params)
     .timeout(10000)
-    .withCredentials(true)
     .build()
     .call<ProjectResponseType>();
 
