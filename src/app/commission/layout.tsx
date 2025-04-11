@@ -10,5 +10,5 @@ export default function CommissionLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="w-full pb-200">{children}</main>;
+  return <main className="w-full pb-200 flex justify-center">{children}</main>;
 }
