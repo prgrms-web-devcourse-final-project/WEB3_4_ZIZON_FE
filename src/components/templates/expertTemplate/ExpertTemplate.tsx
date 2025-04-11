@@ -8,7 +8,7 @@ import { Suspense } from 'react';
 
 export default function ExpertTemplate({ expertList }: { expertList: ExpertListResponseType }) {
   return (
-    <div className="w-full h-fit mt-46 flex flex-col items-center">
+    <div className="w-full h-fit mt-46 flex flex-col items-center mb-100">
       <Banner />
       {/* 사이드바 영역 */}
       <div className=" flex gap-24 mt-40 ">

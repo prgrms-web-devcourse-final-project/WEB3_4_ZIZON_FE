@@ -2,7 +2,7 @@ import StoreMainTemplate from '@/components/templates/store/storeMain/StoreMainT
 
 export default async function StorePage() {
   return (
-    <div className="mt-72 flex justify-center">
+    <div className=" flex justify-center">
       <StoreMainTemplate />
     </div>
   );
