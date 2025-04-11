@@ -24,23 +24,23 @@ export const categories: Category[] = [
 
 // 디지털 콘텐츠 타입 정의
 export interface DigitalContent {
-  file_name: string;
-  file_url: string;
-  file_size: number;
-  file_type: string;
-  download_limit: number;
+  fileName: string;
+  fileUrl: string;
+  fileSize: number;
+  fileType: string;
+  downloadLimit: number;
 }
 
 // 상품 등록 요청 타입 정의
 export interface CreateProductRequest {
-  category_id: (typeof categories)[number]['category_id'];
+  categoryId: (typeof categories)[number]['category_id'];
   title: string;
   description: string;
   price: number;
   stock: number;
-  product_type: ProductType;
-  thumbnail_image: string;
-  digital_contents?: DigitalContent[];
+  productType: ProductType;
+  thumbnailImage: string;
+  digitalContents?: DigitalContent[];
 }
 
 // 상품 등록 응답 타입 정의
