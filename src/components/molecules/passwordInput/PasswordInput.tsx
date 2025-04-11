@@ -22,7 +22,7 @@ function PasswordInput({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
-    <div className="relative group">
+    <div className="w-full relative group">
       <LabeledInput
         color="transparent"
         errorText={errorText}

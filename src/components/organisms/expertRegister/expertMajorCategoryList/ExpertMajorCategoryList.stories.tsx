@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ExpertMajorCategoryList from './ExpertMajorCategoryList';
-import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+import { ExpertCategory } from '@/types/expert';
 
 const meta = {
   title: 'Organisms/ExpertRegister/ExpertMajorCategoryList',

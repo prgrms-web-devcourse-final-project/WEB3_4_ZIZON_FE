@@ -4,11 +4,10 @@ import Image from 'next/image';
 import { useState, useRef } from 'react';
 import ChangePositionButton from '@/components/atoms/buttons/changePositionButton/ChangePositionButton';
 import CertificationTag from '@/components/atoms/tags/certificationTag/CertificationTag';
-import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
-import { compressImage } from '@/utils/compressImage';
+import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
 import { updateUser } from '@/apis/user/updateUser';
 import { useUserStore } from '@/store/userStore';
+import { toast } from 'sonner';
 
 export interface ProfileInfoProps {
   profileImage: string;
@@ -40,49 +39,41 @@ export default function ProfileInfo({
   };
 
   const handleSaveImage = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage || !member?.id) return;
 
     try {
       setIsUploading(true);
 
-      // Presigned URL 요청
-      const presignedUrlResponse = await postImageUpload({
-        folder: 'members',
-        fileName: selectedImage.name,
-        contentType: 'image/webp',
+      // 이미지 업로드 및 URL 받기
+      const accessUrl = await putImageUpload({
+        tableUnionType: 'members',
+        file: selectedImage,
       });
 
-      const { presignedUrl, accessUrl } = presignedUrlResponse;
-
-      const compressedImage = await compressImage(selectedImage);
-
-      // S3에 이미지 업로드
-      const uploadResponse = await putS3Upload(presignedUrl, compressedImage);
-
-      if (uploadResponse.status !== 200) {
+      if (!accessUrl) {
         throw new Error('이미지 업로드 실패');
       }
 
       // 프로필 이미지 업데이트
-      if (member?.id) {
-        const updateResponse = await updateUser({
-          userId: member.id,
-          data: {
-            name: member.name,
-            profileImage: accessUrl,
-          },
-        });
+      const updateResponse = await updateUser({
+        userId: member.id,
+        data: {
+          name: member.name,
+          profileImage: accessUrl,
+        },
+      });
 
-        setMember({
-          ...member,
-          ...updateResponse,
-        });
-      }
+      setMember({
+        ...member,
+        ...updateResponse,
+      });
 
       setSelectedImage(null);
       setPreviewUrl(null);
+      toast.success('프로필 이미지가 업데이트되었습니다.');
     } catch (error) {
-      console.error('이미지 업로드 실패:', error);
+      console.error('프로필 이미지 업데이트 실패:', error);
+      toast.error('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsUploading(false);
     }
@@ -95,7 +86,7 @@ export default function ProfileInfo({
   return (
     <div className="flex flex-col items-center gap-20">
       <div className="relative">
-        <div className=" w-150 h-150 overflow-hidden rounded-full shadow-style1">
+        <div className=" w-150 h-150 overflow-hidden rounded-full shadow-style1 border border-black3">
           <Image
             src={previewUrl || profileImage || '/images/DefaultImage.png'}
             alt={name ?? '장난스러운짱구02'}
@@ -117,7 +108,7 @@ export default function ProfileInfo({
             <label htmlFor="profile-image">
               <button
                 onClick={handleEditClick}
-                className="bg-primary4 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
+                className="bg-secondary3 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
               >
                 <Image src="/icons/Upload.svg" alt="edit" width={20} height={20} />
               </button>

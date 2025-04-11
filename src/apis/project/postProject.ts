@@ -1,34 +1,49 @@
 import { APIBuilder } from '@/utils/APIBuilder';
 
-interface PostProjectInterface {
+interface PostProjectRequest {
+  categoryId: number,
   title: string;
   summary: string;
   description: string;
   region: string;
   budget: number;
   deadline: string;
-  expertId: number | null;
-  imageUrls: string[] | null;
+  expertId?: number | null;
+  imageUrls?: string[] | null;
+}
+interface PostProjectResponse {
+  projectId: number;
+  message: string;
 }
 export const postProject = async ({
-                              title,
-                              summary,
-                              description,
-                              region,
-                              budget,
-                              deadline,
-                              expertId,
-                              imageUrls
-                            }: PostProjectInterface) => {
-
-  const response = await APIBuilder.post('/projects', {
+  categoryId,
+  title,
+  summary,
+  description,
+  region,
+  budget,
+  deadline,
+  expertId,
+  imageUrls
+}: PostProjectRequest) => {
+  const bodyForm = {
+    categoryId,
     title,
     summary,
     description,
     region,
     budget,
-    deadline,
-    expertId,
-    imageUrls
-  })
+    deadline
+  };
+  const response = await APIBuilder.post('/projects', bodyForm)
+    .headers({
+      'Content-Type': 'application/json',
+    })
+    .timeout(10000)
+    .withCredentials(true)
+    .build()
+    .call<PostProjectResponse>();
+
+
+  return response.data;
 }

@@ -13,6 +13,7 @@ export interface ExpertType {
   careerYears: number; // 경력(년)
   gender: boolean; // 성별 (true: 남성, false: 여성)
   profileImage: string; // 프로필 이미지 URL
+  portfolioImage: string;
   mainCategoryId: number; // 메인 카테고리 ID
   subCategoryIds: number[]; // 서브 카테고리 ID 목록
   certificateNames: string[]; // 자격증 이름 목록

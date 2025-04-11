@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ExpertStepFooterButton from '@/components/atoms/buttons/expertStepFooterButton/ExpertStepFooterButton';
 import ExpertCategoryList from '@/components/organisms/expertRegister/expertMajorCategoryList/ExpertMajorCategoryList';
-import { ExpertCategory } from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+import { ExpertCategory } from '@/types/expert';
 import ExpertServices from '@/components/organisms/expertRegister/expertSubCategoryList/ExpertSubCategoryList';
 import ExpertDetailForm, {
   ExpertDetailFormData,
@@ -14,9 +14,8 @@ import { registerExpert } from '@/apis/expert/registerExpert';
 import { SERVICES } from '@/types/expert';
 import { useUserStore } from '@/store/userStore';
 import { getExpertById } from '@/apis/expert/getExpertById';
-import { postImageUpload } from '@/apis/imageUpload/modules/postImageUpload';
-import { putS3Upload } from '@/apis/imageUpload/modules/putS3Upload';
 import { toast } from 'sonner';
+import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
 
 function ExpertRegisterTemplete() {
   const router = useRouter();
@@ -36,7 +35,7 @@ function ExpertRegisterTemplete() {
   });
   const [portfolioImageFile, setPortfolioImageFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setExpert } = useUserStore();
+  const { member: storeMember, setExpert, setMember } = useUserStore();
 
   const isStepValid = () => {
     switch (step) {
@@ -66,21 +65,16 @@ function ExpertRegisterTemplete() {
   // 이미지 업로드 함수
   const uploadPortfolioImage = async (file: File): Promise<string> => {
     try {
-      // 파일 이름 생성 (타임스탬프 + 원본 파일명)
-      const timestamp = new Date().getTime();
-      const fileName = `${timestamp}_${file.name}`;
-
-      // S3 업로드 URL 요청
-      const response = await postImageUpload({
-        folder: 'portfolios',
-        fileName,
-        contentType: 'image/webp',
+      const accessUrl = await putImageUpload({
+        tableUnionType: 'portfolios',
+        file,
       });
 
-      // S3에 파일 업로드
-      await putS3Upload(response.presignedUrl, file);
+      if (!accessUrl) {
+        throw new Error('이미지 업로드에 실패했습니다.');
+      }
 
-      return response.accessUrl;
+      return accessUrl;
     } catch (error) {
       console.error('포트폴리오 이미지 업로드 오류:', error);
       throw new Error('이미지 업로드에 실패했습니다.');
@@ -132,7 +126,7 @@ function ExpertRegisterTemplete() {
         gender: expertDetail.gender,
         bankName: expertDetail.bankName,
         accountNumber: expertDetail.accountNumber,
-        portfolioTitle: expertDetail.portfolioTitle || '포트폴리오 이름',
+        portfolioTitle: expertDetail.portfolioTitle || '',
         portfolioImage: portfolioImageUrl || '',
       });
 
@@ -141,8 +135,12 @@ function ExpertRegisterTemplete() {
 
         const expertData = await getExpertById({ expertId: response.expertId });
         setExpert(expertData); // store에 전문가 정보 저장
+        setMember({
+          ...storeMember,
+          expertId: expertData.id,
+        });
 
-        router.push('/mypage/expertInfo');
+        router.push('/myPage/expertInfo');
       } else {
         toast.error('전문가 등록에 실패했습니다.');
       }
