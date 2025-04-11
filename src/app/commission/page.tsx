@@ -2,13 +2,12 @@
 import React, { useEffect } from 'react';
 import CommissionTemplate from '@/components/templates/commissionTemplate/CommissionTemplate';
 import useInfiniteScrolling from '@/hooks/useInfiniteScrolling';
-import { CommissionListItemProps } from '@/components/molecules/commissionListItem/ComissionListItem';
-import getProjectsAll from '@/apis/project/getProjectsAll';
+import getProjectsAll, { ProjectType } from '@/apis/project/getProjectsAll';
 
 export default function CommissionPage() {
   const [searchBar, setSearchBar] = React.useState<string>('');
   const [scrollHookRef, setScrollHookRef] = React.useState<null | HTMLDivElement>(null);
-  const [commissionList, setCommissionList] = React.useState<CommissionListItemProps[]>([]);
+  const [commissionList, setCommissionList] = React.useState<ProjectType[]>([]);
   const [page, setPage] = React.useState<number>(1);
   const [category, setCategory] = React.useState<number>(0);
   const [hasMore, setHasMore] = React.useState(true);
@@ -19,9 +18,7 @@ export default function CommissionPage() {
       setHasMore(false);
       return;
     }
-    setCommissionList(prev =>
-      reset ? data.projects : [...prev, ...data.projects]
-    );
+    setCommissionList(prev => (reset ? data.projects : [...prev, ...data.projects]));
     setPage(prev => prev + 1);
   };
 
@@ -54,9 +51,7 @@ export default function CommissionPage() {
       commissionList={commissionList}
       category={category}
       onCategoryClick={categoryClickHandler}
-      ScrollHookRef={
-        <div className="bg-red h-1 w-953 mt-100" ref={ref => setScrollHookRef(ref)} />
-      }
+      ScrollHookRef={<div className="bg-red h-1 w-740 mt-100" ref={ref => setScrollHookRef(ref)} />}
     />
   );
 }
