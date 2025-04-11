@@ -34,7 +34,13 @@ export async function middleware(request: NextRequest) {
   // const cookieStore = await cookies();
   // const token = request.cookies.get('accessToken')
   // cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
-  console.log("request.cookies.get('accessToken')", request.cookies.get('accessToken').value);
+  let requestToken: string | undefined;
+  if(request.cookies.get('accessToken').value === undefined) {
+    requestToken = undefined;
+  } else {
+    requestToken = request.cookies.get('accessToken').value
+  }
+  console.log("requestToken -> ", requestToken);
   console.log('All cookies:', request.cookies.getAll());
   const currentPathname = request.nextUrl.pathname;
 
