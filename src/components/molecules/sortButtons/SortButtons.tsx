@@ -19,7 +19,7 @@ export default function SortButtons() {
   return (
     <div className="flex gap-12">
       <TextButton
-        text="최신 업데이트 순"
+        text="등록 순"
         onClick={() => {
           handleParameterChange('latest');
         }}

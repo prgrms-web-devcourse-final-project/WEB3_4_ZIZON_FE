@@ -16,7 +16,7 @@ export default function Banner() {
           쉽고 빠르게 찾아보세요!
         </h2>
         <h3 className="text-black1 font-regular text-16">
-          '전문가와의 상담을 통해 더 나은 결정을 내릴 수 있습니다.'
+          전문가와의 상담을 통해 더 나은 결정을 내릴 수 있습니다.
         </h3>
       </div>
     </div>

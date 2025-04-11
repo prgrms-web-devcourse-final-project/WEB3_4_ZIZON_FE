@@ -40,6 +40,6 @@ export default async function getSuccess(params: GetSuccessRequest): Promise<Suc
     .timeout(50000)
     .build()
     .call<SuccessResponse>();
-
+  console.log('성공시 응답', response.data);
   return response.data;
 }

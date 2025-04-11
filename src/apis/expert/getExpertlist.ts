@@ -3,6 +3,7 @@ import { APIBuilder } from '@/utils/APIBuilder';
 export interface ExpertListRequestType {
   careerLevel: string;
   categoryNames: string;
+  search?: string;
 }
 
 export interface ExpertListItemType {
@@ -20,11 +21,16 @@ export type ExpertListResponseType = ExpertListItemType[];
 export const getExpertlist = async (
   requestQuery: ExpertListRequestType,
 ): Promise<ExpertListResponseType> => {
-  const { careerLevel, categoryNames } = requestQuery;
+  const { careerLevel, categoryNames, search } = requestQuery;
 
-  const response = await APIBuilder.get(
-    `/experts?careerLevel=${careerLevel}&categoryNames=${categoryNames}`,
-  )
+  // URLSearchParams를 사용하여 동적으로 쿼리 생성
+  const params = new URLSearchParams();
+
+  if (careerLevel) params.append('careerLevel', careerLevel);
+  if (categoryNames) params.append('categoryNames', categoryNames);
+  if (search) params.append('name', search);
+
+  const response = await APIBuilder.get(`/experts/search?${params.toString()}`)
     .timeout(50000)
     .build()
     .call<ExpertListResponseType>();

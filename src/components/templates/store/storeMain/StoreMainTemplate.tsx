@@ -1,6 +1,7 @@
 'use client';
 
 import getProductList, { Product } from '@/apis/store/getProductList';
+import TextButton from '@/components/atoms/buttons/textButton/TextButton';
 import StoreMainContent from '@/components/organisms/store/StoreMainContent';
 import StoreSearchRegister from '@/components/organisms/store/StoreSearchResgister';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
@@ -34,7 +35,7 @@ export default function StoreMainTemplate() {
       }
     };
     fetchInitialData();
-  }, []);
+  }, [category]);
 
   // 더 많은 데이터 패칭
   const loadMoreData = async () => {
@@ -82,21 +83,20 @@ export default function StoreMainTemplate() {
   }, [handleObserver, loadMore]);
 
   return (
-    <div className="w-full max-w-1280 mb-200">
+    <div className="w-full max-w-1280 mb-200 mt-72">
       <h1 className="font-semibold text-32 text-black12 mb-40">스토어</h1>
       <div className="w-full flex flex-col gap-32">
         <Suspense>
           <StoreSearchRegister />
         </Suspense>
+
         <StoreMainContent
           productList={data}
           category={category}
           onTabClick={category => setCategory(category)}
         />
       </div>
-      <div ref={loadMore} className="h-30 bg-transparent">
-        loadMore
-      </div>
+      <div ref={loadMore} className="h-30 bg-transparent"></div>
     </div>
   );
 }

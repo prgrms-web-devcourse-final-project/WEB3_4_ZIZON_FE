@@ -23,6 +23,6 @@ export default async function OrderPage({
       };
   const data = await postPayment(paymentRequest);
 
-  console.log('결제 정보:', data);
+  // console.log('결제 정보:', data);
   return <OrderTemplate data={data} paymentType={type} />;
 }

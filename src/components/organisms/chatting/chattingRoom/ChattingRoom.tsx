@@ -11,6 +11,7 @@ import ChattingList from '../chattingLIst/ChattingList';
 import { GetRoomsResponse } from '@/apis/chat/getRooms';
 import getChatHistory from '@/apis/chat/getChatHistory';
 import FileInput from '@/components/atoms/inputs/fileInput/FileInput';
+import { useUserStore } from '@/store/userStore';
 interface ChattingRoomProps {
   roomId: string | null;
   setRoom: (roomId: string | null) => void;
@@ -26,10 +27,12 @@ export default function ChattingRoom({
   setExpertId,
   chatRoomList,
 }: ChattingRoomProps) {
-  //현재 대화방 사용자 정보
-  const { memberInfo: currentUser } = useUserData();
+  //현재 대화방 사용자 정보 // memberInfo가 빠져버림 ㅠㅠ
+  //const { memberInfo: currentUser } = useUserData();
+  const member = useUserStore(state => state.member);
+  const currentUserEmail = member?.email;
   const [senderEmail, receiver] = roomId?.split(':') || []; // sender, receiver
-  const receiverEmail = senderEmail === currentUser?.email ? receiver : senderEmail; // 상대방 이메일
+  const receiverEmail = senderEmail === currentUserEmail ? receiver : senderEmail; // 상대방 이메일
   // 채팅방 관련 변수
   const [messages, setMessages] = useState<any[]>([]); // 메시지 상태 관리
   const [input, setInput] = useState<string>(''); // 입력 상태 관리
@@ -41,15 +44,19 @@ export default function ChattingRoom({
   const chatSubscriptionRef = useRef<any>(null);
   const readSubscriptionRef = useRef<any>(null);
 
+  // 로깅 ===================================
+  //console.log('chatRoomList', chatRoomList);
+  //console.log('member', member);
+
   // 1. 채팅방 메세지 내역 로딩 (리팩토링)
   const fetchChatHistory = async (roomId: string) => {
-    if (!currentUser) return;
-    const sender = currentUser.email;
+    if (!currentUserEmail) return;
+    const sender = currentUserEmail;
     const parts = roomId.split(':');
     const receiver = parts[0] === sender ? parts[1] : parts[0];
     try {
       const response = await getChatHistory(roomId);
-
+      console.log('채팅 기록', response);
       setMessages(response);
     } catch (error) {
       console.error('Error fetching chat history:', error);
@@ -67,7 +74,7 @@ export default function ChattingRoom({
       {},
       (frame: any) => {
         //console.log('STOMP 연결 성공', frame);
-        stompClient.subscribe(`/topic/notice/${currentUser.email}`, (messageOutput: any) => {
+        stompClient.subscribe(`/topic/notice/${currentUserEmail}`, (messageOutput: any) => {
           const payload = JSON.parse(messageOutput.body);
           //console.log('Received message:', messageOutput);
           const roomId = payload.roomId;
@@ -137,9 +144,9 @@ export default function ChattingRoom({
       alert('메시지 내용 또는 이미지를 선택하세요.');
       return;
     }
-    if (!currentUser) return;
+    if (!currentUserEmail) return;
     const chatMessage = {
-      sender: currentUser.email,
+      sender: currentUserEmail,
       receiver: receiverEmail,
       content: text,
       fileUrl: null,
@@ -152,10 +159,10 @@ export default function ChattingRoom({
     //setHiddenFileUrl('');
   };
   useEffect(() => {
-    if (currentUser) {
+    if (currentUserEmail) {
       connectWebSocket();
     }
-  }, [roomId, currentUser]);
+  }, [roomId, currentUserEmail]);
 
   return (
     <div className="flex gap-24 items-start">
@@ -175,7 +182,7 @@ export default function ChattingRoom({
                 key={`${message.timestamp}-${message.content}`}
                 dateTime={new Date(message.timestamp)}
                 message={message.content}
-                tag={message.sender === currentUser.email ? 'get' : 'send'}
+                tag={message.sender === currentUserEmail ? 'get' : 'send'}
               />
             ))}
           <div ref={messagesEndRef} />
