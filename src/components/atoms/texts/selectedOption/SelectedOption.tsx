@@ -1,4 +1,4 @@
-type OptionType = 'left-impact' | 'right-impact' | 'price-small' | 'price-large';
+type OptionType = 'left-impact' | 'right-impact' | 'price-small' | 'price-large' | 'small';
 
 interface StyleConfig {
   container: string;
@@ -32,6 +32,11 @@ const OPTION_STYLES: Record<OptionType, StyleConfig> = {
     container: 'justify-between',
     left: 'text-20 text-black10 font-medium',
     right: 'text-20 text-black12 font-semibold',
+  },
+  small: {
+    container: '',
+    left: 'text-13 text-black7 font-regular',
+    right: 'text-13 text-black10 font-medium',
   },
 } as const;
 
