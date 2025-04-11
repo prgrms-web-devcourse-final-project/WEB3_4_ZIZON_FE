@@ -16,6 +16,13 @@ export default function StoreMainContent({
     <div className="w-full flex justify-between">
       <StoreTab selectedCategory={category} onTabClick={onTabClick} />
       <div className="w-954 grid 2xl:grid-cols-3 grid-cols-2 gap-24">
+        {!productList ||
+          (productList.length === 0 && (
+            <div className="col-span-2 text-center text-gray-500 mt-200">
+              등록된 상품이 없습니다.
+            </div>
+          ))}
+
         {productList &&
           productList.map((product, index) => (
             <Link href={`/store/products/${product.id}`} key={product.id + `${index}`}>
