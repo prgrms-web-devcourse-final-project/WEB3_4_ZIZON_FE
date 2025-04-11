@@ -82,7 +82,6 @@ export default function StoreMainTemplate() {
     };
   }, [handleObserver, loadMore]);
 
-  console.log('category', category);
   return (
     <div className="w-full max-w-1280 mb-200">
       <h1 className="font-semibold text-32 text-black12 mb-40">스토어</h1>
