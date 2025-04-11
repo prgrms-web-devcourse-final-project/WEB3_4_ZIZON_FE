@@ -34,6 +34,7 @@ export async function middleware(request: NextRequest) {
   // const cookieStore = await cookies();
   // const token = request.cookies.get('accessToken')
   // cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
+  console.log("request.cookies", request.cookies);
   console.log('All cookies:', request.cookies.getAll());
   const currentPathname = request.nextUrl.pathname;
 
