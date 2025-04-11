@@ -39,7 +39,7 @@ export const getSortedExpertsByCategory = async (): Promise<SortedExperts> => {
     }
 
     sortedMap['전체'] = allTopExperts;
-    console.log(sortedMap);
+
     return sortedMap;
   } catch (error) {
     console.error('전문가 데이터 정렬 중 오류 발생:', error);

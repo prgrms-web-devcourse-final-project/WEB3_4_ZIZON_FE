@@ -11,6 +11,7 @@ export interface CommissionListItemProps {
   summary: string; // 프로젝트 요약
   region: string; // 지역 정보
   budget: number; // 예산
+  categoryId: number;
 }
 
 function CommissionListItem({
@@ -20,6 +21,7 @@ function CommissionListItem({
   title,
   budget,
   deadline,
+  categoryId
 }: CommissionListItemProps) {
   const router = useRouter();
   const onClickHandler = () => {
@@ -39,7 +41,10 @@ function CommissionListItem({
           </div>
         </div>
         <div className="flex gap-12">
-          <MediumTag text="과외" theme="lightPurple" />
+          {categoryId === 1000 ? <MediumTag text="이사/청소" theme="lightBlue" />: null}
+          {categoryId === 2000 ? <MediumTag text="설치/수리" theme="lightGreen" />: null}
+          {categoryId === 3000 ? <MediumTag text="과외" theme="lightPurple" />: null}
+          {categoryId === 4000 ? <MediumTag text="취미생활" theme="lightOrange" />: null}
           <MediumTag text="수능 대비" theme="" />
         </div>
       </div>
