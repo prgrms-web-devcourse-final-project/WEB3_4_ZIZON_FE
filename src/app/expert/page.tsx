@@ -10,13 +10,15 @@ export default async function ExpertPage({
   searchParams: Promise<{
     category: ProjectCategoryIdType;
     career: string;
+    search: string;
   }>;
 }) {
-  const { category, career } = await searchParams;
+  const { category, career, search } = await searchParams;
 
   const RequestQuery: ExpertListRequestType = {
     careerLevel: career?.toUpperCase() || 'JUNIOR',
     categoryNames: PROJECT_CATEGORY[category as ProjectCategoryIdType] || ALL_CATEGORY,
+    search: search ? search : undefined,
   };
 
   const data = await getExpertlist(RequestQuery);
