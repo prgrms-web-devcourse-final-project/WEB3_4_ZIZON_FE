@@ -19,7 +19,7 @@ export default function MakeOfferTemplate({ projectSummary }: MakeOfferTemplateP
   const offerMutation = useMutation({
     mutationFn: (request: PostOfferRequestType) => postOffer(request),
     onSuccess: () => {
-      //console.log('견적서 전송 성공');
+      alert('견적서가 성공적으로 전송되었습니다.');
     },
     onError: error => {
       console.error('견적서 전송 실패', error);
@@ -35,6 +35,7 @@ export default function MakeOfferTemplate({ projectSummary }: MakeOfferTemplateP
     if (offerMutation.isSuccess) {
       try {
         const response = await postCreateRoom(projectId);
+        alert('채팅방 생성 성공');
         router.push('/expert/chat');
       } catch (error) {
         alert(`채팅방 생성 실패 ${error}`);

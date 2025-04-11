@@ -83,7 +83,7 @@ export default function StoreMainTemplate() {
   }, [handleObserver, loadMore]);
 
   return (
-    <div className="w-full max-w-1280 mb-200">
+    <div className="w-full max-w-1280 mb-200 mt-72">
       <h1 className="font-semibold text-32 text-black12 mb-40">스토어</h1>
       <div className="w-full flex flex-col gap-32">
         <Suspense>
