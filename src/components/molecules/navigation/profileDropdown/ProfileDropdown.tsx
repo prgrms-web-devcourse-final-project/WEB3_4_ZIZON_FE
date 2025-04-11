@@ -25,7 +25,7 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
   return (
     <div className="absolute right-0 top-full mt-8 min-w-280 bg-white pt-24 rounded-8 shadow-lg overflow-hidden z-10">
       <div className="w-full flex items-center justify-between px-28">
-        <span className="text-20 font-bold">{member.name}</span>
+        <span className="text-20 font-bold">{member.name || '장난스러운짱구02'}</span>
         <SmallTag text={userRoleText} theme={userRole === 'client' ? 'default' : 'lightBlue'} />
       </div>
       {userRole === 'client' ? (
@@ -44,7 +44,7 @@ export default function ProfileDropdown({ member, userRole }: ProfileDropdownPro
         </div>
       )}
       <button
-        className="w-full px-20 py-16 bg-black3 hover:bg-black4 font-regular"
+        className="w-full px-20 py-16 bg-black3 hover:bg-black4 font-regular cursor-pointer"
         onClick={handleLogout}
       >
         로그아웃

@@ -4,19 +4,20 @@ interface ProjectIdRequest {
   id: number;
 }
 export interface ProjectIdResponse {
-  id: number;
+  categoryId: number;
   title: string;
   summary: string;
   description: string;
   region: string;
   budget: number;
   deadline: string;
-  status: "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+  status: 'OPEN' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
   clientName: string;
   clientProfileImageUrl: string;
   imageUrls: string[];
 }
-export const getProjectId = async ({id}: ProjectIdRequest) => {
+
+export const getProjectId = async ({ id }: ProjectIdRequest) => {
   const response = await APIBuilder.get(`/projects/${id}`)
     .headers({
       'Content-Type': 'application/json',
@@ -26,6 +27,5 @@ export const getProjectId = async ({id}: ProjectIdRequest) => {
     .build()
     .call<ProjectIdResponse>();
 
-
   return response.data;
-}
+};

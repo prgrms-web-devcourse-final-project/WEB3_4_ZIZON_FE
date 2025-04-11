@@ -21,7 +21,6 @@ export default async function getMyProjects({
   const response = await APIBuilder.get('/projects/my')
     .params(params)
     .timeout(10000)
-    .withCredentials(true)
     .build()
     .call<MyProjectPageResponse>();
 

@@ -79,7 +79,7 @@ export default function ExpertSearch({ className = '' }: ExpertSearchProps) {
       <div className="relative">
         <SearchBar
           type="large"
-          placeholder="어떤 분야의 전문가를 찾고 계신가요?"
+          placeholder="찾고있는 전문가가 있나요?"
           value={searchTerm}
           onChange={handleInputChange}
         />
