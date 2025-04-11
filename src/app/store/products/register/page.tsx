@@ -11,6 +11,7 @@ import StandardButton from '@/components/atoms/buttons/standardButton/StandardBu
 import { useRouter } from 'next/navigation';
 import createProduct, { CreateProductRequest, categories } from '@/apis/store/createProduct';
 import { putImageUpload } from '@/apis/imageUpload/putImageUpload';
+import { putFileUpload } from '@/apis/imageUpload/putFileUpload';
 import { toast } from 'sonner';
 
 const initialBasicInfo: FormProductBasicInfo = {
@@ -78,6 +79,20 @@ export default function ProductRegistrationPage() {
         throw new Error('썸네일 이미지 업로드에 실패했습니다.');
       }
 
+      // 디지털 콘텐츠 파일 업로드
+      let digitalContentUrl: string;
+      if (productType === 'digital' && basicInfo.digitalContent) {
+        digitalContentUrl = await putFileUpload({
+          tableUnionType: 'products',
+          file: basicInfo.digitalContent,
+          fileName: basicInfo.digitalContent.name,
+        });
+
+        if (!digitalContentUrl) {
+          throw new Error('디지털 콘텐츠 파일 업로드에 실패했습니다.');
+        }
+      }
+
       // subCategory를 category_id로 변환
       const category = categories.find(
         cat =>
@@ -90,22 +105,22 @@ export default function ProductRegistrationPage() {
       }
 
       const productData: CreateProductRequest = {
-        category_id: category.category_id,
+        categoryId: category.category_id,
         title: basicInfo.title,
         description: basicInfo.description,
         price: basicInfo.price,
         stock: basicInfo.stock,
-        product_type: productType === 'digital' ? 'DIGITAL' : 'PHYSICAL',
-        thumbnail_image: thumbnailImageUrl,
-        digital_contents:
+        productType: productType === 'digital' ? 'DIGITAL' : 'PHYSICAL',
+        thumbnailImage: thumbnailImageUrl,
+        digitalContents:
           productType === 'digital' && basicInfo.digitalContent
             ? [
                 {
-                  file_name: basicInfo.digitalContent.name,
-                  file_url: 'test', // TODO: 디지털 콘텐츠 파일 업로드 API 구현 필요
-                  file_size: basicInfo.digitalContent.size,
-                  file_type: getFileExtension(basicInfo.digitalContent),
-                  download_limit: basicInfo.downloadLimit || 1,
+                  fileName: basicInfo.digitalContent.name,
+                  fileUrl: digitalContentUrl || '',
+                  fileSize: basicInfo.digitalContent.size,
+                  fileType: getFileExtension(basicInfo.digitalContent),
+                  downloadLimit: basicInfo.downloadLimit || 1,
                 },
               ]
             : undefined,
@@ -113,7 +128,7 @@ export default function ProductRegistrationPage() {
 
       await createProduct(productData);
       toast.success('상품이 성공적으로 등록되었습니다.');
-      router.push('/store/products');
+      router.push('/store');
     } catch (error) {
       console.error('상품 등록 실패:', error);
       toast.error(error instanceof Error ? error.message : '상품 등록에 실패했습니다.');
