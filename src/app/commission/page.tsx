@@ -1,5 +1,5 @@
-'use client'
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import CommissionTemplate from '@/components/templates/commissionTemplate/CommissionTemplate';
 import useInfiniteScrolling from '@/hooks/useInfiniteScrolling';
 import { CommissionListItemProps } from '@/components/molecules/commissionListItem/ComissionListItem';
@@ -11,26 +11,41 @@ export default function CommissionPage() {
   const [commissionList, setCommissionList] = React.useState<CommissionListItemProps[]>([]);
   const [page, setPage] = React.useState<number>(1);
   const [category, setCategory] = React.useState<number>(0);
+  const [hasMore, setHasMore] = React.useState(true);
+
+  const fetchProjects = async (pageNum: number, reset = false) => {
+    const data = await getProjectsAll({ page: pageNum });
+    if (data.projects.length === 0) {
+      setHasMore(false);
+      return;
+    }
+    setCommissionList(prev =>
+      reset ? data.projects : [...prev, ...data.projects]
+    );
+    setPage(prev => prev + 1);
+  };
 
   useInfiniteScrolling({
     scrollHookRef,
-    fetchMore: async () => {
-      // 데이터 조회할 곳
-      const date = await getProjectsAll({page});
-      setPage(page + 1);
-      setCommissionList([...commissionList, ...date.projects]);
-      console.log(date);
-    },
-    hasMore: true,
+    fetchMore: () => fetchProjects(page),
+    hasMore,
   });
+
+  useEffect(() => {
+    // 카테고리 변경 시 새로 불러오기
+    setPage(1);
+    setHasMore(true);
+    fetchProjects(1, true);
+  }, [category]);
+
   const categoryClickHandler = (value: number) => {
     setCategory(value);
-    console.log(value);
-  }
+  };
+
   const onResetHandler = () => {
     setCategory(0);
-    console.log(0);
-  }
+  };
+
   return (
     <CommissionTemplate
       value={searchBar}
@@ -39,7 +54,9 @@ export default function CommissionPage() {
       commissionList={commissionList}
       category={category}
       onCategoryClick={categoryClickHandler}
-      ScrollHookRef={<div className="bg-red h-1 w-953 mt-100" ref={(ref) => setScrollHookRef(ref)}/>}
+      ScrollHookRef={
+        <div className="bg-red h-1 w-953 mt-100" ref={ref => setScrollHookRef(ref)} />
+      }
     />
   );
 }

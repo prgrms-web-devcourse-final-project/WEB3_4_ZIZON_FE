@@ -11,6 +11,7 @@ interface ExpertIntroduction {
   introduction: string;
   major_category: string;
   sub_category_names: string[];
+  portfolioImage: string;
   career_years: number;
   certification?: string[];
   ReviewList?: ReviewItemProps[];
@@ -23,6 +24,7 @@ export default function ExpertIntroduction({
   sub_category_names,
   career_years,
   certification,
+  portfolioImage,
   ReviewList,
 }: ExpertIntroduction) {
   const [currTab, setCurrTab] = useState('all');
@@ -91,6 +93,12 @@ export default function ExpertIntroduction({
 
       <Didivder />
 
+      {portfolioImage === "" ? null : (
+        <div>
+          <h3 className="font-bold text-20 text-black12 mb-24">포트폴리오</h3>
+          <Image src={portfolioImage} alt={''} />
+        </div>
+      )}
       {/* 리뷰 영역 */}
       <div id="review" className="w-full flex flex-col gap-24">
         <h3 className="font-bold text-20 text-black12">리뷰</h3>
