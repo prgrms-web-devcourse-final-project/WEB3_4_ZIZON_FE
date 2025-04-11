@@ -18,9 +18,6 @@ export default function ExpertChattingInfo({
   service,
   expertId,
 }: ExpertChattingInfoProps) {
-  if (!offerData || !projectData) {
-    return <div>로딩중</div>;
-  }
   return (
     <div className="w-full max-w-402 flex flex-col gap-16">
       <StandardButton
@@ -32,9 +29,11 @@ export default function ExpertChattingInfo({
       />
 
       {/* 보낸 견적서 */}
-      <OfferInfo offerInfo={offerData} type="expert" service={service} expertId={expertId} />
+      {offerData && (
+        <OfferInfo offerInfo={offerData} type="expert" service={service} expertId={expertId} />
+      )}
 
-      <ProjectSummary projectData={projectData} />
+      {projectData && <ProjectSummary projectData={projectData} />}
     </div>
   );
 }
