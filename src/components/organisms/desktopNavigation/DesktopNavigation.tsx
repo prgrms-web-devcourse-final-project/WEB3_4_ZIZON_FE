@@ -6,32 +6,25 @@ import DopdangLogo from '@/components/atoms/icons/dopdangLogo/DopdangLogo';
 import NavigationLinks from '@/components/molecules/navigation/navigationLinks/NavigationLinks';
 import AuthButtons from '@/components/molecules/navigation/authButtons/AuthButtons';
 import { useUserStore } from '@/store/userStore';
+import { getCurrentUser } from '@/apis/user/getCurrentUser';
 
 function DesktopNavigation() {
   const router = useRouter();
-  const { currentRole, member, initializeStore } = useUserStore();
+  const { member, setMember, currentRole, initializeStore } = useUserStore();
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_SERVER_URL}/users/me`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include',
-        });
-
-        if (response.status !== 200) {
-          initializeStore();
-        }
+        const userData = await getCurrentUser();
+        setMember(userData);
       } catch (error) {
         console.log(error);
+        initializeStore();
       }
     };
 
     checkAuth();
-  }, [initializeStore]);
+  }, [initializeStore, setMember]);
 
   return (
     <header className="w-full py-20 flex justify-center items-center border-b border-black4">
