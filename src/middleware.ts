@@ -29,6 +29,8 @@ const expertOnlyRoutes = ['/store/products/register', '/expert/chat', '/expert/m
 const clientOnlyRoutes = ['/expert/register', '/client/chat'];
 
 export async function middleware(request: NextRequest) {
+  const token2 = request.cookies.get('accessToken')?.value;
+  console.log('middleware token:', token2); // Vercel 로그에서 확인
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value; // 쿠키에서 accessToken 가져오기
   console.log("token", token)
