@@ -5,7 +5,7 @@ import SellStateTabContainer from '@/components/molecules/sellStateTabContainer/
 import OrderList from '@/components/organisms/orderList/OrderList';
 import getMyProjects from '@/apis/project/getMyProjects';
 import { Project, ProjectStatus } from '@/types/project';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '@/components/atoms/loadingSpinner/LoadingSpinner';
 import ErrorState from '@/components/molecules/errorState/ErrorState';
 import EmptyState from '@/components/molecules/emptyState/EmptyState';
@@ -24,29 +24,25 @@ const convertProjectToOrder = (project: Project) => {
 
 export default function MyProjectPage() {
   const [selectedState, setSelectedState] = useState<ProjectStatus | null>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const pageSize = 10;
 
-  // useInfiniteQuery를 사용하여 프로젝트 데이터 가져오기
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError } =
-    useInfiniteQuery({
-      queryKey: ['myProjects'],
-      queryFn: async ({ pageParam }) => {
-        return getMyProjects({
-          lastProjectId: pageParam,
-          limit: 10,
-        });
-      },
-      getNextPageParam: lastPage => {
-        if (!lastPage.hasNext) return undefined;
-        if (lastPage.projects.length === 0) return undefined;
-        return lastPage.projects[lastPage.projects.length - 1].id;
-      },
-      initialPageParam: undefined,
-    });
+  // useQuery를 사용하여 프로젝트 데이터 가져오기
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['myProjects', currentPage],
+    queryFn: async () => {
+      return getMyProjects({
+        page: currentPage,
+        size: pageSize,
+        sort: [],
+      });
+    },
+  });
 
   // 모든 프로젝트 데이터 추출
   const allProjects = useMemo(() => {
     if (!data) return [];
-    return data.pages.flatMap(page => page.projects);
+    return data.projects;
   }, [data]);
 
   // 필터링된 프로젝트
@@ -77,10 +73,10 @@ export default function MyProjectPage() {
     setSelectedState(prev => (prev === state ? null : state));
   };
 
-  // 더 보기 버튼 클릭 핸들러
-  const handleLoadMore = () => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
+  // 다음 페이지로 이동
+  const handleNextPage = () => {
+    if (data?.hasNext) {
+      setCurrentPage(prev => prev + 1);
     }
   };
 
@@ -132,19 +128,19 @@ export default function MyProjectPage() {
             <OrderList orders={orders} onAskButtonClick={handleAskButtonClick} />
 
             {/* 더 보기 버튼 */}
-            {hasNextPage && (
+            {data?.hasNext && (
               <div className="flex justify-center py-24">
                 <StandardButton
-                  text={isFetchingNextPage ? '로딩 중...' : '더 보기'}
-                  onClick={handleLoadMore}
-                  disabled={isFetchingNextPage}
+                  text="더 보기"
+                  onClick={handleNextPage}
+                  disabled={isLoading}
                   state="dark"
                 />
               </div>
             )}
 
             {/* 더 이상 데이터가 없을 때 표시 */}
-            {!hasNextPage && allProjects.length > 0 && (
+            {!data?.hasNext && allProjects.length > 0 && (
               <div className="flex justify-center py-24">
                 <EmptyState
                   title="더 이상 프로젝트가 없습니다"

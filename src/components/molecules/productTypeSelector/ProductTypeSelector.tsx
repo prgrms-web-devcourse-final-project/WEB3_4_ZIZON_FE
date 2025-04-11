@@ -1,22 +1,18 @@
 import React from 'react';
-import LabelWithIconButton, {
-  ProductCategory,
-} from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+import LabelWithIconButton from '@/components/atoms/buttons/labelWithIconButton/LabelWithIconButton';
+
+// 상품 타입 정의
+export type ProductTypeValue = 'digital' | 'living';
 
 interface ProductTypeSelectorProps {
-  selectedType: ProductCategory;
-  onChange: (type: ProductCategory) => void;
+  selectedType: ProductTypeValue;
+  onChange: (type: ProductTypeValue) => void;
 }
 
-interface CategoryOption {
-  id: string;
-  label: string;
-  value: ProductCategory;
-}
-
-const CATEGORY_OPTIONS: CategoryOption[] = [
-  { id: 'digital', label: 'IT/Digital', value: 'digital' },
-  { id: 'living', label: '리빙', value: 'living' },
+// 카테고리 타입별 옵션 생성
+const CATEGORY_OPTIONS = [
+  { id: 'digital', label: 'IT/Digital', value: 'digital' as ProductTypeValue },
+  { id: 'living', label: '리빙', value: 'living' as ProductTypeValue },
 ];
 
 export default function ProductTypeSelector({ selectedType, onChange }: ProductTypeSelectorProps) {

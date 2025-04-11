@@ -16,16 +16,17 @@ import EmptyState from '@/components/molecules/emptyState/EmptyState';
 function RecentProjectSection() {
   const router = useRouter();
 
-  // TanStack Query를 사용하여 프로젝트 데이터 가져오기
   const { data, isLoading, error, refetch } = useQuery<ProjectItemCardProps[]>({
     queryKey: ['recentProjects'],
     queryFn: async () => {
-      const response = await getProjectsAll({});
-      // 최대 6개의 프로젝트만 사용
-      return response.projects.slice(0, 6).map(project => {
-        // Project 타입을 ProjectItemCardProps 타입으로 변환
+      const response = await getProjectsAll({
+        page: 0,
+        size: 6,
+        sort: ['createdAt', 'DESC'],
+      });
+      return response.projects.map(project => {
         return {
-          categoryId: 1000 as ProjectCategoryIdType, // 기본값 설정 (실제로는 프로젝트 카테고리 정보가 필요함)
+          categoryId: project.categoryId as ProjectCategoryIdType,
           title: project.title,
           budget: project.budget,
           deadline: project.deadline,

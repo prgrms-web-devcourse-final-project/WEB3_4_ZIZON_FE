@@ -100,7 +100,7 @@ export default function ProfileInfo({
             <button
               onClick={handleSaveImage}
               disabled={isUploading}
-              className="bg-primary4 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
+              className="bg-secondary3 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
             >
               <Image src="/icons/Check.svg" alt="edit" width={20} height={20} />
             </button>
@@ -108,7 +108,7 @@ export default function ProfileInfo({
             <label htmlFor="profile-image">
               <button
                 onClick={handleEditClick}
-                className="bg-secondary3 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
+                className="bg-primary4 rounded-full w-32 h-32 cursor-pointer flex items-center justify-center"
               >
                 <Image src="/icons/Upload.svg" alt="edit" width={20} height={20} />
               </button>

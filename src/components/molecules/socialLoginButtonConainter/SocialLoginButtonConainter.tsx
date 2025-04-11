@@ -14,7 +14,7 @@ function SocialLoginButtonConainter() {
 
     try {
       // 리다이렉트 전에 상태 업데이트
-      window.location.href = 'http://localhost:8080/oauth2/authorization/kakao';
+      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL}/oauth2/authorization/kakao`;
     } catch (error) {
       setIsLoading(false);
       setError('카카오 로그인 중 오류가 발생했습니다.');
@@ -28,7 +28,7 @@ function SocialLoginButtonConainter() {
     setError(null);
 
     try {
-      window.location.href = 'http://localhost:8080/oauth2/authorization/naver';
+      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL}/oauth2/authorization/naver`;
     } catch (error) {
       setIsLoading(false);
       setError('네이버 로그인 중 오류가 발생했습니다.');
@@ -42,7 +42,7 @@ function SocialLoginButtonConainter() {
     setError(null);
 
     try {
-      window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+      window.location.href = `${process.env.NEXT_PUBLIC_SERVER_URL}/oauth2/authorization/google`;
     } catch (error) {
       setIsLoading(false);
       setError('구글 로그인 중 오류가 발생했습니다.');

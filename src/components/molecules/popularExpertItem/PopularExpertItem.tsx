@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-
 export interface PopularExpertItemProps {
   name: string;
   categoryName: string;
@@ -29,14 +28,16 @@ export default function PopularExpertItem({
       href={`/expert/${expertId}`}
       className="flex flex-col items-center gap-20 px-24 py-24 bg-black1 border border-black3 rounded-[20px]  hover:shadow-style1 hover:border-transparent transition-all duration-300"
     >
-      <Image
-        src={imagePath === "" ? "/images/DefaultImage.png" : imagePath}
-        width={254}
-        height={181}
-        className="rounded-[12px] object-fill h-181 w-254"
-        alt="expert-thumbnail-image"
-        onError={() => setImagePath('/public/images/DefaultImage.png')}
-      />
+      <div className="w-254 h-200 border border-black2 overflow-hidden rounded-xl">
+        <Image
+          src={imagePath === '' ? '/images/DefaultImage.png' : imagePath}
+          width={254}
+          height={200}
+          className="size-full object-cover"
+          alt="expert-thumbnail-image"
+          onError={() => setImagePath('/public/images/DefaultImage.png')}
+        />
+      </div>
       <div className="flex flex-col items-center gap-24">
         <div className="flex flex-col items-center gap-12">
           <span className="font-bold text-20 text-black10"> {name}</span>

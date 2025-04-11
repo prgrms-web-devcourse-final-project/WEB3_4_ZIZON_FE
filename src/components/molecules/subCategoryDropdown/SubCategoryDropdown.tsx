@@ -33,7 +33,7 @@ export default function SubCategoryDropdown({
     <div className="flex flex-col gap-8">
       <InputLabel label={label} htmlFor="sub-category" />
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-        <DropdownMenuTrigger className="w-full flex items-center justify-between px-16 py-12 border border-black5 rounded-sm bg-transparent text-16 text-black6 focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent">
+        <DropdownMenuTrigger className="w-full flex items-center justify-between px-16 py-12 border border-black5 rounded-sm bg-transparent text-16 text-black7 focus:outline-none focus:ring-1 focus:ring-primary5 focus:border-transparent">
           {selectedCategory?.label || '카테고리를 선택해주세요.'}
           <ChevronDown className="size-16" />
         </DropdownMenuTrigger>

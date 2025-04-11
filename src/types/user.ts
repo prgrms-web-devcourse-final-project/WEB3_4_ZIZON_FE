@@ -41,7 +41,7 @@ export interface UserState {
   currentRole: UserRole;
   setMember: (member: Member | null) => void;
   setExpert: (expert: Expert | null) => void;
-  setCurrentRole: (role: UserRole) => void;
+  setCurrentRole: (role: UserRole) => Promise<UserRole>;
   initializeStore: () => void;
   logout: () => Promise<void>;
 }
