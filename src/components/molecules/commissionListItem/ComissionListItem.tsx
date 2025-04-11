@@ -34,11 +34,11 @@ function CommissionListItem(commission: ProjectType) {
           {categoryId === 2000 ? <MediumTag text="설치/수리" theme="lightGreen" /> : null}
           {categoryId === 3000 ? <MediumTag text="과외" theme="lightPurple" /> : null}
           {categoryId === 4000 ? <MediumTag text="취미생활" theme="lightOrange" /> : null}
-          <MediumTag text={clientName} theme="" />
+          <MediumTag text={status} theme="" />
         </div>
       </div>
       <div className="flex flex-col items-end justify-between">
-        <p className="text-16 text-black6">{status}</p>
+        <p className="text-16 text-black6">{clientName}</p>
         <div className="flex flex-col gap-8">
           <SelectedOption
             type="right-impact"

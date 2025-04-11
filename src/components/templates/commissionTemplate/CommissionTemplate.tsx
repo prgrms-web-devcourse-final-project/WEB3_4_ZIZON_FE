@@ -32,7 +32,7 @@ export default function CommissionTemplate({
   });
 
   return (
-    <div className="w-fit mx-auto mt-72">
+    <div className="w-fit mt-72">
       <h3 className="text-32 font-semibold mb-48">등록된 프로젝트</h3>
       <SearchBar
         type="default"
