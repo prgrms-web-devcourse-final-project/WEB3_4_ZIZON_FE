@@ -17,11 +17,14 @@ export default function ChattingTemplate({ chatRoomList }: { chatRoomList: GetRo
   const { data: expertData, isLoading: isLoadingExpert } = useQuery({
     queryKey: ['expert', expertId],
     queryFn: () => getExpert({ expertId: String(expertId) }),
+    // queryFn: () => getExpert({ expertId: String(11) }),
     enabled: !!expertId,
   });
+
   const { data: offerData, isLoading: isLoadingOffer } = useQuery({
     queryKey: ['offer', projectId, expertId],
     queryFn: () => getOfferList({ projectId: projectId, expertId: expertId! }),
+    // queryFn: () => getOfferList({ projectId: 235, expertId: 11 }),
     enabled: !!projectId && !!expertId,
   });
 
